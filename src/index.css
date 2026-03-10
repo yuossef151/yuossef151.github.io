@@ -2,68 +2,96 @@
 @plugin "daisyui";
 
 
-    .istrue{
-        display: flex;
-    }
-    .isfalse{
+.istrue {
+    display: flex;
+}
+
+.isfalse {
+    display: none;
+}
+
+.bar {
+    display: none;
+}
+
+.swal-ok-btn {
+    background-color: #D9176C;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.swal-ok-btn:hover {
+    background-color: #b51a5d;
+    color: white;
+}
+.mybtn:hover {
+    background-color: #b51a5d;
+    color: white;
+}
+.mybtn2:hover {
+    color: #D9176C;
+    background-color: rgb(228, 228, 228);
+}
+
+@media (max-width: 640px) {
+    .hidden2 {
         display: none;
     }
 
-.bar{
-    display: none;
-}
-@media (max-width: 640px) {
+    .bar {
+        display: flex;
+    }
 
-  .bar{
-    display: flex;
-  }
+    .istrue {
+        display: flex;
+    }
 
-  .istrue{
-    display: flex;
-  }
+    .isfalse {
+        display: none;
+    }
 
-  .isfalse{
-    display: none;
-  }
+    .mynav {
+        display: none;
+    }
 
-  .mynav{
-    display: none;
-  }
+    .mynav1 {
+        display: flex;
+        position: absolute;
+        background-color: white;
+        left: 0;
+        top: 80px;
+        width: 100%;
+        z-index: 999;
+        padding: 10px;
+        color: black;
+    }
 
-  .mynav1{
-    display: flex;
-    position: absolute;
-    background-color: white;
-    left: 0;
-    top: 80px;
-    width: 100%;
-    z-index: 999;
-    padding: 10px;
-    color: black;
-  }
+    .user {
+        display: none;
+    }
 
-  .user{
-    display: none;
-  }
+    .close {
+        display: none;
+    }
 
-  .close{
-    display: none;
-  }
+    .opn {
+        position: absolute;
+        left: 20px;
+        width: 90%;
+        z-index: 999;
+    }
 
-  .opn{
-    position: absolute;
-    left: 20px;
-    width: 90%;
-    z-index: 999;
-  }
+    .mytable {
+        overflow: hidden;
+    }
 
-  .mytable{
-    overflow: hidden;
-  }
-
-  .mytr{
-    display: flex;
-    flex-direction: column;
-  }
+    .mytr {
+        display: flex;
+        flex-direction: column;
+    }
 
 }

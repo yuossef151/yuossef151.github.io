@@ -1,5 +1,5 @@
-import  { useContext, useState } from "react";
-import {  NavLink } from "react-router-dom";
+import { useContext, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 import { CartContext } from "../../cartpage/CartContext";
 import { WishlistContext } from "../../Wishlistpage/WishlistContext";
@@ -178,7 +178,7 @@ export default function Log() {
                             d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z"
                           ></path>
                         </svg>
-                        <NavLink 
+                        <NavLink
                           onClick={() => {
                             logout();
                           }}
@@ -195,13 +195,19 @@ export default function Log() {
           </div>
         ) : (
           <div className="flex gap-4">
-            <button className="bg-[#D9176C] px-4 py-2  rounded-[10px]  ">
-              <NavLink to="login">Log in</NavLink>
-            </button>
+            <NavLink
+              to="login"
+              className="bg-[#D9176C] mybtn  px-4 py-2  rounded-[10px]  "
+            >
+              Log in
+            </NavLink>
 
-            <button className="bg-white px-4 py-2 text-[#D9176C] rounded-[10px]">
-              <NavLink to="Regester">Sign up</NavLink>
-            </button>
+            <NavLink
+              to="Regester"
+              className="bg-white px-4 py-2 mybtn2 text-[#D9176C] rounded-[10px]"
+            >
+              Sign up
+            </NavLink>
           </div>
         )}
       </div>

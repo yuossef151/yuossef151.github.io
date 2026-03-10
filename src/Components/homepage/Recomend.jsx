@@ -98,7 +98,7 @@ export default function Recomend() {
                             },
                           });
                     }}
-                    className="flex grow-4 bg-[#D9176C] py-3.25 justify-center rounded-lg items-center text-white"
+                    className="flex mybtn grow-4 bg-[#D9176C] py-3.25 justify-center rounded-lg items-center text-white"
                   >
                     Add To Cart
                     <svg
@@ -159,7 +159,7 @@ export default function Recomend() {
                             },
                           });
                     }}
-                    className="flex grow py-3.25 justify-center rounded-lg border border-[#D9176C] text-[#D9176C]"
+                    className="flex mybtn2 grow py-3.25 justify-center rounded-lg border border-[#D9176C] text-[#D9176C]"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

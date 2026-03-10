@@ -72,7 +72,7 @@ export default function Wishlistdata() {
         <div className="pb-20">
           <div className="lg:px-15 bg-[#F5F5F5]">
             <table
-              className="hidden sm:max-md:table w-full table-auto bg-[#F5F5F5] "
+              className="hidden2 sm:max-md:table  w-full table-auto bg-[#F5F5F5] "
               style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}
             >
               <thead>
@@ -121,9 +121,13 @@ export default function Wishlistdata() {
                               toast.success("Added to shopping cart", {
                                 position: "bottom-right",
                                 duration: 4000,
+                                iconTheme: {
+                                  primary: "#D9176C",
+                                  secondary: "#fff",
+                                },
                               });
                             }}
-                            className="flex  bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white"
+                            className="flex mybtn bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white"
                           >
                             Add To Cart
                             <svg
@@ -197,7 +201,7 @@ export default function Wishlistdata() {
                 ))}
               </tbody>
             </table>
-            <div className="sm:max-md:hidden space-y-6 px-5 py-5">
+            <div className="sm:max-md:hidden lg:hidden  space-y-6 px-5 py-5">
               {mycart.map((el, index) => (
                 <div
                   key={el.id || index}
@@ -229,15 +233,31 @@ export default function Wishlistdata() {
                     </p>
 
                     <NavLink
-                      onClick={() => removeFromWishlist(el)}
-                      className="text-pink-600 self-end"
+                      onClick={() => removeItem(el)}
                       aria-label="Remove item"
                     >
-                      <FaTrashAlt size={20} />
+                      {loadingId === el.bookId ? (
+                        <ImSpinner2
+                          className="animate-spin text-red-500"
+                          size={18}
+                        />
+                      ) : (
+                        <FaTrashAlt size={18} className="text-[#D9176C]" />
+                      )}
                     </NavLink>
                   </div>
                   <NavLink
-                    onClick={() => addToCart(el)}
+                    onClick={() => {
+                      addToCart(el);
+                      toast.success("Added to shopping cart", {
+                        position: "bottom-right",
+                        duration: 4000,
+                        iconTheme: {
+                          primary: "#D9176C",
+                          secondary: "#fff",
+                        },
+                      });
+                    }}
                     className="flex gap-2 items-center justify-center bg-[#D9176C] py-3 rounded-lg text-white font-semibold"
                   >
                     Add To Cart

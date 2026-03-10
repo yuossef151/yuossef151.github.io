@@ -54,18 +54,18 @@ export default function Mycart() {
   const removeItem = (item) => {
     setLoadingId(item.bookDetails.bookId);
     removeFromCart(item);
-  const removePromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      try {
-        removeFromCart(item);
-        resolve(); 
-      } catch (err) {
-        reject();
-      } finally {
-        setLoadingId(null);
-      }
-    }, 1000);
-  });
+    const removePromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          removeFromCart(item);
+          resolve();
+        } catch (err) {
+          reject();
+        } finally {
+          setLoadingId(null);
+        }
+      }, 1000);
+    });
 
     toast.promise(
       removePromise,
@@ -78,13 +78,13 @@ export default function Mycart() {
         position: "bottom-right",
         autoClose: 2000,
         theme: "colored",
-                iconTheme: {
+        iconTheme: {
           primary: "#D9176C",
           secondary: "#fff",
         },
       },
     );
-};
+  };
 
   useEffect(() => {
     if (loadingId && !Cart.some((el) => el.bookDetails.bookId === loadingId)) {
@@ -112,7 +112,7 @@ export default function Mycart() {
         <div>
           <div className="lg:px-15 bg-[#F5F5F5]">
             <table
-              className="w-full sm:max-md:table table-auto bg-[#F5F5F5] hidden  "
+              className="w-full sm:max-md:table table-auto bg-[#F5F5F5] hidden2  "
               style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}
             >
               <thead className="mytable">
@@ -271,12 +271,23 @@ export default function Mycart() {
                       </button>
                     </div>
 
-                    <button
-                      onClick={() => removeItem(el)}
-                      className="text-pink-600"
+                    <NavLink
+                      onClick={() => {
+                        removeItem(el);
+                      }}
+                      aria-label="Remove item"
                     >
-                      <FaTrashAlt size={18} />
-                    </button>
+                      {loadingId === el.bookDetails.bookId ? (
+                        <ImSpinner2
+                          className="animate-spin text-red-500"
+                          size={18}
+                        />
+                      ) : (
+                        <div>
+                          <FaTrashAlt size={18}  className="text-pink-600"/>
+                        </div>
+                      )}
+                    </NavLink>
                   </div>
 
                   <div className="border-t mt-4 pt-3 flex justify-between font-semibold">

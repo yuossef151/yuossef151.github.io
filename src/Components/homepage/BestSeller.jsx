@@ -76,7 +76,7 @@ export default function BestSeller() {
             onClick={() => {
               console.log(data);
             }}
-            className="bg-[#D9176C] text-white py-3 px-10 rounded-[10px] text-[16px] font-semibold"
+            className="bg-[#D9176C] mybtn  text-white py-3 px-10 rounded-[10px] text-[16px] font-semibold"
           >
             Shop now
           </NavLink>

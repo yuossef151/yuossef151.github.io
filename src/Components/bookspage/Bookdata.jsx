@@ -152,7 +152,7 @@ export default function Bookdata({
                                     },
                                   });
                             }}
-                            className="flex grow bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white"
+                            className="flex grow mybtn bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white"
                           >
                             Add To Cart
                             <svg
@@ -203,11 +203,25 @@ export default function Bookdata({
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-                              console.log(el.bookId);
-                              !token ? requireLoginAlert() : addToWishlist(el);
-                              !token
-                                ? requireLoginAlert()
-                                : toast.success("Added to Wishlist", {
+
+                              if (!token) {
+                                requireLoginAlert();
+                              } else {
+                                if (isInWishlist(el.bookId)) {
+                                  toast.error(
+                                    "This item is already in your wishlist",
+                                    {
+                                      position: "bottom-right",
+                                      duration: 4000,
+                                      iconTheme: {
+                                        primary: "#D9176C",
+                                        secondary: "#fff",
+                                      },
+                                    },
+                                  );
+                                } else {
+                                  addToWishlist(el);
+                                  toast.success("Added to Wishlist", {
                                     position: "bottom-right",
                                     duration: 4000,
                                     iconTheme: {
@@ -215,8 +229,10 @@ export default function Bookdata({
                                       secondary: "#fff",
                                     },
                                   });
+                                }
+                              }
                             }}
-                            className="flex  py-3.25 px-3.5 justify-center items-center rounded-lg border border-[#D9176C] text-[#D9176C] "
+                            className="flex mybtn2  py-3.25 px-3.5 justify-center items-center rounded-lg border border-[#D9176C] text-[#D9176C] "
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
