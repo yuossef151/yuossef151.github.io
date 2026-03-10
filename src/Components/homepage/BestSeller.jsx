@@ -60,11 +60,11 @@ export default function BestSeller() {
           modules={[Autoplay]}
           className="mySwiper"
         >
-          {books.map((book) => (
-            <SwiperSlide className="rounded-2xl overflow-hidden ">
+          {books.map((book , index) => (
+            <SwiperSlide key={index} className="rounded-2xl overflow-hidden ">
               <img
                 className="rounded-2xl"
-                src={`./public/${book}.png`}
+                src={`/${book}.png`}
                 alt={book}
                 loading="lazy"
               />

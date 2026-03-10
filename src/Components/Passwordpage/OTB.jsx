@@ -54,7 +54,7 @@ export default function OTB({ next }) {
           onSubmit={handleSubmit}
         >
           {({ setFieldValue, values }) => (
-            <Form className="flex flex-col items-center gap-8 w-full px-5 md:px-40 lg:px-0">
+            <Form className="flex flex-col items-center gap-8 w-full px-5 sm:max-md:px-40 lg:px-0">
               <div className="flex gap-4 w-full  justify-center">
                 {[0, 1, 2, 3, 4, 5].map((_, index) => (
                   <Field
@@ -80,7 +80,7 @@ export default function OTB({ next }) {
                         inputsRef.current[index - 1]?.focus();
                       }
                     }}
-                    className="otp-field border border-[#2222224D] lg:w-15 lg:h-15 md:w-15 md:h-15 w-11 h-11 text-center text-xl rounded-xl"
+                    className="otp-field border border-[#2222224D] lg:w-15 lg:h-15 sm:max-md:w-15 sm:max-md:h-15 w-11 h-11 text-center text-xl rounded-xl"
                   />
                 ))}
               </div>

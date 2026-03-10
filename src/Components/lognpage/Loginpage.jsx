@@ -69,7 +69,7 @@ export default function Loginpage() {
         <div className=" w-full h-90 inset-0">
           <img
             className=" object-cover w-full h-full rotate-180   top-0 "
-            src="./public/imglogin.png"
+            src="/imglogin.png"
             alt=""
           />
           <div className="absolute w-full h-90 inset-0 bg-[#00000099]"></div>
@@ -83,7 +83,7 @@ export default function Loginpage() {
               handleSubmit(values);
             }}
           >
-            <Form className="lg:w-140 w-full px-5 md:px-40 lg:px-0 ">
+            <Form className="lg:w-140 w-full px-5 sm:max-md:px-40 lg:px-0 ">
               <div className="flex flex-col">
                 <label htmlFor="email">Email</label>
                 <Field
@@ -153,11 +153,11 @@ export default function Loginpage() {
 
               <div className="flex flex-col gap-3 pt-6">
                 <button className="bg-white flex items-center  justify-center py-3 rounded-lg gap-2 ">
-                  <img className="w-5 h-5" src="./public/gogle.png" alt="" />
+                  <img className="w-5 h-5" src="/gogle.png" alt="" />
                   Login with Google
                 </button>
                 <button className="bg-white flex items-center justify-center py-3 rounded-lg gap-2">
-                  <img className="w-5 h-5" src="./public/fac.png" alt="" />
+                  <img className="w-5 h-5" src="/fac.png" alt="" />
                   Login with Facebook
                 </button>
               </div>

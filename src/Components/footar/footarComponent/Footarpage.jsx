@@ -4,14 +4,14 @@ export default function Footarpage() {
   const [language, setLanguage] = useState("English");
   return (
     <>
-      <div className="bg-[#3B2F4A] text-white pt-10 px-5 lg:pt-30 lg:px-15 lg:pb-40 pb-10">
-        <div className="flex flex-col md:gap-5 lg:flex-row justify-between">
-          <div className="flex flex-col md:justify-between  md:flex-row lg:flex-row lg:gap-4 gap-6">
+      <div className="bg-[#3B2F4A] text-white pt-10 px-5 lg:pt-30 lg:px-15 lg:pb-40 pb-30">
+        <div className="flex flex-col sm:max-md:gap-5 lg:flex-row justify-between">
+          <div className="flex flex-col sm:max-md:justify-between  sm:max-md:flex-row lg:flex-row lg:gap-4 gap-6">
             <NavLink to="/" className="flex gap-2">
-              <img src="./public/logo.png" alt="" />
+              <img src="/logo.png" alt="" />
               <p className="">Bookshop</p>
             </NavLink>
-            <ul className="flex  md:gap-5 lg:gap-10 text-[18px]">
+            <ul className="flex gap-6 sm:max-md:gap-5 lg:gap-10 text-[18px]">
               <li>
                 <NavLink to="/">Home</NavLink>
               </li>
@@ -26,25 +26,25 @@ export default function Footarpage() {
 
           <div className="flex  lg:flex-row gap-3 pt-4 lg:pt-0">
             <Link>
-              <img className="w-6 h-6" src="./public/facbok.png" alt="" />
+              <img className="w-6 h-6" src="/facbok.png" alt="" />
             </Link>
             <Link>
-              <img className="w-6 h-6" src="./public/inst.png" alt="" />
+              <img className="w-6 h-6" src="/inst.png" alt="" />
             </Link>
             <Link>
-              <img className="w-6 h-6" src="./public/you.png" alt="" />
+              <img className="w-6 h-6" src="/you.png" alt="" />
             </Link>
             <Link>
-              <img className="w-6 h-6" src="./public/X.png" alt="" />
+              <img className="w-6 h-6" src="/X.png" alt="" />
             </Link>
           </div>
         </div>
-        <div className="border-t-2 border-[#FFFFFF33] mt-4 pt-4 flex flex-col md:flex-row lg:flex-row justify-between">
-          <p className="text-[13px] md:text-[16px]  lg:text-[16px] pb-4 lg:pb-0">
+        <div className="border-t-2 border-[#FFFFFF33] mt-4 pt-4 flex flex-col sm:max-md:flex-row lg:flex-row justify-between">
+          <p className="text-[13px] sm:max-md:text-[16px]  lg:text-[16px] pb-4 lg:pb-0">
             &lt;Developed By&gt; EraaSoft &lt;All Copy Rights Reserved @2024
           </p>
           <div className="flex items-center justify-end gap-3">
-            <img className="w-6 h-6" src="./public/earth.png" alt="" />
+            <img className="w-6 h-6" src="/earth.png" alt="" />
             <div className="navbar-end w-27.5">
               <div className="dropdown">
                 <div

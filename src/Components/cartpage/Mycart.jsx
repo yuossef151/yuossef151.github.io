@@ -97,7 +97,7 @@ export default function Mycart() {
       <div className=" w-full lg:h-30 h-25 inset-0">
         <img
           className=" object-cover w-full h-full rotate-180   top-0 "
-          src="./public/imglogin.png"
+          src="/imglogin.png"
           alt=""
         />
         <div className="absolute w-full lg:h-30 h-25 inset-0 bg-[#00000099] flex items-center justify-center "></div>
@@ -112,7 +112,7 @@ export default function Mycart() {
         <div>
           <div className="lg:px-15 bg-[#F5F5F5]">
             <table
-              className="w-full md:table table-auto bg-[#F5F5F5] hidden  "
+              className="w-full sm:max-md:table table-auto bg-[#F5F5F5] hidden  "
               style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}
             >
               <thead className="mytable">
@@ -158,7 +158,7 @@ export default function Mycart() {
                             {el.bookDetails.author}
                           </span>
                         </p>
-                        <p className="text-gray-500 text-sm mt-1 line-clamp-3 md:hidden lg:flex hidden">
+                        <p className="text-gray-500 text-sm mt-1 line-clamp-3 sm:max-md:hidden lg:flex hidden">
                           {el.bookDetails.description}
                         </p>
                         <p className="text-xs text-gray-400 mt-10">
@@ -221,7 +221,7 @@ export default function Mycart() {
               </tbody>
             </table>
 
-            <div className="md:hidden lg:hidden space-y-6 py-5 px-5">
+            <div className="sm:max-md:hidden lg:hidden space-y-6 py-5 px-5">
               {mycart.map((el, index) => (
                 <div
                   key={el.id || index}

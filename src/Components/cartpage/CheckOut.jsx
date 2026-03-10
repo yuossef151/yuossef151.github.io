@@ -40,8 +40,8 @@ export default function CheckOut() {
 
   return (
     <>
-      <div className="flex md:flex-row lg:flex-row flex-col bg-[#3B2F4A1A] lg:mx-15 px-5 gap-15 lg:px-28 md:px-5 md:items-center pt-10 pb-10 lg:gap-38.75 md:gap-10 mt-15  mb-20">
-        <div className="  lg:w-125 md:w-95  ">
+      <div className="flex sm:max-md:flex-row lg:flex-row flex-col bg-[#3B2F4A1A] lg:mx-15 px-5 gap-15 lg:px-28 sm:max-md:px-5 sm:max-md:items-center pt-10 pb-10 lg:gap-38.75 sm:max-md:gap-10 mt-15  mb-20">
+        <div className="  lg:w-125 sm:max-md:w-95  ">
           <div className="pb-23.5">
             <p className="text-[26px] font-bold pb-4">Payment Summary</p>
             <p>
@@ -69,7 +69,7 @@ export default function CheckOut() {
             </div>
           </div>
         </div>
-        <div className="lg:w-106 md:w-95 flex flex-col justify-start">
+        <div className="lg:w-106 sm:max-md:w-95 flex flex-col justify-start">
           <div className="flex w-full justify-between pb-5">
             <p className="text-[20px] text-[#22222280] self-center ">
               Subtotal

@@ -41,30 +41,30 @@ export default function Recomend() {
     });
   };
 
-  const bookimg = ["./public/book-1.png", "./public/book-5.png"];
+  const bookimg = ["/book-1.png", "/book-5.png"];
 
   return (
     <>
-      <div className="lg:py-30 py-3 px-5 md:py-15 lg:px-15 bg-[#F5F5F5]">
-        <p className="pb-10 lg:text-[26px] text-[20px] font-bold">
+      <div className="lg:py-30 py-3 px-8 sm:max-md:py-15 lg:px-15 bg-[#F5F5F5]">
+        <p className="pb-10 lg:text-[26px] pt-5 lg:pt-0 sm:max-md:pt-0 text-[20px] font-bold">
           Recomended For You
         </p>
         <div className="flex flex-col lg:flex-row gap-6 w-full ">
           {bookData?.map((el, index) => (
             <div
               key={el.id || index}
-              className="flex flex-col md:flex-row lg:flex-row  lg:p-10 p-4 bg-white gap-9.75 lg:w-1/2 "
+              className="flex flex-col sm:max-md:flex-row lg:flex-row items-center lg:items-start sm:max-md:items-start  lg:p-10 px-2 py-4 bg-white gap-9.75 lg:w-1/2 "
             >
-              <img className=" h-80" src={bookimg[index]} alt="" />
+              <img className=" lg:h-80 sm:max-md:h-60 h-70 lg:w-80 sm:max-md:w-80 w-50" src={bookimg[index]} alt="" />
 
               <div>
                 <h3 className="text-[18px] font-bold">{el.bookName}</h3>
                 <p className="pb-2 pt-1 text-[#22222280]">
-                  Author:{" "}
+                  Author:
                   <span className="text-black font-medium">{el.author}</span>
                 </p>
-                <p className="text-[#22222280]">{el.description}</p>
-                <div className="flex  justify-between items-center pt-6 gap-3 lg:gap-0">
+                <p className="text-[#22222280] hidden sm:block ">{el.description}</p>
+                <div className="flex   justify-between lg:items-center pt-6 gap-0 lg:gap-0">
                   <div>
                     <Star rate={el.rate} countReview={el.countReview} />
                     <p>{el.rate}</p>
@@ -74,7 +74,7 @@ export default function Recomend() {
                       Discount: {el.discount}%
                     </p>
                     <div className="flex gap-1 items-end ">
-                      <p className="text-[18px] font-medium">
+                      <p className="lg:text-[18px] sm:max-md:text-[18px] text-[16px] font-medium">
                         ${el.final_price}
                       </p>
                       <span className="text-red-500">

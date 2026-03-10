@@ -41,16 +41,16 @@ export default function Singlbook() {
   return (
     <>
       <div className=" px-5 py-5 lg:py-10 lg:px-10">
-        <div className="flex flex-col md:flex-row lg:flex-row lg:w-full md:w-full w-full lg:ps-0   md:ps-6  md:pe-6 mt-10 gap-9.75  ">
+        <div className="flex flex-col sm:max-md:flex-row lg:flex-row lg:w-full sm:max-md:w-full w-full lg:ps-0   sm:max-md:ps-6  sm:max-md:pe-6 mt-10 gap-9.75  ">
           <img
-            className=" lg:h-full lg:w-70 h-35 w-30 md:h-60 md:w-40"
+            className=" lg:h-full lg:w-70 h-35 w-30 sm:max-md:h-60 sm:max-md:w-40"
             src={`/book-4.png`}
             alt=""
           />
 
-          <div className="flex md:w-full flex-col grow justify-between">
+          <div className="flex sm:max-md:w-full flex-col grow justify-between">
             <div className="flex gap-9.5">
-              <div className="md:w-full lg:w-[80%]">
+              <div className="sm:max-md:w-full lg:w-[80%]">
                 <h3 className="text-[18px] font-bold">{book?.bookName}</h3>
                 <p className="text-[#22222280]">{book?.description}</p>
               </div>
@@ -91,7 +91,7 @@ export default function Singlbook() {
                   <p>{book?.rate}</p>
                 </div>
               </div>
-              <div className="flex  gap-2 pt-4 lg:flex-row md:flex-col flex-col lg:justify-between md:justify-between lg:items-center">
+              <div className="flex  gap-2 pt-4 lg:flex-row sm:max-md:flex-col flex-col lg:justify-between sm:max-md:justify-between lg:items-center">
                 <div>
                   <div className="flex gap-1 items-end ">
                     <p className="text-[18px] font-medium">
@@ -199,7 +199,7 @@ export default function Singlbook() {
         </div>
       </div>
 
-      <div className="flex  gap-3 md:gap-8 lg:gap-15 lg:mx-12.5 mx-4  border-b-2 border-gray-300">
+      <div className="flex  gap-3 sm:max-md:gap-8 lg:gap-15 lg:mx-12.5 mx-4  border-b-2 border-gray-300">
         <NavLink
           onClick={() => {
             setactiveTab(1);

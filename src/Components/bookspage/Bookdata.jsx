@@ -37,14 +37,14 @@ export default function Bookdata({
   };
   return (
     <>
-      <div className="lg:pt-15 md:pt-5 pt-5 md:w-full lg:w-270   pb-24 lg:border-e-2  border-none border-[#22222233]">
-        <div className="lg:w-189 md:w-175 ms-6 w-85 border-[#22222233] border  rounded-[50px] relative overflow-hidden">
+      <div className="lg:pt-15 sm:max-md:pt-5 pt-5 sm:max-md:w-full lg:w-270   pb-24 lg:border-e-2  border-none border-[#22222233]">
+        <div className="lg:w-189 sm:max-md:w-[calc(100%-40px)] ms-6 w-85 border-[#22222233] border  rounded-[50px] relative overflow-hidden">
           <input
-            className="bg-white lg:py-4 md:py-4 py-3 lg:px-6 px-3 lg:w-179 md:w-full w-70 text-[13px] md:text-[15px] lg:text-[18px] rounded-l-2xl h-full   focus:border-none focus:outline-none "
+            className="bg-white lg:py-4 sm:max-md:py-4 py-3 lg:px-6 px-3 lg:w-179 sm:max-md:w-full w-70 text-[13px] sm:max-md:text-[15px] lg:text-[18px] rounded-l-2xl h-full   focus:border-none focus:outline-none "
             type="search"
             placeholder="Search"
           />
-          <div className="lg:w-26.25 w-20 bg-white  absolute right-0 top-0 h-full flex items-center justify-between md:pe-5 lg:pe-6 pe-4 ">
+          <div className="lg:w-26.25 w-20 bg-white  absolute right-0 top-0 h-full flex items-center justify-between sm:max-md:pe-5 lg:pe-6 pe-4 ">
             <div className="border-e-2   border-[#22222233]  h-full px-3 flex justify-center items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +63,7 @@ export default function Bookdata({
                 </g>
               </svg>
             </div>
-            <div className="h-full lg:px-3 md:px-1 flex justify-center items-center">
+            <div className="h-full lg:px-3 sm:max-md:px-1 flex justify-center items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="text-[#D9176C] lg:w-6 w-5 lg:h-6 h-5"
@@ -88,52 +88,54 @@ export default function Bookdata({
                 <div
                   onClick={() => navigate(`/single/${el.bookId}`)}
                   key={el.id || index}
-                  className="flex cursor-pointer flex-col md:flex-row lg:flex-row lg:w-full md:w-full w-full pe-3 ps-3 lg:ps-6 md:ps-6 lg:pe-41 md:pe-6 mt-10 gap-9.75  "
+                  className="flex cursor-pointer flex-col items-center  sm:max-md:flex-row lg:flex-row lg:w-full sm:max-md:w-full w-full px-5 lg:ps-6 md:ps-6 lg:pe-41 md:pe-6 mt-10 gap-9.75  "
                 >
                   <img
-                    className=" lg:h-63 lg:w-75 h-35 w-30 md:h-60 md:w-40"
-                    src={`book-4.png`}
+                    className=" lg:h-full lg:w-75 h-55 w-50 sm:max-md:h-60 sm:max-md:w-40"
+                    src={`/book-4.png`}
                     alt=""
                   />
-
-                  <div className="flex md:w-full flex-col grow justify-between">
-                    <div className="md:w-full">
-                      <h3 className="text-[18px] font-bold">{el.bookName}</h3>
-                      <p className="text-[#22222280]">{el.description}</p>
-                    </div>
-
+                  <div></div>
+                  <div className="flex sm:max-md:w-full w-full flex-col grow justify-between">
                     <div>
-                      <div className="flex justify-between md:w-full pt-6 gap-3 lg:gap-0">
-                        <div>
-                          <div className="flex  justify-between items-center">
-                            <Star rate={el.rate} countReview={el.countReview} />
-                            <p>{el.rate}</p>
-                          </div>
+                      <div className="sm:max-md:w-full">
+                        <h3 className="text-[18px] font-bold">{el.bookName}</h3>
+                        <p className="text-[#22222280] hidden sm:block">
+                          {el.description}
+                        </p>
+                      </div>
+                      <div className="flex justify-start gap-30 py-5">
+                        <div className="">
+                          <p className="pb-2 pt-1 text-[#22222280]">Author</p>
+                          <p className="text-black font-medium">{el.author}</p>
                         </div>
                         <div>
-                          <div className="flex gap-1 items-end ">
-                            <p className="text-[18px] font-medium">
-                              ${el.price}
-                            </p>
-                          </div>
+                          <p className="pb-2 pt-1 text-[#22222280]">Year</p>
+                          <p className="text-black font-medium">
+                            {el.publicationYear}
+                          </p>
                         </div>
                       </div>
-                      <div className="flex gap-2 pt-4 lg;flex-row md:flex-row flex-col lg:justify-between md:justify-between">
-                        <div className="flex justify-between gap-10">
-                          <div className="">
-                            <p className="pb-2 pt-1 text-[#22222280]">Author</p>
-                            <p className="text-black font-medium">
-                              {el.author}
-                            </p>
+                      <div className="flex gap-2 pt-4 lg;flex-row sm:max-md:flex-col flex-col lg:justify-between sm:max-md:justify-between lg:items-center">
+                        <div className="flex  w-full sm:max-md:w-full  gap-3 justify-between lg:gorw">
+                          <div>
+                            <div className="flex  justify-between items-center">
+                              <Star
+                                rate={el.rate}
+                                countReview={el.countReview}
+                              />
+                              <p>{el.rate}</p>
+                            </div>
                           </div>
                           <div>
-                            <p className="pb-2 pt-1 text-[#22222280]">Year</p>
-                            <p className="text-black font-medium">
-                              {el.publicationYear}
-                            </p>
+                            <div className="flex gap-1  items-end ">
+                              <p className="text-[18px] font-medium">
+                                ${el.price}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex gap-4 ">
+                        <div className="flex gap-4  lg:w-full">
                           <NavLink
                             onClick={(e) => {
                               e.preventDefault();

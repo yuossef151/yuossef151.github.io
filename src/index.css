@@ -12,54 +12,58 @@
 .bar{
     display: none;
 }
-@media (max-width: 393px) {
-    .bar{
-        display: flex;
-    }
-    .istrue{
-        display: flex;
-    }
-    .isfalse{
-        display: none;
-    }
-    .mynav{
-        display: none;
-    }
-    .mynav1{
+@media (max-width: 640px) {
+
+  .bar{
+    display: flex;
+  }
+
+  .istrue{
+    display: flex;
+  }
+
+  .isfalse{
+    display: none;
+  }
+
+  .mynav{
+    display: none;
+  }
+
+  .mynav1{
     display: flex;
     position: absolute;
     background-color: white;
     left: 0;
     top: 80px;
-    width: 100%; 
+    width: 100%;
     z-index: 999;
-    /* padding-bottom:10px ; */
     padding: 10px;
+    color: black;
+  }
 
-        color: black;
-    }
-    
-    .user{
-        display: none;
-    }
+  .user{
+    display: none;
+  }
 
-}
+  .close{
+    display: none;
+  }
 
-@media (max-width: 393px) {
-    .close{
-        display: none;
-    }
-    .opn{
-        position: absolute;
-        left: 20px;
-        width: 90%;
-        z-index: 999;
-    }
-    .mytable{
-        overflow: hidden;
-    }
-    .mytr{
-        display: flex;
-        flex-direction: column;
-    }
+  .opn{
+    position: absolute;
+    left: 20px;
+    width: 90%;
+    z-index: 999;
+  }
+
+  .mytable{
+    overflow: hidden;
+  }
+
+  .mytr{
+    display: flex;
+    flex-direction: column;
+  }
+
 }

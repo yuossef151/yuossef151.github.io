@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import  { useContext, useState } from "react";
+import {  NavLink } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
-import { getcartAPI } from "../../../API/Auth";
 import { CartContext } from "../../cartpage/CartContext";
 import { WishlistContext } from "../../Wishlistpage/WishlistContext";
 
@@ -127,7 +126,7 @@ export default function Log() {
                   </div>
                   <ul
                     tabIndex="-1"
-                    className={`menu  dropdown-content mt-5  rounded-box z-1 lg:w-full w-40 md:w-full -left-20 lg:left-0 md:left-0 bg-white text-black flex flex-col gap-4  ${prof ? "istrue" : "isfalse"}`}
+                    className={`menu  dropdown-content mt-5  rounded-box z-1 lg:w-full w-40 sm:max-md:w-full -left-20 lg:left-0 sm:max-md:left-0 bg-white text-black flex flex-col gap-4  ${prof ? "istrue" : "isfalse"}`}
                   >
                     <li className="">
                       <div className="flex py-3">
@@ -146,7 +145,7 @@ export default function Log() {
                             d="M19.618 21.25c0-3.602-4.016-6.53-7.618-6.53s-7.618 2.928-7.618 6.53M12 11.456a4.353 4.353 0 1 0 0-8.706a4.353 4.353 0 0 0 0 8.706"
                           ></path>
                         </svg>
-                        <Link to={"Profile"}>Profile</Link>
+                        <NavLink to="Profile">Profile</NavLink>
                       </div>
                     </li>
                     <li className="">
@@ -162,57 +161,10 @@ export default function Log() {
                             d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-2a8 8 0 1 0 0-16a8 8 0 0 0 0 16m1-8h4v2h-6V7h2z"
                           ></path>
                         </svg>
-                        <Link to={"/"}>Order History</Link>
+                        <NavLink to="/">Order History</NavLink>
                       </div>
                     </li>
-                    <li className="">
-                      <div className="flex py-3">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={20}
-                          height={20}
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7m0 2a5 5 0 0 0-5 5c0 1 0 3 5 9.71C17 12 17 10 17 9a5 5 0 0 0-5-5"
-                          ></path>
-                        </svg>
-                        <Link to={""}>Address</Link>
-                      </div>
-                    </li>
-                    <li className="">
-                      <div className="flex py-3">
-                        <svg
-                          width={20}
-                          height={20}
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clipPath="url(#clip0_78_1160)">
-                            <path
-                              d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433286 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C19.9971 7.34872 18.9426 4.80684 17.0679 2.9321C15.1932 1.05736 12.6513 0.00286757 10 0ZM10 18.3333C8.35183 18.3333 6.74066 17.8446 5.37025 16.9289C3.99984 16.0132 2.93174 14.7117 2.30101 13.189C1.67028 11.6663 1.50525 9.99076 1.82679 8.37425C2.14834 6.75774 2.94201 5.27288 4.10745 4.10744C5.27289 2.94201 6.75774 2.14833 8.37425 1.82679C9.99076 1.50525 11.6663 1.67027 13.189 2.301C14.7118 2.93173 16.0132 3.99984 16.9289 5.37025C17.8446 6.74066 18.3333 8.35182 18.3333 10C18.3309 12.2094 17.4522 14.3276 15.8899 15.8899C14.3276 17.4522 12.2094 18.3309 10 18.3333Z"
-                              fill="#222222"
-                            />
-                            <path
-                              d="M9.99992 8.33301H9.16659C8.94557 8.33301 8.73361 8.42081 8.57733 8.57709C8.42105 8.73337 8.33325 8.94533 8.33325 9.16634C8.33325 9.38735 8.42105 9.59932 8.57733 9.7556C8.73361 9.91188 8.94557 9.99967 9.16659 9.99967H9.99992V14.9997C9.99992 15.2207 10.0877 15.4327 10.244 15.5889C10.4003 15.7452 10.6122 15.833 10.8333 15.833C11.0543 15.833 11.2662 15.7452 11.4225 15.5889C11.5788 15.4327 11.6666 15.2207 11.6666 14.9997V9.99967C11.6666 9.55765 11.491 9.13372 11.1784 8.82116C10.8659 8.5086 10.4419 8.33301 9.99992 8.33301Z"
-                              fill="#222222"
-                            />
-                            <path
-                              d="M10 6.66699C10.6904 6.66699 11.25 6.10735 11.25 5.41699C11.25 4.72664 10.6904 4.16699 10 4.16699C9.30964 4.16699 8.75 4.72664 8.75 5.41699C8.75 6.10735 9.30964 6.66699 10 6.66699Z"
-                              fill="#222222"
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_78_1160">
-                              <rect width="20" height="20" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
-                        <Link to={""}>Help</Link>
-                      </div>
-                    </li>
+
                     <li className="">
                       <div className="flex py-3">
                         <svg
@@ -226,13 +178,13 @@ export default function Log() {
                             d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z"
                           ></path>
                         </svg>
-                        <Link
+                        <NavLink 
                           onClick={() => {
                             logout();
                           }}
                         >
                           Log Out
-                        </Link>
+                        </NavLink>
                       </div>
                     </li>
                   </ul>

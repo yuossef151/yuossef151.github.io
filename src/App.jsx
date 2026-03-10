@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
+    
     <AuthProvider>
       <CartProvider>
         <WishlistProvider>

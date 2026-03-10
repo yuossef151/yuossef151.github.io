@@ -54,7 +54,7 @@ export default function Booklest() {
 
   return (
     <>
-      <div className="flex md:flex md:flex-col flex-col lg:flex-row bg-[#F5F5F5] ">
+      <div className="flex sm:max-md:flex sm:max-md:flex-col flex-col lg:flex-row bg-[#F5F5F5] ">
         <Categories
           category={categories}
           handleCategoryChange={handleCategoryChange}

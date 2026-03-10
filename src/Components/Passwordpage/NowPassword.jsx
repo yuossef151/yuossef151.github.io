@@ -46,7 +46,7 @@ export default function NowPassword({ next }) {
           }}
           validationSchema={registerschema}
         >
-          <Form className="lg:w-140 w-full px-5 md:px-40 lg:px-0">
+          <Form className="lg:w-140 w-full px-5 sm:max-md:px-40 lg:px-0">
             <div className="flex gap-6 my-6"></div>
 
             <div className="flex flex-col my-6">

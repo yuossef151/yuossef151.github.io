@@ -59,7 +59,7 @@ export default function Wishlistdata() {
       <div className=" w-full lg:h-30 h-25 inset-0">
         <img
           className=" object-cover w-full h-full rotate-180   top-0 "
-          src="./public/imglogin.png"
+          src="/imglogin.png"
           alt=""
         />
         <div className="absolute w-full lg:h-30 h-25 inset-0 bg-[#00000099] flex items-center justify-center "></div>
@@ -72,7 +72,7 @@ export default function Wishlistdata() {
         <div className="pb-20">
           <div className="lg:px-15 bg-[#F5F5F5]">
             <table
-              className="hidden md:table w-full table-auto bg-[#F5F5F5] "
+              className="hidden sm:max-md:table w-full table-auto bg-[#F5F5F5] "
               style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}
             >
               <thead>
@@ -197,7 +197,7 @@ export default function Wishlistdata() {
                 ))}
               </tbody>
             </table>
-            <div className="md:hidden space-y-6 px-5 py-5">
+            <div className="sm:max-md:hidden space-y-6 px-5 py-5">
               {mycart.map((el, index) => (
                 <div
                   key={el.id || index}

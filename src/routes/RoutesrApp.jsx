@@ -36,7 +36,11 @@ const router = createBrowserRouter(
         },
         {
           path: "Profile",
-          element: <Profile />,
+          element: (
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "Password",
@@ -77,7 +81,9 @@ const router = createBrowserRouter(
       ],
     },
   ],
-
+  {
+    basename: "/",
+  },
 );
 
 export default router;

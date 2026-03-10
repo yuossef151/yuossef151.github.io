@@ -39,7 +39,7 @@ export default function Email({ next }) {
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
-            <Form className="lg:w-140 w-full px-5 md:px-40 lg:px-0">
+            <Form className="lg:w-140 w-full px-5 sm:max-md:px-40 lg:px-0">
               <div className="flex flex-col">
                 <label htmlFor="email">Email</label>
                 <Field

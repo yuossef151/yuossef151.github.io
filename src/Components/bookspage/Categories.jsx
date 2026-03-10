@@ -8,7 +8,7 @@ export default function Categories({
   const [opn, setopn] = useState(false);
   return (
     <>
-      <div className="lg:w-100 pt-10  h-full lg:pt-15 md:pt-5 lg:pb-24 md:pb-5 ps-10 pe-5">
+      <div className="lg:w-100 pt-10  h-full lg:pt-15 sm:max-md:pt-5 lg:pb-24 sm:max-md:pb-5 ps-10 pe-5">
         <div className="flex gap-2">
           <button
             onClick={() => {
@@ -23,8 +23,8 @@ export default function Categories({
               viewBox="0 0 24 24"
               className={
                 opn
-                  ? "text-black lg:text-black md:text-black"
-                  : " text-[#D9176C] lg:text-black md:text-black"
+                  ? "text-black lg:text-black sm:max-md:text-black"
+                  : " text-[#D9176C] lg:text-black sm:max-md:text-black"
               }
             >
               <path
@@ -42,16 +42,16 @@ export default function Categories({
         <div
           className={
             opn
-              ? "  bg-white lg:w-full p-5 mt-5 md:w-full opn"
-              : "  bg-white w-full lg:w-full p-5 mt-5 md:w-full close"
+              ? "  bg-white lg:w-full p-5 mt-5 sm:max-md:w-full opn"
+              : "  bg-white w-full lg:w-full p-5 mt-5 sm:max-md:w-full close"
           }
         >
           <p>Categories</p>
-<div className="flex flex-col md:flex-row md:flex-wrap  gap-x-4 gap-y-2 py-5">
+<div className="flex flex-col sm:max-md:flex-row sm:max-md:flex-wrap  gap-x-4 gap-y-2 py-5">
   {category.map((el, index) => (
     <div
       key={index}
-      className="flex items-center gap-5 w-full md:w-75 lg:w-full"
+      className="flex items-center gap-5 w-full sm:max-md:w-75 lg:w-full"
     >
       <input
         id={el.categoryName}
