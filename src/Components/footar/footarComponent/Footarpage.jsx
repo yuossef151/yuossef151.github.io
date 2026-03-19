@@ -5,7 +5,7 @@ export default function Footarpage() {
   const [langOpen, setLangOpen] = useState(false);
   return (
     <>
-      <div className="bg-[#3B2F4A] text-white pt-10 px-5 lg:pt-30 lg:px-15 lg:pb-40 pb-30">
+      <div className="bg-[#3B2F4A] text-white pt-10 px-5 lg:pt-30 lg:px-15 lg:pb-40 pb-50">
         <div className="flex flex-col sm:max-md:gap-5 lg:flex-row justify-between">
           <div className="flex flex-col sm:max-md:justify-between  sm:max-md:flex-row lg:flex-row lg:gap-4 gap-6">
             <NavLink to="/" className="flex gap-2">
@@ -76,7 +76,7 @@ export default function Footarpage() {
 
                 <ul
                   tabIndex="-1"
-                  className={`menu menu-sm dropdown-content absolute rounded-box z-10 mt-2 w-28 bg-black px-2 py-3 rounded-lg  ${langOpen ? "istrue" : "isfalse"}`}
+                  className={`menu menu-sm dropdown-content absolute rounded-box z-10 mt-2  w-28 bg-black px-2 py-3 rounded-lg flex flex-col  ${langOpen ? "istrue" : "isfalse"}`}
                 >
                   <li className="">
                     <NavLink onClick={() => setLanguage("Français")}>Français</NavLink>
