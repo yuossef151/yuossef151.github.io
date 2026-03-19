@@ -99,7 +99,7 @@ export default function Bookdata({
                   <div className="flex sm:max-md:w-full w-full flex-col grow justify-between">
                     <div>
                       <div className="sm:max-md:w-full">
-                        <h3 className="text-[16px] sm:max-md:text-[17px] lg:text-[18px] font-bold text-black leading-snug break-words w-full">
+                        <h3 className="text-[16px] sm:max-md:text-[17px] lg:text-[18px] font-bold text-black leading-snug wrap-break-word w-full">
                           {el.bookName}
                         </h3>
                         <p className="text-[#22222280] hidden sm:block">

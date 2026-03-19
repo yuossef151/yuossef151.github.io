@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, createHashRouter } from "react-router-dom";
 import Mainlayout from "../layouts/Mainlayout";
 import Home from "../page/home/Home";
 import Books from "../page/books/Books";
@@ -12,7 +12,7 @@ import Cart from "../page/cart/Cart";
 import Wishlist from "../page/wishlist/Wishlist";
 import Singl from "../page/books/Singl";
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   [
     {
       path: "/",
