@@ -18,72 +18,19 @@ const router = createHashRouter(
       path: "/",
       element: <Mainlayout />,
       children: [
-        {
-          index: true,
-          element: <Home />,
-        },
-        {
-          path: "Books",
-          element: <Books />,
-        },
-        {
-          path: "single/:id",
-          element: <Singl />,
-        },
-        {
-          path: "About",
-          element: <About />,
-        },
-        {
-          path: "Profile",
-          element: (
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "Password",
-          element: <Password />,
-        },
-        {
-          path: "cart",
-          element: (
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "Wishlist",
-          element: (
-            <ProtectedRoute>
-              <Wishlist />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "login",
-          element: (
-            <GuestRoute>
-              <Login />
-            </GuestRoute>
-          ),
-        },
-        {
-          path: "Regester",
-          element: (
-            <GuestRoute>
-              <Regester />
-            </GuestRoute>
-          ),
-        },
+        { index: true, element: <Home /> },
+        { path: "Books", element: <Books /> },
+        { path: "single/:id", element: <Singl /> },
+        { path: "About", element: <About /> },
+        { path: "Profile", element: <ProtectedRoute><Profile /></ProtectedRoute> },
+        { path: "Password", element: <Password /> },
+        { path: "cart", element: <ProtectedRoute><Cart /></ProtectedRoute> },
+        { path: "Wishlist", element: <ProtectedRoute><Wishlist /></ProtectedRoute> },
+        { path: "login", element: <GuestRoute><Login /></GuestRoute> },
+        { path: "Regester", element: <GuestRoute><Regester /></GuestRoute> },
       ],
     },
-  ],
-  {
-    basename: "/",
-  },
+  ]
 );
 
 export default router;
