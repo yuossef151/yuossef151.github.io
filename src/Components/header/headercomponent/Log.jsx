@@ -7,6 +7,7 @@ import { WishlistContext } from "../../Wishlistpage/WishlistContext";
 export default function Log() {
   const { user, logout } = useContext(AuthContext);
   const [prof, setprof] = useState(false);
+
   const { Cart } = useContext(CartContext);
   console.log(Cart);
 
@@ -82,7 +83,7 @@ export default function Log() {
                 }}
                 className="flex gap-4 cursor-pointer"
               >
-                <div className="dropdown">
+                <div className="dropdown relative ">
                   <div
                     tabIndex={0}
                     role="button"
@@ -126,10 +127,10 @@ export default function Log() {
                   </div>
                   <ul
                     tabIndex="-1"
-                    className={`menu  dropdown-content mt-5  rounded-box z-1 lg:w-full w-40 sm:max-md:w-full -left-20 lg:left-0 sm:max-md:left-0 bg-white text-black flex flex-col gap-4  ${prof ? "istrue" : "isfalse"}`}
+                    className={`menu dropdown-content absolute mt-5 rounded-box z-10 lg:w-full w-40 sm:max-md:w-full -left-20 lg:left-0 sm:max-md:left-0 bg-white text-black flex flex-col gap-4 px-2 rounded-lg ${prof ? "istrue" : "isfalse"}`}
                   >
                     <li className="">
-                      <div className="flex py-3">
+                      <div className="flex py-3 items-center gap-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width={20}
@@ -149,7 +150,7 @@ export default function Log() {
                       </div>
                     </li>
                     <li className="">
-                      <div className="flex py-3">
+                      <div className="flex py-3 items-center gap-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width={20}
@@ -166,7 +167,7 @@ export default function Log() {
                     </li>
 
                     <li className="">
-                      <div className="flex py-3">
+                      <div className="flex py-3 items-center gap-2 ">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width={20}

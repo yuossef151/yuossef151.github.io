@@ -236,7 +236,7 @@ export default function Mycart() {
 
                     <div className="flex flex-col justify-between flex-1">
                       <div>
-                        <h3 className="font-semibold text-base">
+                        <h3 className="font-semibold text-base sm:max-md:line-clamp-2 line-clamp-1">
                           {el.bookDetails.bookName}
                         </h3>
 
@@ -284,13 +284,13 @@ export default function Mycart() {
                         />
                       ) : (
                         <div>
-                          <FaTrashAlt size={18}  className="text-pink-600"/>
+                          <FaTrashAlt size={18} className="text-pink-600" />
                         </div>
                       )}
                     </NavLink>
                   </div>
 
-                  <div className="border-t mt-4 pt-3 flex justify-between font-semibold">
+                  <div className="border-t mt-4 pt-3 flex flex-wrap justify-between font-semibold">
                     <span>Total</span>
                     <span>${(el.bookDetails.price * el.qty).toFixed(2)}</span>
                   </div>

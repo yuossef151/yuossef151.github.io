@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 export default function Footarpage() {
   const [language, setLanguage] = useState("English");
+  const [langOpen, setLangOpen] = useState(false);
   return (
     <>
       <div className="bg-[#3B2F4A] text-white pt-10 px-5 lg:pt-30 lg:px-15 lg:pb-40 pb-30">
@@ -46,11 +47,14 @@ export default function Footarpage() {
           <div className="flex items-center justify-end gap-3">
             <img className="w-6 h-6" src="/earth.png" alt="" />
             <div className="navbar-end w-27.5">
-              <div className="dropdown">
+              <div
+                onClick={() => setLangOpen((prev) => !prev)}
+                className="dropdown relative"
+              >
                 <div
                   tabIndex={0}
                   role="button"
-                  className="btn btn-ghost border border-[#FFFFFF80] w-27.5"
+                  className="btn btn-ghost border border-[#FFFFFF80] w-27.5 flex py-1 px-2 rounded-lg cursor-pointer justify-between"
                 >
                   <p>{language}</p>
                   <svg
@@ -69,18 +73,19 @@ export default function Footarpage() {
                     ></path>
                   </svg>
                 </div>
+
                 <ul
                   tabIndex="-1"
-                  className="menu menu-sm dropdown-content  rounded-box z-1 w-28 bg-black"
+                  className={`menu menu-sm dropdown-content absolute rounded-box z-10 mt-2 w-28 bg-black px-2 py-3 rounded-lg  ${langOpen ? "istrue" : "isfalse"}`}
                 >
-                  <li>
-                    <a onClick={() => setLanguage("Français")}>Français</a>
+                  <li className="">
+                    <NavLink onClick={() => setLanguage("Français")}>Français</NavLink>
                   </li>
-                  <li>
-                    <a onClick={() => setLanguage("English")}>English</a>
+                  <li className="pt-3">
+                    <NavLink onClick={() => setLanguage("English")}>English</NavLink>
                   </li>
-                  <li>
-                    <a onClick={() => setLanguage("عربي")}>عربي</a>
+                  <li className="pt-3">
+                    <NavLink onClick={() => setLanguage("عربي")}>عربي</NavLink>
                   </li>
                 </ul>
               </div>
