@@ -38,7 +38,7 @@ export default function Bookdata({
   return (
     <>
       <div className="lg:pt-15 sm:max-md:pt-5 pt-5 sm:max-md:w-full lg:w-270   pb-24 lg:border-e-2  border-none border-[#22222233]">
-        <div className="lg:w-189 sm:max-md:w-[calc(100%-40px)] ms-6 w-85 border-[#22222233] border  rounded-[50px] relative overflow-hidden">
+        <div className="lg:w-189 sm:max-md:w-[calc(100%-20px)] ms-6 w-85 border-[#22222233] border  rounded-[50px] relative overflow-hidden">
           <input
             className="bg-white lg:py-4 sm:max-md:py-4 py-3 lg:px-6 px-3 lg:w-179 sm:max-md:w-full w-70 text-[13px] sm:max-md:text-[15px] lg:text-[18px] rounded-l-2xl h-full   focus:border-none focus:outline-none "
             type="search"
@@ -99,7 +99,9 @@ export default function Bookdata({
                   <div className="flex sm:max-md:w-full w-full flex-col grow justify-between">
                     <div>
                       <div className="sm:max-md:w-full">
-                        <h3 className="text-[18px] font-bold">{el.bookName}</h3>
+                        <h3 className="text-[16px] sm:max-md:text-[17px] lg:text-[18px] font-bold text-black leading-snug break-words w-full">
+                          {el.bookName}
+                        </h3>
                         <p className="text-[#22222280] hidden sm:block">
                           {el.description}
                         </p>
@@ -152,7 +154,7 @@ export default function Bookdata({
                                     },
                                   });
                             }}
-                            className="flex grow mybtn bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white"
+                            className="flex grow bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white"
                           >
                             Add To Cart
                             <svg
@@ -203,25 +205,11 @@ export default function Bookdata({
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-
-                              if (!token) {
-                                requireLoginAlert();
-                              } else {
-                                if (isInWishlist(el.bookId)) {
-                                  toast.error(
-                                    "This item is already in your wishlist",
-                                    {
-                                      position: "bottom-right",
-                                      duration: 4000,
-                                      iconTheme: {
-                                        primary: "#D9176C",
-                                        secondary: "#fff",
-                                      },
-                                    },
-                                  );
-                                } else {
-                                  addToWishlist(el);
-                                  toast.success("Added to Wishlist", {
+                              console.log(el.bookId);
+                              !token ? requireLoginAlert() : addToWishlist(el);
+                              !token
+                                ? requireLoginAlert()
+                                : toast.success("Added to Wishlist", {
                                     position: "bottom-right",
                                     duration: 4000,
                                     iconTheme: {
@@ -229,10 +217,8 @@ export default function Bookdata({
                                       secondary: "#fff",
                                     },
                                   });
-                                }
-                              }
                             }}
-                            className="flex mybtn2  py-3.25 px-3.5 justify-center items-center rounded-lg border border-[#D9176C] text-[#D9176C] "
+                            className="flex  py-3.25 px-3.5 justify-center items-center rounded-lg border border-[#D9176C] text-[#D9176C] "
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
