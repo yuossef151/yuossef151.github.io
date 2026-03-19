@@ -32,15 +32,15 @@ export default function Message() {
   };
   const about = [
     {
-      img: "./public/call.png",
+      img: "call.png",
       title: "01123456789",
     },
     {
-      img: "./public/chat.png",
+      img: "chat.png",
       title: "Example@gmail.com",
     },
     {
-      img: "./public/marker.png",
+      img: "marker.png",
       title:
         "adipiscing elit. Mauris et ultricies est. Aliquam in justo varius,",
     },
