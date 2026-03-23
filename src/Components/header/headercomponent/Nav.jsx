@@ -8,6 +8,10 @@ export default function Nav({ opn, setopn }) {
       >
         <li>
           <NavLink
+            onClick={(e) => {
+              e.stopPropagation();
+              setopn((prev) => !prev);
+            }}
             className={({ isActive }) => ` ${isActive ? "text-[#EAA451]" : ""}`}
             to="/"
           >
@@ -16,6 +20,10 @@ export default function Nav({ opn, setopn }) {
         </li>
         <li>
           <NavLink
+            onClick={(e) => {
+              e.stopPropagation();
+              setopn((prev) => !prev);
+            }}
             className={({ isActive }) => ` ${isActive ? "text-[#EAA451]" : ""}`}
             to="Books"
           >
@@ -24,6 +32,10 @@ export default function Nav({ opn, setopn }) {
         </li>
         <li>
           <NavLink
+            onClick={(e) => {
+              e.stopPropagation();
+              setopn((prev) => !prev);
+            }}
             className={({ isActive }) => ` ${isActive ? "text-[#EAA451]" : ""}`}
             to="About"
           >

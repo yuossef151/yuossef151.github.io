@@ -9,50 +9,37 @@ import toast from "react-hot-toast";
 export default function Wishlistdata() {
   const { wishlist, removeFromWishlist } = useContext(WishlistContext);
   const mycart = wishlist;
-  const { addToCart } = useContext(CartContext);
-  const [loadingId, setLoadingId] = useState(null);
+  const { addToCart, handleAddToCart, loadingId, setLoadingId } =
+    useContext(CartContext);
+  const [loadingId2, setLoadingId2] = useState([]);
 
-  const removeItem = (bookId) => {
-    removeFromWishlist(bookId);
-    setLoadingId(bookId.bookId);
-    const removePromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        try {
-          removeFromWishlist(bookId);
-          resolve();
-        } catch (err) {
-          reject();
-        } finally {
-          setLoadingId(null);
-        }
-      }, 1000);
-    });
+  const removeItem = async (item) => {
+    const id = item.bookId;
 
-    toast.promise(
-      removePromise,
-      {
-        pending: "Removing item...",
-        success: "Item removed! ",
-        error: "Failed to remove item ",
-      },
-      {
-        position: "bottom-right",
-        autoClose: 2000,
-        theme: "colored",
-        iconTheme: {
-          primary: "#D9176C",
-          secondary: "#fff",
-        },
-      },
-    );
+    if (loadingId2.includes(id)) return;
+
+    setLoadingId2((prev) => [...prev, id]);
+
+    await removeFromWishlist(item);
   };
 
   useEffect(() => {
-    if (loadingId && !mycart.some((el) => el.bookId === loadingId)) {
-      setLoadingId(null);
-    }
+    loadingId2.forEach((id) => {
+      const stillExists = mycart.some((el) => el.bookId === id);
+
+      if (!stillExists) {
+        toast.success("Item removed!", {
+          position: "bottom-right",
+          duration: 4000,
+          iconTheme: { primary: "#D9176C", secondary: "#fff" },
+        });
+      }
+    });
+
+    setLoadingId2((prev) =>
+      prev.filter((id) => mycart.some((el) => el.bookId === id)),
+    );
   }, [mycart]);
-  console.log(mycart.length);
 
   return (
     <>
@@ -116,70 +103,75 @@ export default function Wishlistdata() {
                         </p>
                         <div className="pt-5">
                           <NavLink
-                            onClick={() => {
-                              addToCart(el);
-                              toast.success("Added to shopping cart", {
-                                position: "bottom-right",
-                                duration: 4000,
-                                iconTheme: {
-                                  primary: "#D9176C",
-                                  secondary: "#fff",
-                                },
-                              });
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              if (loadingId.includes(el.bookId)) return;
+
+                              handleAddToCart(el);
                             }}
-                            className="flex mybtn bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white"
+                            className={`flex  relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(el.bookId) ? "bg-gray-400  " : "bg-[#D9176C]"}`}
                           >
-                            Add To Cart
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width={20}
-                              height={20}
-                              viewBox="0 0 512 512"
-                            >
-                              <circle
-                                cx={176}
-                                cy={416}
-                                r={16}
-                                fill="none"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={32}
-                              ></circle>
-                              <circle
-                                cx={400}
-                                cy={416}
-                                r={16}
-                                fill="none"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={32}
-                              ></circle>
-                              <path
-                                fill="none"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={32}
-                                d="M48 80h64l48 272h256"
-                              ></path>
-                              <path
-                                fill="none"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={32}
-                                d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
-                              ></path>
-                            </svg>
+                            {loadingId.includes(el.bookId) ? (
+                              <ImSpinner2
+                                className="animate-spin text-[#D9176C]"
+                                size={18}
+                              />
+                            ) : (
+                              <>
+                                Add To Cart
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width={20}
+                                  height={20}
+                                  viewBox="0 0 512 512"
+                                >
+                                  <circle
+                                    cx={176}
+                                    cy={416}
+                                    r={16}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={32}
+                                  ></circle>
+                                  <circle
+                                    cx={400}
+                                    cy={416}
+                                    r={16}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={32}
+                                  ></circle>
+                                  <path
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={32}
+                                    d="M48 80h64l48 272h256"
+                                  ></path>
+                                  <path
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={32}
+                                    d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
+                                  ></path>
+                                </svg>
+                              </>
+                            )}
                           </NavLink>
                         </div>
                       </div>
                     </td>
 
                     <td className="text-center py-6 px-6 font-semibold">
-                      ${el.price.toFixed(2)}
+                      ${el?.price?.toFixed(2)}
                     </td>
 
                     <td className="text-center py-6 px-6 text-pink-600">
@@ -187,7 +179,7 @@ export default function Wishlistdata() {
                         onClick={() => removeItem(el)}
                         aria-label="Remove item"
                       >
-                        {loadingId === el.bookId ? (
+                        {loadingId2.includes(el.bookId) ? (
                           <ImSpinner2
                             className="animate-spin text-red-500"
                             size={18}
@@ -229,54 +221,84 @@ export default function Wishlistdata() {
 
                   <div className="flex items-center justify-between">
                     <p className="text-pink-600 font-bold text-xl">
-                      ${el.price.toFixed(2)}
+                      ${el?.price?.toFixed(2)}
                     </p>
 
                     <NavLink
                       onClick={() => removeItem(el)}
                       aria-label="Remove item"
                     >
-                      {loadingId === el.bookId ? (
+                      {loadingId2.includes(el.bookId) ? (
                         <ImSpinner2
                           className="animate-spin text-red-500"
                           size={18}
                         />
                       ) : (
-                        <FaTrashAlt size={18} className="text-[#D9176C]" />
+                        <FaTrashAlt className="text-[#D9176C]" size={18} />
                       )}
                     </NavLink>
                   </div>
                   <NavLink
-                    onClick={() => {
-                      addToCart(el);
-                      toast.success("Added to shopping cart", {
-                        position: "bottom-right",
-                        duration: 4000,
-                        iconTheme: {
-                          primary: "#D9176C",
-                          secondary: "#fff",
-                        },
-                      });
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleAddToCart(el);
                     }}
-                    className="flex gap-2 items-center justify-center bg-[#D9176C] py-3 rounded-lg text-white font-semibold"
+                    className={`flex  relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(el.bookId) ? "bg-gray-400 cursor-not-allowed " : "bg-[#D9176C]"}`}
                   >
-                    Add To Cart
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={20}
-                      height={20}
-                      viewBox="0 0 512 512"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={32}
-                    >
-                      <circle cx={176} cy={416} r={16}></circle>
-                      <circle cx={400} cy={416} r={16}></circle>
-                      <path d="M48 80h64l48 272h256"></path>
-                      <path d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"></path>
-                    </svg>
+                    {loadingId.includes(el.bookId) ? (
+                      <ImSpinner2
+                        className="animate-spin text-[#D9176C]"
+                        size={18}
+                      />
+                    ) : (
+                      <>
+                        Add To Cart
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={20}
+                          height={20}
+                          viewBox="0 0 512 512"
+                        >
+                          <circle
+                            cx={176}
+                            cy={416}
+                            r={16}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={32}
+                          ></circle>
+                          <circle
+                            cx={400}
+                            cy={416}
+                            r={16}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={32}
+                          ></circle>
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={32}
+                            d="M48 80h64l48 272h256"
+                          ></path>
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={32}
+                            d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
+                          ></path>
+                        </svg>
+                      </>
+                    )}
                   </NavLink>
                 </div>
               ))}

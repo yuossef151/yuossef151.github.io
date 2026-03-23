@@ -73,7 +73,7 @@ export const addToWishlistAPI = (bookId) => {
   const token = localStorage.getItem("token");
 
   return api.post(
-    `/wishlist/store/${bookId.bookId}`,
+    `/wishlist/store/${bookId}`,
     {},
     {
       headers: {
@@ -90,7 +90,6 @@ export const removeWishlistAPI = (bookId) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
-
 
 
 export const addToCartAPI = (book) => {

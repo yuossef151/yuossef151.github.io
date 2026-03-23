@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../cartpage/CartContext";
 import { useQuery } from "@tanstack/react-query";
 import { singleBookAPI } from "../../../API/Auth";
@@ -10,10 +10,19 @@ import Reviews from "./Reviews";
 import Recomended from "./Recomended";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { ImSpinner2 } from "react-icons/im";
 
 export default function Singlbook() {
-  const { addToCart, Cart } = useContext(CartContext);
-  const { addToWishlist, isInWishlist } = useContext(WishlistContext);
+  const { addToCart, Cart, handleAddToCart, loadingId, setLoadingId } =
+    useContext(CartContext);
+  const {
+    wishlist,
+    addToWishlist,
+    isInWishlist,
+    handleAddToWishlist,
+    loadingId2,
+    setLoadingId2,
+  } = useContext(WishlistContext);
   const { id } = useParams();
   const token = localStorage.getItem("token");
 
@@ -34,13 +43,31 @@ export default function Singlbook() {
       text: "Please log in to add items to your cart or wishlist.",
       showConfirmButton: true,
       confirmButtonText: "OK",
-      footer: '<a href="/login" class="underline text-pink-600 font-bold">Go to login page</a>',
+      footer:
+        '<a href="/login" class="underline text-pink-600 font-bold">Go to login page</a>',
       position: "center",
       customClass: {
-        confirmButton:"swal-ok-btn",
+        confirmButton: "swal-ok-btn",
       },
     });
   };
+
+  useEffect(() => {
+    loadingId2.forEach((id) => {
+      const exists = wishlist.some((el) => el.bookId === id);
+
+      if (exists) {
+        toast.success("Added to Wishlist", {
+          position: "bottom-right",
+          duration: 4000,
+          iconTheme: { primary: "#D9176C", secondary: "#fff" },
+        });
+      }
+    });
+    setLoadingId2((prev) =>
+      prev.filter((id) => !wishlist.some((item) => item.bookId === id)),
+    );
+  }, [wishlist]);
   return (
     <>
       <div className=" px-5 py-5 lg:py-10 lg:px-10">
@@ -104,117 +131,106 @@ export default function Singlbook() {
                 </div>
                 <div className="flex gap-4 ">
                   <NavLink
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.preventDefault();
                       e.stopPropagation();
+                      if (loadingId.includes(book.bookId)) return;
 
-                      !token ? requireLoginAlert() : addToCart(book);
-                      !token
-                        ? requireLoginAlert()
-                        : toast.success("Added to shopping cart", {
-                            position: "bottom-right",
-                            duration: 4000,
-                            iconTheme: {
-                              primary: "#D9176C",
-                              secondary: "#fff",
-                            },
-                          });
+                      handleAddToCart(book);
                     }}
-                    className="flex grow mybtn bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white"
+                    className={`flex relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(book?.bookId) ? "bg-gray-400  w-[163.16px] h-12.5" : "bg-[#D9176C]"}`}
                   >
-                    Add To Cart
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={20}
-                      height={20}
-                      viewBox="0 0 512 512"
-                    >
-                      <circle
-                        cx={176}
-                        cy={416}
-                        r={16}
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={32}
-                      ></circle>
-                      <circle
-                        cx={400}
-                        cy={416}
-                        r={16}
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={32}
-                      ></circle>
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={32}
-                        d="M48 80h64l48 272h256"
-                      ></path>
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={32}
-                        d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
-                      ></path>
-                    </svg>
+                    {loadingId.includes(book?.bookId) ? (
+                      <ImSpinner2
+                        className="animate-spin text-[#D9176C]"
+                        size={18}
+                      />
+                    ) : (
+                      <>
+                        Add To Cart
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={20}
+                          height={20}
+                          viewBox="0 0 512 512"
+                        >
+                          <circle
+                            cx={176}
+                            cy={416}
+                            r={16}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={32}
+                          ></circle>
+                          <circle
+                            cx={400}
+                            cy={416}
+                            r={16}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={32}
+                          ></circle>
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={32}
+                            d="M48 80h64l48 272h256"
+                          ></path>
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={32}
+                            d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
+                          ></path>
+                        </svg>
+                      </>
+                    )}
                   </NavLink>
                   <NavLink
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.preventDefault();
                       e.stopPropagation();
+                      if (loadingId2.includes(book.bookId)) return;
 
-                      if (!token) {
-                        requireLoginAlert();
-                      } else {
-                        if (isInWishlist(book?.bookId)) {
-                          toast.error("This item is already in your wishlist", {
-                            position: "bottom-right",
-                            duration: 4000,
-                            iconTheme: {
-                              primary: "#D9176C",
-                              secondary: "#fff",
-                            },
-                          });
-                        } else {
-                          addToWishlist(book);
-                          toast.success("Added to Wishlist", {
-                            position: "bottom-right",
-                            duration: 4000,
-                            iconTheme: {
-                              primary: "#D9176C",
-                              secondary: "#fff",
-                            },
-                          });
-                        }
-                      }
+                      handleAddToWishlist(book);
                     }}
-                    className="flex mybtn2  py-3.25 px-3.5 justify-center items-center rounded-lg border border-[#D9176C] text-[#D9176C] "
+                    className={`relative flex py-3.25 px-3.5 justify-center items-center rounded-lg border text-[#D9176C] border-[#D9176C]
+                        ${
+                          loadingId2.includes(book?.bookId)
+                            ? "bg-gray-400 "
+                            : ""
+                        }`}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={20}
-                      height={20}
-                      viewBox="0 0 24 24"
-                      className=""
-                    >
-                      <path
-                        fill={isInWishlist(book?.bookId) ? "#D9176C" : "none"}
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M7.75 3.5C5.127 3.5 3 5.76 3 8.547C3 14.125 12 20.5 12 20.5s9-6.375 9-11.953C21 5.094 18.873 3.5 16.25 3.5c-1.86 0-3.47 1.136-4.25 2.79c-.78-1.654-2.39-2.79-4.25-2.79"
-                      ></path>
-                    </svg>
+                    {loadingId2.includes(book?.bookId) ? (
+                      <ImSpinner2
+                        className="animate-spin text-[#ffff]"
+                        size={18}
+                      />
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={20}
+                        height={20}
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill={isInWishlist(book?.bookId) ? "#D9176C" : "none"}
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M7.75 3.5C5.127 3.5 3 5.76 3 8.547C3 14.125 12 20.5 12 20.5s9-6.375 9-11.953C21 5.094 18.873 3.5 16.25 3.5c-1.86 0-3.47 1.136-4.25 2.79c-.78-1.654-2.39-2.79-4.25-2.79"
+                        ></path>
+                      </svg>
+                    )}
                   </NavLink>
                 </div>
               </div>

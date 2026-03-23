@@ -3,7 +3,7 @@ import { CartContext } from "./CartContext";
 import { FaPlusCircle, FaMinusCircle, FaTrashAlt } from "react-icons/fa";
 import CheckOut from "./CheckOut";
 import { NavLink } from "react-router-dom";
-import { ImSpinner2 } from "react-icons/im";
+import { ImSpinner10, ImSpinner2 } from "react-icons/im";
 import toast from "react-hot-toast";
 
 export default function Mycart() {
@@ -17,7 +17,7 @@ export default function Mycart() {
   } = useContext(CartContext);
   console.log(Cart);
   const mycart = Cart;
-  const [loadingId, setLoadingId] = useState(null);
+  const [loadingId, setLoadingId] = useState([]);
 
   const increaseQty = (item) => {
     const updatedCart = mycart.map((el) =>
@@ -51,46 +51,32 @@ export default function Mycart() {
     }
   };
 
-  const removeItem = (item) => {
-    setLoadingId(item.bookDetails.bookId);
-    removeFromCart(item);
-    const removePromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        try {
-          removeFromCart(item);
-          resolve();
-        } catch (err) {
-          reject();
-        } finally {
-          setLoadingId(null);
-        }
-      }, 1000);
-    });
+ const removeItem = async (item) => {
+  const id = item.bookDetails.bookId;
 
-    toast.promise(
-      removePromise,
-      {
-        pending: "Removing item...",
-        success: "Item removed! ",
-        error: "Failed to remove item ",
-      },
-      {
+  if (loadingId.includes(id)) return; 
+
+  setLoadingId((prev) => [...prev, id]);
+
+ 
+  await removeFromCart(item); 
+};
+
+useEffect(() => {
+  loadingId.forEach((id) => {
+    const stillExists = Cart.some((el) => el.bookDetails.bookId === id);
+
+    if (!stillExists) {
+      toast.success("Item removed!", {
         position: "bottom-right",
-        autoClose: 2000,
-        theme: "colored",
-        iconTheme: {
-          primary: "#D9176C",
-          secondary: "#fff",
-        },
-      },
-    );
-  };
+        duration: 4000,
+        iconTheme: { primary: "#D9176C", secondary: "#fff" },
+      });
 
-  useEffect(() => {
-    if (loadingId && !Cart.some((el) => el.bookDetails.bookId === loadingId)) {
-      setLoadingId(null);
+      setLoadingId((prev) => prev.filter((i) => i !== id));
     }
-  }, [Cart]);
+  });
+}, [Cart, loadingId]);
 
   return (
     <>
@@ -204,7 +190,7 @@ export default function Mycart() {
                         }}
                         aria-label="Remove item"
                       >
-                        {loadingId === el.bookDetails.bookId ? (
+                        {loadingId.includes(el.bookDetails.bookId) ? (
                           <ImSpinner2
                             className="animate-spin text-red-500"
                             size={18}
@@ -271,23 +257,29 @@ export default function Mycart() {
                       </button>
                     </div>
 
-                    <NavLink
-                      onClick={() => {
-                        removeItem(el);
-                      }}
-                      aria-label="Remove item"
-                    >
-                      {loadingId === el.bookDetails.bookId ? (
-                        <ImSpinner2
-                          className="animate-spin text-red-500"
-                          size={18}
-                        />
-                      ) : (
-                        <div>
-                          <FaTrashAlt size={18} className="text-pink-600" />
-                        </div>
-                      )}
-                    </NavLink>
+                      <NavLink
+                        // className={`${loadingId.includes(el.bookDetails.bookId) ? "cursor-not-allowed":""}`}
+                        onClick={() => {
+                          if (loadingId.includes(el.bookDetails.bookId)) return;
+                          removeItem(el);
+                        }}
+                        style={{
+                          pointerEvents: loadingId.includes(el.bookDetails.bookId) ? "none" : "auto",
+                          opacity: loadingId.includes(el.bookDetails.bookId) ? 0.5 : 1,
+                        }}
+                        aria-label="Remove item"
+                      >
+                        {loadingId.includes(el.bookDetails.bookId) ? (
+                          <ImSpinner2
+                            className="animate-spin text-red-500"
+                            size={18}
+                          />
+                        ) : (
+                          <div>
+                            <FaTrashAlt className="text-pink-600" size={18} />
+                          </div>
+                        )}
+                      </NavLink>
                   </div>
 
                   <div className="border-t mt-4 pt-3 flex flex-wrap justify-between font-semibold">
