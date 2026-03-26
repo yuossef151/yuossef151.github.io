@@ -1,10 +1,11 @@
 import Book from "../bookspage/Book";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckOutAPI, OrderAPI } from "../../API/Auth";
 import Swal from "sweetalert2";
+import * as Yup from "yup";
 
 export default function Ordar() {
   const { user } = useContext(AuthContext);
@@ -133,6 +134,14 @@ export default function Ordar() {
     console.log(payload);
   };
 
+  const schema = Yup.object({
+    phone: Yup.string().required(),
+    city: Yup.string().required(),
+    state: Yup.string().required(),
+    zip: Yup.string().required(),
+    address: Yup.string().required(),
+    paymentMethod: Yup.string().required("Please select a payment method"),
+  });
   return (
     <>
       <Book />
@@ -141,6 +150,7 @@ export default function Ordar() {
           <Formik
             innerRef={formikref}
             enableReinitialize
+            validationSchema={schema}
             initialValues={{
               name: user?.data?.first_name || user?.user?.first_name || "",
               phone: user?.data?.phone || user?.user?.phone || "",
@@ -172,6 +182,11 @@ export default function Ordar() {
                         className="p-3 border rounded-lg w-full"
                         readOnly
                       />
+                      <ErrorMessage
+                        name="name"
+                        component={"p"}
+                        className="text-red-600 py-2 font-semibold"
+                      />
                     </div>
 
                     <div className="flex flex-col grow">
@@ -179,6 +194,11 @@ export default function Ordar() {
                         Phone
                       </label>
                       <Field name="phone" className="p-3 border rounded-lg" />
+                      <ErrorMessage
+                        name="phone"
+                        component={"p"}
+                        className="text-red-600 py-2 font-semibold"
+                      />
                     </div>
                   </div>
                   <div className="flex lg:flex-row flex-col gap-6 my-6">
@@ -192,6 +212,11 @@ export default function Ordar() {
                         className="p-3 border rounded-lg"
                         readOnly
                       />
+                      <ErrorMessage
+                        name="email"
+                        component={"p"}
+                        className="text-red-600 py-2 font-semibold"
+                      />
                     </div>
 
                     <div className="flex flex-col grow">
@@ -199,6 +224,11 @@ export default function Ordar() {
                         City
                       </label>
                       <Field name="city" className="p-3 border rounded-lg" />
+                      <ErrorMessage
+                        name="city"
+                        component={"p"}
+                        className="text-red-600 py-2 font-semibold"
+                      />
                     </div>
                   </div>
                   <div className="flex lg:flex-row flex-col gap-6 my-6">
@@ -210,6 +240,11 @@ export default function Ordar() {
                         name="state"
                         className="p-3 border rounded-lg w-full"
                       />
+                      <ErrorMessage
+                        name="state"
+                        component={"p"}
+                        className="text-red-600 py-2 font-semibold"
+                      />
                     </div>
 
                     <div className="flex flex-col grow">
@@ -217,11 +252,21 @@ export default function Ordar() {
                         Zip
                       </label>
                       <Field name="zip" className="p-3 border rounded-lg" />
+                      <ErrorMessage
+                        name="zip"
+                        component={"p"}
+                        className="text-red-600 py-2 font-semibold"
+                      />
                     </div>
                   </div>
                   <div className="flex flex-col my-4">
                     <label className="text-[#22222280] pb-2.5">Address</label>
                     <Field name="address" className="p-3 border rounded-lg" />
+                    <ErrorMessage
+                      name="address"
+                      component={"p"}
+                      className="text-red-600 py-2 font-semibold"
+                    />
                   </div>
                 </div>
                 <div className="  mt-5 p-6 rounded-lg bg-white w-full">
@@ -256,6 +301,11 @@ export default function Ordar() {
                       </label>
                     ))}
                   </div>
+                  <ErrorMessage
+                    name="paymentMethod"
+                    component="p"
+                    className="text-red-600 font-semibold mt-3 text-center"
+                  />
                 </div>
               </Form>
             )}
