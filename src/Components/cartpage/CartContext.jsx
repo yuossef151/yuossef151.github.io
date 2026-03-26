@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import {
   addToCartAPI,
   getcartAPI,
@@ -7,19 +7,23 @@ import {
 } from "../../API/Auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [loadingId, setLoadingId] = useState([]);
-
+  const { user } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const token = localStorage.getItem("token");
 
   const { data: CartData, isLoading } = useQuery({
-    queryKey: ["cart"],
+    queryKey: ["cart", token],
     queryFn: async () => {
+      if (!token) return [];
       const res = await getcartAPI();
       return res.data.data;
     },
@@ -36,7 +40,7 @@ export function CartProvider({ children }) {
     mutationFn: (book) => addToCartAPI(book),
     onSuccess: (data) => {
       if (data?.data?.cartItem) {
-        setCart((prev) => [...prev, data.data.cartItem]); // إضافة للـ state بدل استبداله
+        setCart((prev) => [...prev, data.data.cartItem]); 
       }
       queryClient.invalidateQueries(["cart"]);
     },
@@ -68,28 +72,26 @@ export function CartProvider({ children }) {
     addMutation.mutate(book);
   };
 
+  const requireLoginAlert = () => {
+    Swal.fire({
+      icon: "warning",
+      title: "You must be logged in!",
+      text: "Please log in to add items to your cart or wishlist.",
+      footer: '<a href="#" id="login-link">Go to login page</a>',
+      didOpen: () => {
+        const link = document.getElementById("login-link");
+        if (link) {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            Swal.close();
+            window.scrollTo(0, 0);
+            window.location.hash = "#/login";
+          });
+        }
+      },
+    });
+  };
 
-    const requireLoginAlert = () => {
-      return Swal.fire({
-        icon: "warning",
-        title: "You must be logged in!",
-        text: "Please log in to add items to your cart or wishlist.",
-        confirmButtonText: "OK",
-        footer: '<a href="#" id="login-link">Go to login page</a>',
-        position: "center",
-        didOpen: () => {
-          const link = document.getElementById("login-link");
-          if (link) {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              Swal.close();
-              navigate("/login");
-            });
-          }
-        },
-      });
-    };
-    
   const handleAddToCart = async (book) => {
     if (!token) {
       await requireLoginAlert();

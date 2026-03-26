@@ -9,7 +9,6 @@ export default function Img() {
             src="/imglogin.png"
             alt=""
           />
-          {/* bg-[#D9176C] */}
           <div className="absolute w-full lg:h-200 h-100 inset-0 bg-[#00000099] flex items-center justify-center ">
             <div className='lg:w-133.75 sm:max-md:w-100 w-70  rounded-[50px] relative overflow-hidden'>
             <input className='bg-white lg:py-4 sm:max-md:py-4 py-3 lg:px-6 px-3 lg:w-111 sm:max-md:w-100 w-70 text-[13px] sm:max-md:text-[15px] lg:text-[18px] rounded-l-2xl h-full   focus:border-none focus:outline-none ' type="search" placeholder='Search'/>

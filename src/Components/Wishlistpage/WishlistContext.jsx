@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   addToWishlistAPI,
   getWishlistAPI,
@@ -6,12 +6,17 @@ import {
 } from "../../API/Auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export const WishlistContext = createContext();
 
 export function WishlistProvider({ children }) {
   const queryClient = useQueryClient();
   const [loadingId2, setLoadingId2] = useState([]);
+  const { user } = useContext(AuthContext);
+  
   const token = localStorage.getItem("token");
 
   const {
@@ -20,8 +25,10 @@ export function WishlistProvider({ children }) {
     isError,
     error,
   } = useQuery({
-    queryKey: ["wishlist"],
+    queryKey: ["wishlist" , token],
+    
     queryFn: async () => {
+       if (!token) return [];
       const res = await getWishlistAPI();
       return res.data.data.map((item) => item.book);
     },
@@ -57,21 +64,23 @@ export function WishlistProvider({ children }) {
     }
   };
 
+
+
   const requireLoginAlert = () => {
-    return Swal.fire({
+
+    Swal.fire({
       icon: "warning",
       title: "You must be logged in!",
       text: "Please log in to add items to your cart or wishlist.",
-      confirmButtonText: "OK",
       footer: '<a href="#" id="login-link">Go to login page</a>',
-      position: "center",
       didOpen: () => {
         const link = document.getElementById("login-link");
         if (link) {
           link.addEventListener("click", (e) => {
             e.preventDefault();
             Swal.close();
-            navigate("/login");
+            window.scrollTo(0, 0);
+            window.location.hash = "#/login";
           });
         }
       },

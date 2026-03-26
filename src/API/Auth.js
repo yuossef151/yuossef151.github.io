@@ -82,6 +82,29 @@ export const addToWishlistAPI = (bookId) => {
     },
   );
 };
+export const OrdarAPI = () => {
+  const token = localStorage.getItem("token");
+
+  return api.post(
+    `/order`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+};
+export const CheckOutAPI = (payload) => {
+  const token = localStorage.getItem("token");
+
+  return api.post(`/order/checkout`, payload, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
 export const removeWishlistAPI = (bookId) => {
   const token = localStorage.getItem("token");
@@ -91,22 +114,17 @@ export const removeWishlistAPI = (bookId) => {
   });
 };
 
-
 export const addToCartAPI = (book) => {
   const token = localStorage.getItem("token");
 
   const formData = new FormData();
   formData.append("qty", 1);
 
-  return api.post(
-    `/cart/store/${book.bookId}`,
-    formData,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  return api.post(`/cart/store/${book.bookId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 export const singleBookAPI = (bookId) => {
   const token = localStorage.getItem("token");
@@ -118,25 +136,18 @@ export const singleBookAPI = (bookId) => {
   });
 };
 
-
-
 export const updateCartQuantityAPI = (bookId, qty) => {
   const token = localStorage.getItem("token");
   const formData = new FormData();
   formData.append("qty", qty);
 
-  return api.post(
-    `/cart/update/${bookId}`,
-    formData,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  return api.post(`/cart/update/${bookId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
-
 
 export const removeCartAPI = (cartId) => {
   const token = localStorage.getItem("token");
@@ -151,11 +162,11 @@ export const OrderAPI = () => {
 
   return api.post(
     "/order",
-    {}, 
+    {},
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 };

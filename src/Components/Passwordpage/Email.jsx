@@ -15,7 +15,6 @@ export default function Email({ next }) {
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     } catch (error) {
       setErrorMessage("The is Email wrong");
-      // alert("not fund is Email");
     } finally {
       setSubmitting(false);
     }

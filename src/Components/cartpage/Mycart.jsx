@@ -258,7 +258,6 @@ useEffect(() => {
                     </div>
 
                       <NavLink
-                        // className={`${loadingId.includes(el.bookDetails.bookId) ? "cursor-not-allowed":""}`}
                         onClick={() => {
                           if (loadingId.includes(el.bookDetails.bookId)) return;
                           removeItem(el);

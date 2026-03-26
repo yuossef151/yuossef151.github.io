@@ -1,7 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import {  useEffect, useState } from "react";
+import {  Field, Form, Formik } from "formik";
 import { profile, updateprofile } from "../../API/Auth";
 export default function Myprofile() {
   const [user, setuser] = useState({});
@@ -17,7 +15,6 @@ export default function Myprofile() {
       }
     };
     userdata();
-    console.log(user.data);
   }, []);
 
   const handleSubmit = async (values, { setValues }) => {
@@ -32,7 +29,6 @@ export default function Myprofile() {
         phone: Updatedata.data.data.phone,
         address: Updatedata.data.data.address,
       });
-      // setuser(Updatedata.data.data);
       setuser({ data: { ...user.data, ...Updatedata.data.data } });
 
       alert("Profile updated successfully!");
@@ -123,7 +119,7 @@ export default function Myprofile() {
 
               <button
                 type="submit"
-                className="bg-[#D9176C] w-70 mt-10  text-white py-[11.5px] rounded-lg"
+                className="bg-[#D9176C] w-70 mt-10  text-white py-[11.5px] rounded-lg cursor-pointer"
               >
                 Update information
               </button>

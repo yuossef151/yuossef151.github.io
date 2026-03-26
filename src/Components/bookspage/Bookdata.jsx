@@ -4,9 +4,7 @@ import { CartContext } from "../cartpage/CartContext";
 import { WishlistContext } from "../Wishlistpage/WishlistContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import Swal from "sweetalert2";
 import { ImSpinner2 } from "react-icons/im";
-import { addToCartAPI } from "../../API/Auth";
 
 export default function Bookdata({ page, settpage, book, pages, booktotal }) {
   const mypages = Math.ceil(booktotal / pages.per_page);
@@ -15,19 +13,24 @@ export default function Bookdata({ page, settpage, book, pages, booktotal }) {
   const {
     wishlist,
     addToWishlist,
-    handleAddToWishlist,
     isInWishlist,
+    handleAddToWishlist,
     loadingId2,
     setLoadingId2,
   } = useContext(WishlistContext);
 
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    setLoadingId((prev) =>
-      prev.filter((id) => !Cart.some((el) => el.bookDetails.bookId === id)),
-    );
+    setLoadingId((prev) => {
+      const newArr = prev.filter(
+        (id) => !Cart.some((el) => el.bookDetails.bookId === id),
+      );
+
+      if (newArr.length === prev.length) return prev;
+
+      return newArr;
+    });
   }, [Cart]);
 
   useEffect(() => {
@@ -42,9 +45,14 @@ export default function Bookdata({ page, settpage, book, pages, booktotal }) {
         });
       }
     });
-    setLoadingId2((prev) =>
-      prev.filter((id) => !wishlist.some((item) => item.bookId === id)),
-    );
+    setLoadingId2((prev) => {
+      const newArr = prev.filter(
+        (id) => !wishlist.some((item) => item.bookId === id),
+      );
+      if (newArr.length === prev.length) return prev;
+
+      return newArr;
+    });
   }, [wishlist]);
 
   return (
@@ -217,9 +225,7 @@ export default function Bookdata({ page, settpage, book, pages, booktotal }) {
                       }}
                       className={`relative flex py-3.25 px-3.5 justify-center items-center rounded-lg border text-[#D9176C] border-[#D9176C]
                         ${
-                          loadingId2.includes(el.bookId)
-                            ? "bg-gray-400 "
-                            : ""
+                          loadingId2.includes(el.bookId) ? "bg-gray-400 " : ""
                         }`}
                     >
                       {loadingId2.includes(el.bookId) ? (
@@ -252,7 +258,6 @@ export default function Bookdata({ page, settpage, book, pages, booktotal }) {
           </div>
         ))}
 
-        {/* Pagination */}
         <div className="w-full flex justify-center items-center pt-10">
           {page - 1 > 0 && (
             <button

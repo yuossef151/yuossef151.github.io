@@ -1,14 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { OrderAPI } from "../../API/Auth";
 import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 export default function CheckOut() {
   const queryClient = useQueryClient();
+  const token = localStorage.getItem("token");
+
   const { data: ordardata, isLoading } = useQuery({
-    queryKey: ["order"],
+    queryKey: ["ordar", token],
     queryFn: async () => {
       try {
-        const res = await OrderAPI();
+        const res = await OrderAPI();                
         return res.data.data;
       } catch (error) {
         if (error.response?.status === 404) {
@@ -22,7 +25,7 @@ export default function CheckOut() {
         throw error;
       }
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 0,
   });
 
   const result = ordardata?.subTotal?.toLocaleString("en-US", {
@@ -74,29 +77,31 @@ export default function CheckOut() {
             <p className="text-[20px] text-[#22222280] self-center ">
               Subtotal
             </p>
-            <p className="text-[#D9176C] text-[28px] font-bold">
-              ${result }
-            </p>
+            <p className="text-[#D9176C] text-[28px] font-bold">${result}</p>
           </div>
           <div className="flex w-full justify-between pb-5">
             <p className="text-[20px] text-[#22222280] self-center ">Tax</p>
             <p className="text-[#D9176C] text-[28px] font-bold">
-              {ordardata?.tax }
+              {ordardata?.tax}
             </p>
           </div>
           <div className="flex w-full justify-between">
             <p className="text-[20px] text-[#22222280] self-center ">Total</p>
-            <p className="text-[#D9176C] text-[28px] font-bold">
-              ${result2}
-            </p>
+            <p className="text-[#D9176C] text-[28px] font-bold">${result2}</p>
           </div>
           <div className="flex flex-col w-full gap-3 pt-10">
-            <button className="bg-[#D9176C] text-white py-3.25 rounded-lg">
+            <NavLink
+              to={"/Ordar"}
+              className="bg-[#D9176C] text-white py-3.25 rounded-lg flex justify-center"
+            >
               Check out
-            </button>
-            <button className="text-[#D9176C] border border-[#D9176C] py-3.25 rounded-lg">
+            </NavLink>
+            <NavLink
+              to={"/Books"}
+              className="text-[#D9176C] border border-[#D9176C] py-3.25 rounded-lg flex  justify-center"
+            >
               Keep Shopping
-            </button>
+            </NavLink>
           </div>
         </div>
       </div>

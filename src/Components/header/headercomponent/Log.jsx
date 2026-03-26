@@ -9,7 +9,6 @@ export default function Log() {
   const [prof, setprof] = useState(false);
 
   const { Cart } = useContext(CartContext);
-  console.log(Cart);
 
   const { wishlist, setWishlist } = useContext(WishlistContext);
 
@@ -100,10 +99,10 @@ export default function Log() {
                       </div>
                       <div className="user">
                         <p className="text-start text-[16px]">
-                          {user.user.first_name} {user.user.last_name}
+                          {user?.user?.first_name||user?.data?.first_name} {user?.user?.last_name||user?.data?.last_name}
                         </p>
                         <p className="text-[14px] text-[#FFFFFF80]">
-                          {user.user.email}
+                          {user?.user?.email||user?.data?.email}
                         </p>
                       </div>
                     </div>

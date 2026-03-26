@@ -1,7 +1,6 @@
 import Bookdata from "../Bookdata";
 
 export default function Details({boookdata , book}) {
-    console.log(boookdata);
     
   return (
     <>

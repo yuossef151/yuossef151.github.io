@@ -8,7 +8,6 @@ import { WishlistContext } from "../../Wishlistpage/WishlistContext";
 import Details from "./Details";
 import Reviews from "./Reviews";
 import Recomended from "./Recomended";
-import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { ImSpinner2 } from "react-icons/im";
 
@@ -33,26 +32,12 @@ export default function Singlbook() {
 
   const book = data?.data?.data?.book;
   const boookdata = data?.data?.data;
-  console.log(book);
 
   const [activeTab, setactiveTab] = useState(1);
-  const requireLoginAlert = () => {
-    Swal.fire({
-      icon: "warning",
-      title: "You must be logged in!",
-      text: "Please log in to add items to your cart or wishlist.",
-      showConfirmButton: true,
-      confirmButtonText: "OK",
-      footer:
-        '<a href="/login" class="underline text-pink-600 font-bold">Go to login page</a>',
-      position: "center",
-      customClass: {
-        confirmButton: "swal-ok-btn",
-      },
-    });
-  };
 
   useEffect(() => {
+    if (loadingId2.length === 0) return;
+
     loadingId2.forEach((id) => {
       const exists = wishlist.some((el) => el.bookId === id);
 
@@ -132,8 +117,6 @@ export default function Singlbook() {
                 <div className="flex gap-4 ">
                   <NavLink
                     onClick={async (e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
                       if (loadingId.includes(book.bookId)) return;
 
                       handleAddToCart(book);
@@ -196,8 +179,7 @@ export default function Singlbook() {
                   </NavLink>
                   <NavLink
                     onClick={async (e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
+
                       if (loadingId2.includes(book.bookId)) return;
 
                       handleAddToWishlist(book);

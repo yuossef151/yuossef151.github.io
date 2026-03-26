@@ -7,15 +7,16 @@ import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
-    
-    <AuthProvider>
-      <CartProvider>
-        <WishlistProvider>
-                <Toaster  />
-          <RouterProvider router={router}>
-          </RouterProvider>
-        </WishlistProvider>
-      </CartProvider>
-    </AuthProvider>
+    <>
+      <Toaster />
+
+      <AuthProvider>
+        <CartProvider>
+          <WishlistProvider>
+            <RouterProvider router={router} />
+          </WishlistProvider>
+        </CartProvider>
+      </AuthProvider>
+    </>
   );
 }
