@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 export default function Ordar() {
   const { user } = useContext(AuthContext);
   const token = localStorage.getItem("token");
+  const mydata = localStorage.getItem("contactData");
   const [selected, setSelected] = useState("");
   const queryClient = useQueryClient();
   const formikref = useRef();
@@ -25,8 +26,9 @@ export default function Ordar() {
     enabled: !!token,
     retry: false,
   });
-
+  //jj
   console.log(books);
+  console.log(user);
 
   const getPaymentMethod = (method) => {
     switch (method) {
@@ -114,6 +116,7 @@ export default function Ordar() {
       console.log(err.response?.data);
     },
   });
+
   const handleSubmit = async (values) => {
     const payload = {
       name: values.name,
@@ -139,13 +142,13 @@ export default function Ordar() {
             innerRef={formikref}
             enableReinitialize
             initialValues={{
-              name: `${user?.data?.first_name}` || "",
-              phone: user?.data?.phone || "",
-              email: user?.data?.email || "",
+              name: user?.data?.first_name || user?.user?.first_name || "",
+              phone: user?.data?.phone || user?.user?.phone || "",
+              email: user?.data?.email || user?.user?.email || "",
               city: "",
               state: "",
               zip: "",
-              address: user?.data?.address || "",
+              address: user?.data?.address || user?.user?.address || "",
               paymentMethod: "",
             }}
             onSubmit={handleSubmit}

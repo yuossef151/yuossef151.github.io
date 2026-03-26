@@ -1,9 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import api from "../API/axios";
 import { useQueryClient } from "@tanstack/react-query";
-import { WishlistContext } from "../Components/Wishlistpage/WishlistContext";
-import { CartContext } from "../Components/cartpage/CartContext";
-import { useNavigate } from "react-router-dom";
+
 
 export const AuthContext = createContext(null);
 
