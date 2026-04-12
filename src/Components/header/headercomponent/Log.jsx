@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 import { CartContext } from "../../cartpage/CartContext";
@@ -12,6 +12,19 @@ export default function Log() {
 
   const { wishlist, setWishlist } = useContext(WishlistContext);
 
+
+
+  const navRef = useRef(null);
+      useEffect(() => {
+      const handleClickOutside = (e) => {
+        if (navRef.current && !navRef.current.contains(e.target)) {
+          setprof(false);
+        }
+      };
+  
+      document.addEventListener("click", handleClickOutside);
+      return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
   return (
     <>
       <div className="">
@@ -75,7 +88,7 @@ export default function Log() {
                 </NavLink>
               </div>
             </div>
-            <div>
+            <div ref={navRef}>
               <div
                 onClick={() => {
                   setprof((prev) => !prev);
@@ -180,6 +193,8 @@ export default function Log() {
                         </svg>
                         <NavLink
                           onClick={() => {
+                            console.log("akali");
+                            
                             logout();
                           }}
                         >

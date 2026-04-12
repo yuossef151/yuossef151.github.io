@@ -16,7 +16,7 @@ export function WishlistProvider({ children }) {
   const queryClient = useQueryClient();
   const [loadingId2, setLoadingId2] = useState([]);
   const { user } = useContext(AuthContext);
-  
+
   const token = localStorage.getItem("token");
 
   const {
@@ -25,10 +25,10 @@ export function WishlistProvider({ children }) {
     isError,
     error,
   } = useQuery({
-    queryKey: ["wishlist" , token],
-    
+    queryKey: ["wishlist", token],
+
     queryFn: async () => {
-       if (!token) return [];
+      if (!token) return [];
       const res = await getWishlistAPI();
       return res.data.data.map((item) => item.book);
     },
@@ -64,27 +64,42 @@ export function WishlistProvider({ children }) {
     }
   };
 
-
-
   const requireLoginAlert = () => {
+toast.custom(
+  (t) => (
+      <div className="bg-white p-5  rounded-xl shadow-lg w-120 text-center">
+        <p className="font-semibold mb-3">
+          You should log in first!
+        </p>
 
-    Swal.fire({
-      icon: "warning",
-      title: "You must be logged in!",
-      text: "Please log in to add items to your cart or wishlist.",
-      footer: '<a href="#" id="login-link">Go to login page</a>',
-      didOpen: () => {
-        const link = document.getElementById("login-link");
-        if (link) {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            Swal.close();
+        <button
+          className="bg-[#D9176C] text-white py-2 rounded-lg w-full mb-2"
+          onClick={() => {
+            toast.dismiss("login-toast");
             window.scrollTo(0, 0);
             window.location.hash = "#/login";
-          });
-        }
-      },
-    });
+          }}
+        >
+          Log in
+        </button>
+
+        <button
+          className="bg-white text-[#D9176C] py-2 border border-[#D9176C] rounded-lg w-full"
+          onClick={() => {
+            toast.dismiss("login-toast");
+            window.scrollTo(0, 0);
+            window.location.hash = "#/Regester";
+          }}
+        >
+          Create account
+        </button>
+      </div>
+  ),
+  {
+    id: "login-toast",
+     duration: Infinity,
+  }
+);
   };
 
   const handleAddToWishlist = async (book) => {

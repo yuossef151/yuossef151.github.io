@@ -1,14 +1,14 @@
-import {  useEffect, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 import {  Field, Form, Formik } from "formik";
 import { profile, updateprofile } from "../../API/Auth";
+import { AuthContext } from "../../context/AuthContext";
 export default function Myprofile() {
-  const [user, setuser] = useState({});
-
+const { user, setUser } = useContext(AuthContext);
   useEffect(() => {
     const userdata = async () => {
       try {
         const mydata = await profile();
-        setuser(mydata.data);
+        setUser(mydata.data);
         console.log(mydata.data.data);
       } catch (error) {
         console.log(error.response?.data || error);
@@ -24,12 +24,24 @@ export default function Myprofile() {
         address: values.address,
       });
 
+          const newUser = {
+      ...user,
+      data: {
+        ...user.data,
+        ...Updatedata.data.data,
+      },
+    };
+
+    setUser(newUser);
+
       setValues({
         ...values,
         phone: Updatedata.data.data.phone,
         address: Updatedata.data.data.address,
       });
-      setuser({ data: { ...user.data, ...Updatedata.data.data } });
+      setUser({ data: { ...user.data, ...Updatedata.data.data } });
+      // console.log(user.data);
+      
 
       alert("Profile updated successfully!");
     } catch (error) {
@@ -37,6 +49,9 @@ export default function Myprofile() {
     }
   };
 
+  useEffect(() => {
+  console.log(user.data);
+}, [user]);
   return (
     <div className="bg-[#F5F5F5] pb-30">
       <div className="w-full h-90 inset-0 relative">

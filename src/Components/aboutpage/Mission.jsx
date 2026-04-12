@@ -20,7 +20,7 @@ export default function Mission() {
   ];
   return (
     <>
-      <div className="bg-[#F5F5F5] lg:px-39 px-5 lg:py-30 py-10">
+      <div className="bg-[#F5F5F5] lg:px-10 px-5 lg:py-30 py-10">
         <h2 className="pb-20 text-[34px] font-bold text-center">Our Mission</h2>
         <div className="flex flex-col sm:max-md:grid sm:max-md:grid-cols-2 lg:grid lg:grid-cols-3 sm:max-md:justify-center sm:max-md:items-center lg:flex-wrap gap-6  ">
           {arry.map((el, index) => {

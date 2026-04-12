@@ -115,71 +115,77 @@ export default function Singlbook() {
                   </div>
                 </div>
                 <div className="flex gap-4 ">
+                  {book.stock <= 0 ? (
+                    <div className="flex grow py-3.25 px-7.5 justify-center rounded-lg text-[#D9176C] items-center border-2 border-[#D9176C] ">
+                      <p>Out of stock</p>
+                    </div>
+                  ) : (
+                    <NavLink
+                      onClick={async (e) => {
+                        if (loadingId.includes(book.bookId)) return;
+
+                        handleAddToCart(book);
+                      }}
+                      className={`flex relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(book?.bookId) ? "bg-gray-400  w-[163.16px] h-12.5" : "bg-[#D9176C]"}`}
+                    >
+                      {loadingId.includes(book?.bookId) ? (
+                        <ImSpinner2
+                          className="animate-spin text-[#D9176C]"
+                          size={18}
+                        />
+                      ) : (
+                        <>
+                          Add To Cart
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={20}
+                            height={20}
+                            viewBox="0 0 512 512"
+                          >
+                            <circle
+                              cx={176}
+                              cy={416}
+                              r={16}
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={32}
+                            ></circle>
+                            <circle
+                              cx={400}
+                              cy={416}
+                              r={16}
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={32}
+                            ></circle>
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={32}
+                              d="M48 80h64l48 272h256"
+                            ></path>
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={32}
+                              d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
+                            ></path>
+                          </svg>
+                        </>
+                      )}
+                    </NavLink>
+                  )}
+
                   <NavLink
                     onClick={async (e) => {
-                      if (loadingId.includes(book.bookId)) return;
-
-                      handleAddToCart(book);
-                    }}
-                    className={`flex relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(book?.bookId) ? "bg-gray-400  w-[163.16px] h-12.5" : "bg-[#D9176C]"}`}
-                  >
-                    {loadingId.includes(book?.bookId) ? (
-                      <ImSpinner2
-                        className="animate-spin text-[#D9176C]"
-                        size={18}
-                      />
-                    ) : (
-                      <>
-                        Add To Cart
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={20}
-                          height={20}
-                          viewBox="0 0 512 512"
-                        >
-                          <circle
-                            cx={176}
-                            cy={416}
-                            r={16}
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={32}
-                          ></circle>
-                          <circle
-                            cx={400}
-                            cy={416}
-                            r={16}
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={32}
-                          ></circle>
-                          <path
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={32}
-                            d="M48 80h64l48 272h256"
-                          ></path>
-                          <path
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={32}
-                            d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
-                          ></path>
-                        </svg>
-                      </>
-                    )}
-                  </NavLink>
-                  <NavLink
-                    onClick={async (e) => {
-
                       if (loadingId2.includes(book.bookId)) return;
 
                       handleAddToWishlist(book);

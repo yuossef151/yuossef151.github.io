@@ -51,32 +51,31 @@ export default function Mycart() {
     }
   };
 
- const removeItem = async (item) => {
-  const id = item.bookDetails.bookId;
+  const removeItem = async (item) => {
+    const id = item.bookDetails.bookId;
 
-  if (loadingId.includes(id)) return; 
+    if (loadingId.includes(id)) return;
 
-  setLoadingId((prev) => [...prev, id]);
+    setLoadingId((prev) => [...prev, id]);
 
- 
-  await removeFromCart(item); 
-};
+    await removeFromCart(item);
+  };
 
-useEffect(() => {
-  loadingId.forEach((id) => {
-    const stillExists = Cart.some((el) => el.bookDetails.bookId === id);
+  useEffect(() => {
+    loadingId.forEach((id) => {
+      const stillExists = Cart.some((el) => el.bookDetails.bookId === id);
 
-    if (!stillExists) {
-      toast.success("Item removed!", {
-        position: "bottom-right",
-        duration: 4000,
-        iconTheme: { primary: "#D9176C", secondary: "#fff" },
-      });
+      if (!stillExists) {
+        toast.success("Item removed!", {
+          position: "bottom-right",
+          duration: 4000,
+          iconTheme: { primary: "#D9176C", secondary: "#fff" },
+        });
 
-      setLoadingId((prev) => prev.filter((i) => i !== id));
-    }
-  });
-}, [Cart, loadingId]);
+        setLoadingId((prev) => prev.filter((i) => i !== id));
+      }
+    });
+  }, [Cart, loadingId]);
 
   return (
     <>
@@ -90,7 +89,7 @@ useEffect(() => {
       </div>
       {mycart.length === 0 ? (
         <div className="flex w-full justify-center items-center  pt-20">
-          <p className="text-3xl text-[#18181880]">
+          <p className="lg:text-3xl text-[20px] sm:max-md:text-[26px] text-[#18181880]">
             The shopping cart is empty
           </p>
         </div>
@@ -103,19 +102,19 @@ useEffect(() => {
             >
               <thead className="mytable">
                 <tr className="bg-[#F5F5F5] mytr">
-                  <th className="py-4 px-6 text-left font-semibold text-gray-700">
+                  <th className="py-4 px-3 text-left font-semibold text-gray-700">
                     Item
                   </th>
-                  <th className="py-4 px-6 text-center font-semibold text-gray-700">
+                  <th className="py-4 px-3 text-center font-semibold text-gray-700">
                     Quantity
                   </th>
-                  <th className="py-4 px-6 text-right font-semibold text-gray-700">
+                  <th className="py-4 px-3 text-center font-semibold text-gray-700">
                     Price
                   </th>
-                  <th className="py-4 px-6 text-right font-semibold text-gray-700">
+                  <th className="py-4 px-3 text-right font-semibold text-gray-700">
                     Total Price
                   </th>
-                  <th className="py-4 px-6 text-center font-semibold text-gray-700"></th>
+                  <th className="py-4 px-3 text-center font-semibold text-gray-700"></th>
                 </tr>
               </thead>
               <tbody
@@ -128,28 +127,30 @@ useEffect(() => {
                     className="bg-white "
                     style={{ borderRadius: "8px" }}
                   >
-                    <td className="flex gap-4 items-start py-6 px-6 max-w-lg">
-                      <img
-                        src={el.image || `/book-${index + 1}.png`}
-                        alt={el.bookName}
-                        className="w-42.5 h-62.5 object-cover rounded"
-                      />
-                      <div className="flex flex-col">
-                        <h3 className="text-lg font-semibold">
-                          {el.bookDetails.bookName}
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                          Author:
-                          <span className="font-medium">
-                            {el.bookDetails.author}
-                          </span>
-                        </p>
-                        <p className="text-gray-500 text-sm mt-1 line-clamp-3 sm:max-md:hidden lg:flex hidden">
-                          {el.bookDetails.description}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-10">
-                          ASIN: {el.asin || "B09TWSRMCB"}
-                        </p>
+                    <td className=" py-6 px-6  align-top">
+                      <div className="flex gap-4  max-w-lg h-full">
+                        <img
+                          src={el.image || `/book-${index + 1}.png`}
+                          alt={el.bookName}
+                          className="w-42.5 h-62.5 object-cover rounded"
+                        />
+                        <div className="flex flex-col justify-between">
+                          <h3 className="text-lg font-semibold">
+                            {el.bookDetails.bookName}
+                          </h3>
+                          <p className="text-gray-600 text-sm">
+                            Author:
+                            <span className="font-medium">
+                              {el.bookDetails.author}
+                            </span>
+                          </p>
+                          <p className="text-gray-500 text-sm mt-1 line-clamp-3 sm:max-md:hidden lg:flex hidden">
+                            {el.bookDetails.description}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-10">
+                            ASIN: {el.asin || "B09TWSRMCB"}
+                          </p>
+                        </div>
                       </div>
                     </td>
 
@@ -257,28 +258,32 @@ useEffect(() => {
                       </button>
                     </div>
 
-                      <NavLink
-                        onClick={() => {
-                          if (loadingId.includes(el.bookDetails.bookId)) return;
-                          removeItem(el);
-                        }}
-                        style={{
-                          pointerEvents: loadingId.includes(el.bookDetails.bookId) ? "none" : "auto",
-                          opacity: loadingId.includes(el.bookDetails.bookId) ? 0.5 : 1,
-                        }}
-                        aria-label="Remove item"
-                      >
-                        {loadingId.includes(el.bookDetails.bookId) ? (
-                          <ImSpinner2
-                            className="animate-spin text-red-500"
-                            size={18}
-                          />
-                        ) : (
-                          <div>
-                            <FaTrashAlt className="text-pink-600" size={18} />
-                          </div>
-                        )}
-                      </NavLink>
+                    <NavLink
+                      onClick={() => {
+                        if (loadingId.includes(el.bookDetails.bookId)) return;
+                        removeItem(el);
+                      }}
+                      style={{
+                        pointerEvents: loadingId.includes(el.bookDetails.bookId)
+                          ? "none"
+                          : "auto",
+                        opacity: loadingId.includes(el.bookDetails.bookId)
+                          ? 0.5
+                          : 1,
+                      }}
+                      aria-label="Remove item"
+                    >
+                      {loadingId.includes(el.bookDetails.bookId) ? (
+                        <ImSpinner2
+                          className="animate-spin text-red-500"
+                          size={18}
+                        />
+                      ) : (
+                        <div>
+                          <FaTrashAlt className="text-pink-600" size={18} />
+                        </div>
+                      )}
+                    </NavLink>
                   </div>
 
                   <div className="border-t mt-4 pt-3 flex flex-wrap justify-between font-semibold">

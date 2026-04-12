@@ -8,33 +8,40 @@ import { useQuery } from "@tanstack/react-query";
 export default function Booklest() {
   const [page, setpage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const handleCategoryChange = (categoryName) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryName)
-        ? prev.filter((c) => c !== categoryName)
-        : [...prev, categoryName],
-        
-    );
+  const [searchValue, setSearchValue] = useState("");
 
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategories((prev) =>
+      prev.includes(categoryId)
+        ? prev.filter((id) => id !== categoryId)
+        : [...prev, categoryId],
+    );
   };
-  useEffect(() => {
-  console.log("Selected Categories updated:", selectedCategories);
-}, [selectedCategories]);
+
   const { Cart } = useContext(CartContext);
 
-  const { data: bookData, isLoading } = useQuery({
-    queryKey: ["books", page, selectedCategories],
-    queryFn: async () => {
-      const filters =
-        selectedCategories.length > 0
-          ? { category_name: { $in: "Tax Examiner" } }
-          : {};
+const {
+  data: bookData,
+  isLoading,
+  isFetching,
+} = useQuery({
+  queryKey: ["books", page, searchValue, selectedCategories.join(",")],
 
-      const res = await getbooksAPI(page, { params: { filters } });
-      return res.data.data;
-    },
-    keepPreviousData: true,
+queryFn: async ({ queryKey }) => {
+  const [, page, search, categories] = queryKey;
+
+  const res = await getbooksAPI(page, {
+    search: search || "",
+    category_id: categories || "",
   });
+
+  return res.data.data;
+}
+});
+  const mybookdata = bookData;
+  useEffect(() => {
+  console.log("FILTER:", selectedCategories);
+}, [selectedCategories]);
 
   const { data: categoriesData } = useQuery({
     queryKey: ["categories"],
@@ -44,24 +51,43 @@ export default function Booklest() {
     },
   });
 
-  const books = bookData?.books || [];
-  const pages = bookData?.pagination_links?.meta || {};
+  const books = bookData?.books ?? [];
+  const pages = bookData?.pagination_links?.meta ?? {};
   const categories = categoriesData || [];
 
   const totalCount = categories.reduce((sum, cat) => {
     return sum + cat.books_count;
   }, 0);
 
+  useEffect(() => {
+    const selectedData = categories.filter((cat) =>
+      selectedCategories.includes(cat.id),
+    );
+
+    console.log("Selected Categories Data:", selectedData);
+  }, [selectedCategories, categories]);
+useEffect(() => {
+  setpage(1);
+}, [searchValue, selectedCategories]);
+
+
   return (
     <>
-      <div className="flex sm:max-md:flex sm:max-md:flex-col flex-col lg:flex-row bg-[#F5F5F5] ">
-        <Categories
+      <div className="flex sm:max-md:flex sm:max-md:flex-col flex-col lg:flex-row  bg-[#F5F5F5] ">
+<div className="">
+          <Categories
           category={categories}
           handleCategoryChange={handleCategoryChange}
           selectedCategories={selectedCategories}
         />
-        <div className="">
+</div>
+        <div className="lg:w-[70%]">
           <Bookdata
+            bookdata={mybookdata}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            search={searchValue}
+            setsearch={setSearchValue}
             page={page}
             pages={pages}
             settpage={setpage}

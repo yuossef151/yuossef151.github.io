@@ -15,11 +15,10 @@ export default function BestSeller() {
     "book-6",
     "book-7",
   ];
-  const data = JSON.parse(localStorage.getItem("contactData"));
   return (
     <>
       <div className="bg-[#3B2F4A] py-30">
-        <div className="text-white  lg:px-126 px-5 flex flex-col items-center text-center pb-10">
+        <div className="text-white   px-5 flex flex-col items-center text-center pb-10">
           <h3 className="lg:text-[26px] text-[20px] font-bold pb-2">Best Seller</h3>
           <p className="lg:text-[16px]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et
@@ -72,9 +71,9 @@ export default function BestSeller() {
           ))}
         </Swiper>
         <div className="flex justify-center pt-10">
-          <NavLink
+          <NavLink to={"/Books"}
             onClick={() => {
-              console.log(data);
+              
             }}
             className="bg-[#D9176C] mybtn  text-white py-3 px-10 rounded-[10px] text-[16px] font-semibold"
           >

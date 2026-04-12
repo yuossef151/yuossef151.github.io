@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import Logo from "./headercomponent/logo";
 import Log from "./headercomponent/Log";
 import Nav from "./headercomponent/Nav";
+import Logo from "./headercomponent/Logo";
 
 export default function Header() {
   const [opn, setopn] = useState(false);
@@ -20,8 +20,8 @@ export default function Header() {
 
   return (
     <>
-      <div className="w-full flex bg-[#ffffff4d] text-white lg:justify-between sm:max-md:justify-between lg:px-35 px-3 py-6  items-center absolute  top-0 z-20">
-        <div ref={navRef} className="  flex  lg:gap-20 sm:max-md:gap-10 lg:w-[35%] grow">
+      <div className="w-full flex bg-[#ffffff4d] text-white lg:justify-between sm:max-md:justify-between lg:px-25 md:px-5 px-3 py-6  items-center absolute  top-0 z-20">
+        <div ref={navRef} className="flex lg:gap-20 sm:max-md:gap-10  md:gap-5 grow">
           <Logo />
           <Nav opn={opn} setopn={setopn} />
           

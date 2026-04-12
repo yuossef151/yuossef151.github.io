@@ -1,6 +1,6 @@
 import Book from "../bookspage/Book";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckOutAPI, OrderAPI } from "../../API/Auth";
@@ -142,6 +142,21 @@ export default function Ordar() {
     address: Yup.string().required(),
     paymentMethod: Yup.string().required("Please select a payment method"),
   });
+
+//   useEffect(() => {
+//   if (formikref.current && user) {
+//     formikref.current.setValues({
+//       name: user?.data?.first_name || user?.user?.first_name || "",
+//       phone: user?.data?.phone || user?.user?.phone || "",
+//       email: user?.data?.email || user?.user?.email || "",
+//       address: user?.data?.address || user?.user?.address || "",
+//       city: "",
+//       state: "",
+//       zip: "",
+//       paymentMethod: "",
+//     });
+//   }
+// }, [user]);
   return (
     <>
       <Book />

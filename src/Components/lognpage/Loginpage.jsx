@@ -4,9 +4,11 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { loginApi } from "../../API/Auth";
 import { AuthContext } from "../../context/AuthContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 export default function Loginpage() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,6 +68,8 @@ export default function Loginpage() {
     email: Yup.string().required().email(),
     password: Yup.string().required(),
   });
+  const [see, setsee] = useState(false);
+  const [remm, setremm] = useState(false);
   return (
     <>
       <div className="bg-[#F5F5F5] pb-30">
@@ -80,7 +84,7 @@ export default function Loginpage() {
         <div className="flex flex-col justify-center items-center pt-15">
           <p className="text-[#D9176C] text-[20px]">Welcome Back!</p>
           <Formik
-            initialValues={{ email: "", password: "", remember: false }}
+            initialValues={{ email: "", password: "", remember: remm }}
             validationSchema={schema}
             onSubmit={(values) => {
               handleSubmit(values);
@@ -102,15 +106,25 @@ export default function Loginpage() {
                   className="text-red-600 py-2 font-semibold"
                 />
               </div>
-              <div className="flex flex-col my-6">
+              <div className="flex flex-col my-6 relative">
                 <label htmlFor="password">Password</label>
-                <Field
-                  className="p-4 bg-white rounded-lg mt-2"
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Enter password"
-                />
+                <div className="relative w-full mt-2">
+                  <Field
+                    className="p-4 bg-white  w-full rounded-lg "
+                    id="password"
+                    name="password"
+                    type={see ? "text" : "password"}
+                    placeholder="Enter password"
+                  />
+                  <div
+                    onClick={() => {
+                      setsee((prev) => !prev);
+                    }}
+                    className="absolute top-[50%] -translate-y-1/2 right-[5%]"
+                  >
+                    {see ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+                </div>
                 <ErrorMessage
                   name="password"
                   component={"p"}
@@ -129,6 +143,9 @@ export default function Loginpage() {
                     id="checkbox"
                     type="checkbox"
                     name="remember"
+                    onClick={()=>{
+                      setremm((prev) => !prev);
+                    }}
                   />
                   <label htmlFor="checkbox">Remember me</label>
                 </div>

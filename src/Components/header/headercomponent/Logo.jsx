@@ -5,7 +5,7 @@ export default function Logo() {
   return (
     <>
       <NavLink to="/" className="flex gap-2">
-        <img src="/logo.png" alt="" />
+        <img className="" src="/logo.png" alt="" />
         <p className="">Bookshop</p>
       </NavLink>
     </>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Categories({
   category,
@@ -6,10 +6,22 @@ export default function Categories({
   selectedCategories,
 }) {
   const [opn, setopn] = useState(false);
+const navRef = useRef(null);
+    useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setopn(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+  
   return (
     <>
       <div className="lg:w-100 pt-10  h-full lg:pt-15 sm:max-md:pt-5 lg:pb-24 sm:max-md:pb-5 ps-10 pe-5">
-        <div className="flex gap-2">
+        <div ref={navRef} className="flex gap-2">
           <button
             onClick={() => {
               opn ? setopn(false) : setopn(true);
@@ -56,9 +68,9 @@ export default function Categories({
       <input
         id={el.categoryName}
         type="checkbox"
-        checked={selectedCategories.includes(el.categoryName)}
-        onChange={() => handleCategoryChange(el.categoryName)}
-        className="cursor-pointer"
+        checked={selectedCategories.includes(el.id)}
+        onChange={() => handleCategoryChange(el.id)}
+        className="cursor-pointer accent-[#D9176C] w-4 h-4"
       />
       <label
         htmlFor={el.categoryName}

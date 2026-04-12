@@ -1,43 +1,50 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import Logo from "../../header/headercomponent/Logo";
 export default function Footarpage() {
   const [language, setLanguage] = useState("English");
   const [langOpen, setLangOpen] = useState(false);
+  const lang = ["English", "Français", "عربي"];
+  const img = ["/facbok.png", "/inst.png", "/you.png", "/X.png"];
+  const nav = [
+    {
+      link: "Home",
+      to: "/",
+    },
+    {
+      link: "Books",
+      to: "Books",
+    },
+    {
+      link: "About us",
+      to: "About",
+    },
+  ];
   return (
     <>
       <div className="bg-[#3B2F4A] text-white pt-10 px-5 lg:pt-30 lg:px-15 lg:pb-40 pb-50">
         <div className="flex flex-col sm:max-md:gap-5 lg:flex-row justify-between">
           <div className="flex flex-col sm:max-md:justify-between  sm:max-md:flex-row lg:flex-row lg:gap-4 gap-6">
-            <NavLink to="/" className="flex gap-2">
-              <img src="/logo.png" alt="" />
-              <p className="">Bookshop</p>
-            </NavLink>
+            <Logo />
             <ul className="flex gap-6 sm:max-md:gap-5 lg:gap-10 text-[18px]">
-              <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="Books">Books</NavLink>
-              </li>
-              <li>
-                <NavLink to="About">About us</NavLink>
-              </li>
+              {nav.map((el, index) => {
+                return (
+                  <li key={index}>
+                    <NavLink to={el.to}>{el.link}</NavLink>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           <div className="flex  lg:flex-row gap-3 pt-4 lg:pt-0">
-            <Link>
-              <img className="w-6 h-6" src="/facbok.png" alt="" />
-            </Link>
-            <Link>
-              <img className="w-6 h-6" src="/inst.png" alt="" />
-            </Link>
-            <Link>
-              <img className="w-6 h-6" src="/you.png" alt="" />
-            </Link>
-            <Link>
-              <img className="w-6 h-6" src="/X.png" alt="" />
-            </Link>
+            {img.map((el, index) => {
+              return (
+                <Link key={index}>
+                  <img className="w-6 h-6" src={el} alt="" />
+                </Link>
+              );
+            })}
           </div>
         </div>
         <div className="border-t-2 border-[#FFFFFF33] mt-4 pt-4 flex flex-col sm:max-md:flex-row lg:flex-row justify-between">
@@ -76,17 +83,15 @@ export default function Footarpage() {
 
                 <ul
                   tabIndex="-1"
-                  className={`menu menu-sm dropdown-content absolute rounded-box z-10 mt-2  w-28 bg-black px-2 py-3 rounded-lg flex flex-col  ${langOpen ? "istrue" : "isfalse"}`}
+                  className={`menu menu-sm dropdown-content absolute rounded-box z-10 mt-2  w-28 bg-black px-4 py-5 rounded-lg flex flex-col gap-3  ${langOpen ? "istrue" : "isfalse"}`}
                 >
-                  <li className="">
-                    <NavLink onClick={() => setLanguage("Français")}>Français</NavLink>
-                  </li>
-                  <li className="pt-3">
-                    <NavLink onClick={() => setLanguage("English")}>English</NavLink>
-                  </li>
-                  <li className="pt-3">
-                    <NavLink onClick={() => setLanguage("عربي")}>عربي</NavLink>
-                  </li>
+                  {lang.map((el, index) => {
+                    return (
+                      <li key={index} className="">
+                        <NavLink onClick={() => setLanguage(el)}>{el}</NavLink>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>

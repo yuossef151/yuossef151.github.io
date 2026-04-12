@@ -44,9 +44,13 @@ export const updateprofile = (data) => {
   });
 };
 
-export const getbooksAPI = (page, config = {}) => {
+export const getbooksAPI = (page, params = {}) => {
   return api.get("/book", {
-    params: { page, ...config.params },
+    params: {
+      page,
+      search: params.search || "",
+      category_id: params.category_id || "",
+    },
   });
 };
 export const getcategoryAPI = () => {

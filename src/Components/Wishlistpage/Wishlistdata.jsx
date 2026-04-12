@@ -53,7 +53,9 @@ export default function Wishlistdata() {
       </div>
       {mycart.length === 0 ? (
         <div className="py-20 w-full flex items-center justify-center">
-          <p className="text-3xl text-[#18181880]">The Wishlis is empty</p>
+          <p className="lg:text-3xl text-[20px] sm:max-md:text-[26px] text-[#18181880] ">
+            The Wishlis is empty
+          </p>
         </div>
       ) : (
         <div className="pb-20">
@@ -83,89 +85,100 @@ export default function Wishlistdata() {
                     className="bg-white "
                     style={{ borderRadius: "8px" }}
                   >
-                    <td className="flex gap-4 items-start py-6 px-6 ">
-                      <img
-                        src={el.image || `/book-${index + 1}.png`}
-                        alt={el.bookName}
-                        className="w-42.5 h-62.5 object-cover rounded"
-                      />
-                      <div className="flex flex-col">
-                        <h3 className="text-lg font-semibold">{el.bookName}</h3>
-                        <p className="text-gray-600 text-sm">
-                          Author:{" "}
-                          <span className="font-medium">{el.author}</span>
-                        </p>
-                        <p className="text-gray-500 text-sm mt-1 line-clamp-3">
-                          {el.description}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-10">
-                          ASIN: {el.asin || "B09TWSRMCB"}
-                        </p>
-                        <div className="pt-5">
-                          <NavLink
-                            onClick={async (e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              if (loadingId.includes(el.bookId)) return;
-
-                              handleAddToCart(el);
-                            }}
-                            className={`flex  relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(el.bookId) ? "bg-gray-400  " : "bg-[#D9176C]"}`}
-                          >
-                            {loadingId.includes(el.bookId) ? (
-                              <ImSpinner2
-                                className="animate-spin text-[#D9176C]"
-                                size={18}
-                              />
+                    <td className=" py-6 px-6 ">
+                      <div className="flex gap-4 h-full w-full">
+                        <img
+                          src={el.image || `/book-${index + 1}.png`}
+                          alt={el.bookName}
+                          className="w-42.5 h-62.5 object-cover rounded"
+                        />
+                        <div className="flex flex-col w-full justify-between">
+                          <h3 className="text-lg font-semibold">
+                            {el.bookName}
+                          </h3>
+                          <p className="text-gray-600 text-sm">
+                            Author:{" "}
+                            <span className="font-medium">{el.author}</span>
+                          </p>
+                          <p className="text-gray-500 text-sm mt-1 line-clamp-3">
+                            {el.description}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-10">
+                            ASIN: {el.asin || "B09TWSRMCB"}
+                          </p>
+                          <div className="pt-5">
+                            {el.stock <= 0 ? (
+                              <div className="flex grow py-3.25 px-7.5 justify-center rounded-lg text-[#D9176C] items-center border-2 border-[#D9176C] ">
+                                <p>Out of stock</p>
+                              </div>
                             ) : (
-                              <>
-                                Add To Cart
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width={20}
-                                  height={20}
-                                  viewBox="0 0 512 512"
-                                >
-                                  <circle
-                                    cx={176}
-                                    cy={416}
-                                    r={16}
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={32}
-                                  ></circle>
-                                  <circle
-                                    cx={400}
-                                    cy={416}
-                                    r={16}
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={32}
-                                  ></circle>
-                                  <path
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={32}
-                                    d="M48 80h64l48 272h256"
-                                  ></path>
-                                  <path
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={32}
-                                    d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
-                                  ></path>
-                                </svg>
-                              </>
+                              <NavLink
+                                onClick={async (e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  if (loadingId.includes(el.bookId)) return;
+                                  if (loadingId2.includes(el.bookId)) return;
+
+                                  handleAddToCart(el);
+                                }}
+                                className={`flex  relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(el.bookId) ? "bg-gray-400  " : "bg-[#D9176C]"}`}
+                              >
+                                {loadingId.includes(el.bookId) ? (
+                                  <ImSpinner2
+                                    className="animate-spin text-[#D9176C]"
+                                    size={18}
+                                  />
+                                ) : (
+                                  <>
+                                    Add To Cart
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width={20}
+                                      height={20}
+                                      viewBox="0 0 512 512"
+                                    >
+                                      <circle
+                                        cx={176}
+                                        cy={416}
+                                        r={16}
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={32}
+                                      ></circle>
+                                      <circle
+                                        cx={400}
+                                        cy={416}
+                                        r={16}
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={32}
+                                      ></circle>
+                                      <path
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={32}
+                                        d="M48 80h64l48 272h256"
+                                      ></path>
+                                      <path
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={32}
+                                        d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
+                                      ></path>
+                                    </svg>
+                                  </>
+                                )}
+                              </NavLink>
                             )}
-                          </NavLink>
+                          </div>
                         </div>
                       </div>
                     </td>
@@ -193,7 +206,7 @@ export default function Wishlistdata() {
                 ))}
               </tbody>
             </table>
-            <div className="sm:max-md:hidden lg:hidden  space-y-6 px-5 py-5">
+            <div className="sm:max-md:hidden md:hidden lg:hidden  space-y-6 px-5 py-5">
               {mycart.map((el, index) => (
                 <div
                   key={el.id || index}
@@ -238,68 +251,76 @@ export default function Wishlistdata() {
                       )}
                     </NavLink>
                   </div>
-                  <NavLink
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      handleAddToCart(el);
-                    }}
-                    className={`flex  relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(el.bookId) ? "bg-gray-400 cursor-not-allowed " : "bg-[#D9176C]"}`}
-                  >
-                    {loadingId.includes(el.bookId) ? (
-                      <ImSpinner2
-                        className="animate-spin text-[#D9176C]"
-                        size={18}
-                      />
-                    ) : (
-                      <>
-                        Add To Cart
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={20}
-                          height={20}
-                          viewBox="0 0 512 512"
-                        >
-                          <circle
-                            cx={176}
-                            cy={416}
-                            r={16}
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={32}
-                          ></circle>
-                          <circle
-                            cx={400}
-                            cy={416}
-                            r={16}
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={32}
-                          ></circle>
-                          <path
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={32}
-                            d="M48 80h64l48 272h256"
-                          ></path>
-                          <path
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={32}
-                            d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
-                          ></path>
-                        </svg>
-                      </>
-                    )}
-                  </NavLink>
+                  {el.stock <= 0 ? (
+                    <div className="flex grow py-3.25 px-7.5 justify-center rounded-lg text-[#D9176C] items-center border-2 border-[#D9176C] ">
+                      <p>Out of stock</p>
+                    </div>
+                  ) : (
+                    <NavLink
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (loadingId.includes(el.bookId)) return;
+                        if (loadingId2.includes(el.bookId)) return;
+                        handleAddToCart(el);
+                      }}
+                      className={`flex  relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(el.bookId) ? "bg-gray-400 cursor-not-allowed " : "bg-[#D9176C]"}`}
+                    >
+                      {loadingId.includes(el.bookId) ? (
+                        <ImSpinner2
+                          className="animate-spin text-[#D9176C]"
+                          size={18}
+                        />
+                      ) : (
+                        <>
+                          Add To Cart
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={20}
+                            height={20}
+                            viewBox="0 0 512 512"
+                          >
+                            <circle
+                              cx={176}
+                              cy={416}
+                              r={16}
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={32}
+                            ></circle>
+                            <circle
+                              cx={400}
+                              cy={416}
+                              r={16}
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={32}
+                            ></circle>
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={32}
+                              d="M48 80h64l48 272h256"
+                            ></path>
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={32}
+                              d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
+                            ></path>
+                          </svg>
+                        </>
+                      )}
+                    </NavLink>
+                  )}
                 </div>
               ))}
             </div>

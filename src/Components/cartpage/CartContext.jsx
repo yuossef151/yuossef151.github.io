@@ -40,9 +40,14 @@ export function CartProvider({ children }) {
     mutationFn: (book) => addToCartAPI(book),
     onSuccess: (data) => {
       if (data?.data?.cartItem) {
-        setCart((prev) => [...prev, data.data.cartItem]); 
+        setCart((prev) => [...prev, data.data.cartItem]);
       }
       queryClient.invalidateQueries(["cart"]);
+    },
+    onError: (err) => {
+      console.log("ERROR FULL:", err); 
+      console.log("ERROR DATA:", err.response?.data); 
+      console.log("MESSAGE:", err.response?.data?.message); 
     },
   });
 
@@ -73,23 +78,39 @@ export function CartProvider({ children }) {
   };
 
   const requireLoginAlert = () => {
-    Swal.fire({
-      icon: "warning",
-      title: "You must be logged in!",
-      text: "Please log in to add items to your cart or wishlist.",
-      footer: '<a href="#" id="login-link">Go to login page</a>',
-      didOpen: () => {
-        const link = document.getElementById("login-link");
-        if (link) {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            Swal.close();
-            window.scrollTo(0, 0);
-            window.location.hash = "#/login";
-          });
-        }
+    toast.custom(
+      (t) => (
+        <div className="bg-white p-5  rounded-xl shadow-lg w-120 text-center">
+          <p className="font-semibold mb-3">You should log in first!</p>
+
+          <button
+            className="bg-[#D9176C] text-white py-2 rounded-lg w-full mb-2"
+            onClick={() => {
+              toast.dismiss("login-toast");
+              window.scrollTo(0, 0);
+              window.location.hash = "#/login";
+            }}
+          >
+            Log in
+          </button>
+
+          <button
+            className="bg-white text-[#D9176C] py-2 border border-[#D9176C] rounded-lg w-full"
+            onClick={() => {
+              toast.dismiss("login-toast");
+              window.scrollTo(0, 0);
+              window.location.hash = "#/Regester";
+            }}
+          >
+            Create account
+          </button>
+        </div>
+      ),
+      {
+        id: "login-toast",
+        duration: Infinity,
       },
-    });
+    );
   };
 
   const handleAddToCart = async (book) => {

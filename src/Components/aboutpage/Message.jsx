@@ -68,9 +68,9 @@ export default function Message() {
           src="bgimg.png"
           alt=""
         />
-        <div className="lg:pt-30 lg:pb-29 py-15 lg:px-43 px-5 flex flex-col lg:flex-row lg:justify-between lg:gap-48 gap-15">
+        <div className="lg:pt-30 lg:pb-10 py-15 lg:px-10 px-5 flex flex-col lg:flex-row lg:justify-between lg:gap-48 gap-15">
           <div className="lg:w-148 ">
-            <h2 className="text-[40px] font-bold lg:w-[60%] pb-4">
+            <h2 className="text-[38px] font-bold lg:w-[67%] pb-4">
               Have a Questions? Get in Touch
             </h2>
             <p>

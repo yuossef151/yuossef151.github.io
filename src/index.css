@@ -2,7 +2,7 @@
 
 
 .istrue {
-    display: block;
+    display: flex;
 }
 
 .isfalse {
@@ -29,7 +29,7 @@
 }
 
 
-@media (max-width: 640px) {
+@media (max-width: 640px ) {
     .hidden2 {
         display: none;
     }
@@ -66,6 +66,62 @@
     .user {
         display: none;
     }
+
+    .close {
+        display: none;
+    }
+
+    .opn {
+        position: absolute;
+        left: 20px;
+        width: 90%;
+        z-index: 999;
+    }
+
+    .mytable {
+        overflow: hidden;
+    }
+
+    .mytr {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+@media (max-width: 1024px) {
+
+    .bar {
+        display: flex;
+    }
+
+    .istrue {
+        display: flex;
+        
+    }
+
+    .isfalse {
+        display: none;
+    }
+
+    .mynav {
+        display: none;
+    }
+
+    .mynav1 {
+        display: flex;
+        position: absolute;
+        background-color: white;
+        left: 0;
+        top: 80px;
+        width: 100%;
+        z-index: 999;
+        padding: 10px;
+        color: black;
+    }
+
+    /* .user {
+        display: none;
+    } */
 
     .close {
         display: none;
