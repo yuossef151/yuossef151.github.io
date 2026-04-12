@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import { NavLink } from "react-router-dom";
 
-export default function BestSeller() {
+export default function BestSeller({bookData}) {
   const books = [
     "book-1",
     "book-2",
@@ -15,6 +15,7 @@ export default function BestSeller() {
     "book-6",
     "book-7",
   ];
+
   return (
     <>
       <div className="bg-[#3B2F4A] py-30">
@@ -59,7 +60,32 @@ export default function BestSeller() {
           modules={[Autoplay]}
           className="mySwiper"
         >
-          {books.map((book , index) => (
+          {
+            bookData?.best_selling_image?.length <1?(
+                        books.map((book , index) => (
+            <SwiperSlide key={index} className="rounded-2xl overflow-hidden justify-center flex ">
+              <img
+                className="rounded-2xl"
+                src={`/${book}.png`}
+                alt={book}
+                loading="lazy"
+              />
+            </SwiperSlide>
+          ))
+            ):(
+              bookData?.best_selling_image?.map((book , index) => (
+            <SwiperSlide key={index} className="rounded-2xl overflow-hidden  ">
+              <img
+                className="rounded-2xl h-70"
+                src={book}
+                alt={book}
+                loading="lazy"
+              />
+            </SwiperSlide>
+          ))
+            )
+          }
+          {/* {books.map((book , index) => (
             <SwiperSlide key={index} className="rounded-2xl overflow-hidden ">
               <img
                 className="rounded-2xl"
@@ -68,7 +94,7 @@ export default function BestSeller() {
                 loading="lazy"
               />
             </SwiperSlide>
-          ))}
+          ))} */}
         </Swiper>
         <div className="flex justify-center pt-10">
           <NavLink to={"/Books"}

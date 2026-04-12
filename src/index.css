@@ -28,6 +28,10 @@
     color: white;
 }
 
+.swiper-wrapper{
+    display: flex;
+    justify-content: center;
+}
 
 @media (max-width: 640px ) {
     .hidden2 {
