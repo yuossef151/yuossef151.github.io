@@ -82,8 +82,6 @@ const navRef = useRef(null);
     </div>
   ))}
 </div>
-
-          <p>Load More</p>
         </div>
       </div>
     </>

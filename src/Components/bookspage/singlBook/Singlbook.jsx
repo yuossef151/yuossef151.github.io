@@ -115,7 +115,7 @@ export default function Singlbook() {
                   </div>
                 </div>
                 <div className="flex gap-4 ">
-                  {book.stock <= 0 ? (
+                  {book?.stock <= 0 ? (
                     <div className="flex grow py-3.25 px-7.5 justify-center rounded-lg text-[#D9176C] items-center border-2 border-[#D9176C] ">
                       <p>Out of stock</p>
                     </div>

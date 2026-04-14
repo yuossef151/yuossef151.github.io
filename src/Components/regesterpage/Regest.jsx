@@ -3,10 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { registerApi } from "../../API/Auth";
 import { useMutation } from "@tanstack/react-query";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
 
 export default function Regest() {
   const navigate = useNavigate();
-
+  const [see, setsee] = useState();
+  const [see2, setsee2] = useState();
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: (values) => registerApi(values),
     onSuccess: (form) => {
@@ -25,8 +28,12 @@ export default function Regest() {
     first_name: Yup.string().required(),
     last_name: Yup.string().required(),
     email: Yup.string().required().email(),
-    password: Yup.string().required().min(8, "Password must be at least 8 characters"),
-    password_confirmation: Yup.string().required().oneOf([Yup.ref("password")], "Passwords must match"),
+    password: Yup.string()
+      .required()
+      .min(8, "Password must be at least 8 characters"),
+    password_confirmation: Yup.string()
+      .required()
+      .oneOf([Yup.ref("password")], "Passwords must match"),
   });
   return (
     <>
@@ -101,21 +108,32 @@ export default function Regest() {
                   component={"p"}
                   className="text-red-600 py-2 font-semibold"
                 />
-                {isError && error.response?.data?.message.includes("Duplicate entry") &&  (
-                  <p className="text-red-600 py-2 font-semibold">
-                    This email already has an account
-                  </p>
-                )}
+                {isError &&
+                  error.response?.data?.message.includes("Duplicate entry") && (
+                    <p className="text-red-600 py-2 font-semibold">
+                      This email already has an account
+                    </p>
+                  )}
               </div>
               <div className="flex flex-col my-6">
                 <label htmlFor="password">Password</label>
-                <Field
-                  className="p-4 bg-white rounded-lg mt-2"
-                  id="password"
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                />
+                <div className="relative w-full mt-2">
+                  <Field
+                    className="p-4 bg-white  w-full rounded-lg "
+                    id="password"
+                    name="password"
+                    type={see ? "text" : "password"}
+                    placeholder="Enter password"
+                  />
+                  <div
+                    onClick={() => {
+                      setsee((prev) => !prev);
+                    }}
+                    className="absolute top-[50%] -translate-y-1/2 right-[5%]"
+                  >
+                    {see ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+                </div>
                 <ErrorMessage
                   name="password"
                   component={"p"}
@@ -124,31 +142,28 @@ export default function Regest() {
               </div>
               <div className="flex flex-col my-6">
                 <label htmlFor="confpassword">Confirm password</label>
-                <Field
-                  className="p-4 bg-white rounded-lg mt-2"
-                  id="confpassword"
-                  type="password"
-                  name="password_confirmation"
-                  placeholder="Enter password"
-                />
+                <div className="relative w-full mt-2">
+                  <Field
+                    className="p-4 bg-white  w-full rounded-lg "
+                    id="confpassword"
+                    name="password_confirmation"
+                    type={see2 ? "text" : "password"}
+                    placeholder="Enter password"
+                  />
+                  <div
+                    onClick={() => {
+                      setsee2((prev) => !prev);
+                    }}
+                    className="absolute top-[50%] -translate-y-1/2 right-[5%]"
+                  >
+                    {see2 ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+                </div>
                 <ErrorMessage
                   name="password_confirmation"
                   component={"p"}
                   className="text-red-600 py-2 font-semibold"
                 />
-              </div>
-              <div className="flex   pb-10">
-                <div className="flex items-center">
-                  <input
-                    className="me-3 w-4 h-4 cursor-pointer"
-                    id="checkbox"
-                    type="checkbox"
-                  />
-                  <label className="cursor-pointer pe-1" htmlFor="checkbox">Agree with </label>
-                </div>
-                <Link className="text-[#D9176C]" to="">
-                  Terms & Conditions
-                </Link>
               </div>
               <button
                 type="submit"
@@ -159,7 +174,7 @@ export default function Regest() {
 
               <div className="flex flex-col  w-full items-center">
                 <p className="py-10 items-center">
-                  Already have an account?
+                  Already have an account?{" "}
                   <Link className="text-[#D9176C] font-semibold" to="/login">
                     Login
                   </Link>

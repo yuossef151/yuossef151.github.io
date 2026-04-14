@@ -139,7 +139,7 @@ export default function Loginpage() {
               <div className="flex  justify-between pb-10">
                 <div className="flex items-center">
                   <Field
-                    className="me-3 w-4 h-4"
+                    className="me-3 w-4 h-4 accent-[#D9176C] "
                     id="checkbox"
                     type="checkbox"
                     name="remember"
@@ -162,9 +162,9 @@ export default function Loginpage() {
 
               <div className="flex flex-col  w-full items-center">
                 <p className="py-10 items-center">
-                  Don’t have an account?
+                  Don’t have an account?{" "}
                   <Link className="text-[#D9176C] font-semibold" to="/Regester">
-                    Signup
+                    Sign up
                   </Link>
                 </p>
 

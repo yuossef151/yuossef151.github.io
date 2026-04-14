@@ -138,25 +138,11 @@ export default function Ordar() {
     phone: Yup.string().required(),
     city: Yup.string().required(),
     state: Yup.string().required(),
-    zip: Yup.string().required(),
+    zip: Yup.string().required().max(5),
     address: Yup.string().required(),
     paymentMethod: Yup.string().required("Please select a payment method"),
   });
 
-//   useEffect(() => {
-//   if (formikref.current && user) {
-//     formikref.current.setValues({
-//       name: user?.data?.first_name || user?.user?.first_name || "",
-//       phone: user?.data?.phone || user?.user?.phone || "",
-//       email: user?.data?.email || user?.user?.email || "",
-//       address: user?.data?.address || user?.user?.address || "",
-//       city: "",
-//       state: "",
-//       zip: "",
-//       paymentMethod: "",
-//     });
-//   }
-// }, [user]);
   return (
     <>
       <Book />
@@ -266,7 +252,16 @@ export default function Ordar() {
                       <label className="text-[#22222280] pb-2.5 ps-2">
                         Zip
                       </label>
-                      <Field name="zip" className="p-3 border rounded-lg" />
+                      <Field
+                        name="zip"
+                        type="text"
+                        maxLength={5}
+                        className="p-3 border rounded-lg"
+                        onChange={(e) => {
+                          const onlyNums = e.target.value.replace(/\D/g, "");
+                          setFieldValue("zip", onlyNums.slice(0, 5));
+                        }}
+                      />
                       <ErrorMessage
                         name="zip"
                         component={"p"}

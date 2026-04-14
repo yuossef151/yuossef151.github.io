@@ -18,6 +18,7 @@ export default function Mycart() {
   console.log(Cart);
   const mycart = Cart;
   const [loadingId, setLoadingId] = useState([]);
+  const [stock, setstock] = useState("");
 
   const increaseQty = (item) => {
     const updatedCart = mycart.map((el) =>
@@ -111,7 +112,7 @@ export default function Mycart() {
                   <th className="py-4 px-3 text-center font-semibold text-gray-700">
                     Price
                   </th>
-                  <th className="py-4 px-3 text-right font-semibold text-gray-700">
+                  <th className="py-4 px-3 text-center font-semibold text-gray-700">
                     Total Price
                   </th>
                   <th className="py-4 px-3 text-center font-semibold text-gray-700"></th>
@@ -127,7 +128,7 @@ export default function Mycart() {
                     className="bg-white "
                     style={{ borderRadius: "8px" }}
                   >
-                    <td className=" py-6 px-6  align-top">
+                    <td className=" py-6 px-4  align-top">
                       <div className="flex gap-4  max-w-lg h-full">
                         <img
                           src={el.image || `/book-${index + 1}.png`}
@@ -154,11 +155,12 @@ export default function Mycart() {
                       </div>
                     </td>
 
-                    <td className="text-center py-6 px-6">
+                    <td className="text-center py-6 px-4  relative">
                       <div className="inline-flex items-center gap-3 text-pink-600">
                         <NavLink
                           onClick={() => {
                             el.qty == 1 ? removeItem(el) : decreaseQty(el);
+                            setstock("");
                           }}
                           aria-label="Decrease quantity"
                         >
@@ -168,24 +170,35 @@ export default function Mycart() {
                           {el.qty || 1}
                         </span>
                         <NavLink
-                          onClick={() => increaseQty(el)}
+                          onClick={() => {
+                            el.qty >= el.bookDetails?.stock
+                              ? setstock("Out of stock")
+                              : (() => {
+                                  increaseQty(el);
+                                  setstock("");
+                                })();
+                          }}
                           aria-label="Increase quantity"
                         >
                           <FaPlusCircle size={20} />
                         </NavLink>
                       </div>
+                      <div className="absolute bottom-10 text-red-600 left-[50%] -translate-x-1/2">
+                        <p className="text-[18px]">{stock}</p>
+                      </div>
                     </td>
 
-                    <td className="text-right py-6 px-6 font-semibold">
+                    <td className="text-center py-6 px-4 font-semibold">
                       ${el.bookDetails.price.toFixed(2)}
                     </td>
 
-                    <td className="text-right py-6 px-6 font-semibold">
+                    <td className="text-center py-6 px-4 font-semibold">
                       ${(el.bookDetails.price * el.qty).toFixed(2)}
                     </td>
 
-                    <td className="text-center py-6 px-6 text-pink-600">
+                    <td className="text-center py-6 px-4 text-pink-600">
                       <NavLink
+                        className="flex items-center justify-center"
                         onClick={() => {
                           removeItem(el);
                         }}
@@ -244,8 +257,10 @@ export default function Mycart() {
                   <div className="flex items-center justify-between mt-5">
                     <div className="inline-flex items-center gap-4 text-pink-600">
                       <button
-                        onClick={() =>
+                        onClick={() =>{
                           el.qty == 1 ? removeItem(el) : decreaseQty(el)
+                          setstock("");
+                        }
                         }
                       >
                         <FaMinusCircle size={20} />
@@ -253,7 +268,16 @@ export default function Mycart() {
 
                       <span className="font-semibold text-lg">{el.qty}</span>
 
-                      <button onClick={() => increaseQty(el)}>
+                      <button
+                        onClick={() => {
+                          el.qty >= el.bookDetails?.stock
+                            ? setstock("Out of stock")
+                            : (() => {
+                                increaseQty(el);
+                                setstock("");
+                              })();
+                        }}
+                      >
                         <FaPlusCircle size={20} />
                       </button>
                     </div>
@@ -284,6 +308,9 @@ export default function Mycart() {
                         </div>
                       )}
                     </NavLink>
+                  </div>
+                  <div className="w-full flex items-center justify-center text-red-600 text-[18px]">
+                    <p>{stock}</p>
                   </div>
 
                   <div className="border-t mt-4 pt-3 flex flex-wrap justify-between font-semibold">

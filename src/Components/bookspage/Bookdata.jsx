@@ -168,7 +168,7 @@ export default function Bookdata({
                           {el.publicationYear}
                         </p>
                       </div>
-                      {
+                      {/* {
                         el.stock < 0?(<div className="flex flex-col items-center">
                         <p className="pb-2 pt-1 text-[#22222280]">stock</p>
                         <p className="text-black font-medium">
@@ -180,7 +180,7 @@ export default function Bookdata({
                           {el.stock}
                         </p>
                       </div>)
-                      }
+                      } */}
                     </div>
 
                     <div className="flex gap-2 pt-4 lg;flex-row sm:max-md:flex-col flex-col lg:justify-between sm:max-md:justify-between lg:items-center">
