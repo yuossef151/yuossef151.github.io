@@ -74,9 +74,9 @@ export default function BestSeller({bookData}) {
           ))
             ):(
               bookData?.best_selling_image?.map((book , index) => (
-            <SwiperSlide key={index} className="rounded-2xl overflow-hidden  ">
+            <SwiperSlide key={index} className="rounded-2xl  overflow-hidden  ">
               <img
-                className="rounded-2xl h-70"
+                className="rounded-2xl  lg:h-70 h-60 md:h-80  lg:w-90 w-50 md:w-60"
                 src={book}
                 alt={book}
                 loading="lazy"
@@ -84,17 +84,7 @@ export default function BestSeller({bookData}) {
             </SwiperSlide>
           ))
             )
-          }
-          {/* {books.map((book , index) => (
-            <SwiperSlide key={index} className="rounded-2xl overflow-hidden ">
-              <img
-                className="rounded-2xl"
-                src={`/${book}.png`}
-                alt={book}
-                loading="lazy"
-              />
-            </SwiperSlide>
-          ))} */}
+          } 
         </Swiper>
         <div className="flex justify-center pt-10">
           <NavLink to={"/Books"}

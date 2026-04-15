@@ -30,7 +30,14 @@
 
 .swiper-wrapper{
     display: flex;
-    justify-content: center;
+    justify-content: center; 
+    align-items: center;
+}
+.swiper-slide {
+     margin-right: 0  !important ; 
+     display: flex !important;
+     justify-content: center;
+     align-items: center;
 }
 
 @media (max-width: 640px ) {

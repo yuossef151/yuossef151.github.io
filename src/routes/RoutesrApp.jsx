@@ -12,6 +12,7 @@ import Cart from "../page/cart/Cart";
 import Wishlist from "../page/wishlist/Wishlist";
 import Singl from "../page/books/Singl";
 import Myordar from "../page/Ordar/Myordar";
+import OrderHistory from "../page/ordarhistory/OrderHistory";
 
 
 const router = createHashRouter([
@@ -69,6 +70,14 @@ element: <Mainlayout />,
         element: (
           <ProtectedRoute>
             <Myordar />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "OrdarHistory",
+        element: (
+          <ProtectedRoute>
+            <OrderHistory />
           </ProtectedRoute>
         ),
       },

@@ -174,3 +174,24 @@ export const OrderAPI = () => {
     },
   );
 };
+
+export const OrdarHestoryAPI = ()=> {
+  const token = localStorage.getItem("token");
+  return api.get(
+    "/order/history", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+}
+
+export const OrdardataAPI = (ordarId) => {
+  const token = localStorage.getItem("token");
+
+  return api.get(`/order/show/${ordarId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

@@ -22,7 +22,6 @@ export default function Bookdata({
   const mypages = pages?.last_page || 1;
   const { addToCart, handleAddToCart, loadingId, setLoadingId, Cart } =
     useContext(CartContext);
-  // Natus facilis eos.
   const {
     wishlist,
     addToWishlist,
@@ -129,7 +128,6 @@ export default function Bookdata({
           <div className="text-center py-10 text-[#D9176C] flex items-center justify-center gap-3">
             <p>Loading books </p> <BeatLoader color="#D9176C" size={10} />
           </div>
-          // .filter((el) => el.stock >= 1)
         ) : book.length > 0 ? (
           book
             
