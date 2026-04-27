@@ -77,6 +77,7 @@ export default function Mycart() {
       }
     });
   }, [Cart, loadingId]);
+console.log(mycart);
 
   return (
     <>
@@ -131,7 +132,7 @@ export default function Mycart() {
                     <td className=" py-6 px-4  align-top">
                       <div className="flex gap-4  max-w-lg h-full">
                         <img
-                          src={el.image || `/book-${index + 1}.png`}
+                          src={el.bookDetails?.bookImage[0]?.image}
                           alt={el.bookName}
                           className="w-42.5 h-62.5 object-cover rounded"
                         />
@@ -229,7 +230,7 @@ export default function Mycart() {
                 >
                   <div className="flex gap-4">
                     <img
-                      src={el.image || `/book-${index + 1}.png`}
+                      src={el.bookDetails?.bookImage[0]?.image}
                       alt={el.bookName}
                       className="w-24 h-32 object-cover rounded"
                     />

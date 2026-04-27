@@ -13,6 +13,21 @@
     display: none;
 }
 
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-scroll {
+    animation: scroll 15s linear infinite;
+}
+
 .swal-ok-btn {
     background-color: #D9176C;
     color: white;
@@ -28,19 +43,20 @@
     color: white;
 }
 
-.swiper-wrapper{
+.swiper-wrapper {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 }
+
 .swiper-slide {
-     margin-right: 0  !important ; 
-     display: flex !important;
-     justify-content: center;
-     align-items: center;
+    margin-right: 0 !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
 }
 
-@media (max-width: 640px ) {
+@media (max-width: 640px) {
     .hidden2 {
         display: none;
     }
@@ -51,7 +67,7 @@
 
     .istrue {
         display: flex;
-        
+
     }
 
     .isfalse {
@@ -99,6 +115,7 @@
     }
 
 }
+
 @media (max-width: 1024px) {
 
     .bar {
@@ -107,7 +124,7 @@
 
     .istrue {
         display: flex;
-        
+
     }
 
     .isfalse {

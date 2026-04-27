@@ -73,6 +73,8 @@ export default function Bookdata({
     console.log(bookData);
   }, [search]);
   const hasBooks = book?.length > 0;
+  console.log(book);
+  
 
   return (
     <div className="lg:pt-15 sm:max-md:pt-5 pt-5 sm:max-md:w-full lg:w-full pb-24 lg:border-e-2 border-none border-[#22222233]">
@@ -129,9 +131,7 @@ export default function Bookdata({
             <p>Loading books </p> <BeatLoader color="#D9176C" size={10} />
           </div>
         ) : book.length > 0 ? (
-          book
-            
-            .map((el, index) => (
+          book.map((el, index) => (
               <div
                 onClick={() => navigate(`/single/${el.bookId}`)}
                 key={el.id || index}
@@ -140,7 +140,7 @@ export default function Bookdata({
                 <div className="lg:w-[25%] md:w-[40%] lg:h-full h-55 w-50 sm:max-md:h-full sm:max-md:w-[30%]">
                   <img
                     className=" h-full w-full  "
-                    src={`/book-4.png`}
+                    src={el?.bookImage[0]?.image}
                     alt=""
                   />
                 </div>

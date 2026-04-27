@@ -59,7 +59,7 @@ export default function Singlbook() {
         <div className="flex flex-col sm:max-md:flex-row lg:flex-row lg:w-full sm:max-md:w-full w-full lg:ps-0   sm:max-md:ps-6  sm:max-md:pe-6 mt-10 gap-9.75  ">
           <img
             className=" lg:h-full lg:w-70 h-35 w-30 sm:max-md:h-60 sm:max-md:w-40"
-            src={`/book-4.png`}
+            src={book?.bookImage[0]?.image}
             alt=""
           />
 
