@@ -125,7 +125,7 @@ console.log(bookData);
                         if (loadingId.includes(el.bookId)) return;
                         handleAddToCart(el);
                       }}
-                      className={`relative flex  grow-4 bg-[#D9176C] py-3.25 justify-center rounded-lg items-center text-white 
+                      className={`relative flex hover:bg-[#c41661] hover:text-[#dbdbdb]  grow-4 bg-[#D9176C] py-3.25 justify-center rounded-lg items-center text-white 
                       ${loadingId.includes(el.bookId) ? "bg-gray-400 " : "bg-[#D9176C]"}
                     `}
                     >
@@ -192,7 +192,7 @@ console.log(bookData);
                       if (loadingId2.includes(el.bookId)) return;
                       handleAddToWishlist(el);
                     }}
-                    className={`relative flex mybtn2 grow py-3.25 justify-center rounded-lg border border-[#D9176C] text-[#D9176C]
+                    className={`relative hover:text-[#c41661] hover:bg-[#dbdbdb] flex mybtn2 grow py-3.25 justify-center rounded-lg border border-[#D9176C] text-[#D9176C]
                       ${loadingId2.includes(el.bookId) ? "bg-gray-400 " : ""}`}
                   >
                     {loadingId2.includes(el.bookId) ? (
