@@ -92,13 +92,13 @@ export default function CheckOut() {
           <div className="flex flex-col w-full gap-3 pt-10">
             <NavLink
               to={"/Ordar"}
-              className="bg-[#D9176C] text-white py-3.25 rounded-lg flex justify-center"
+              className="bg-[#D9176C] hover:bg-[#a91455] hover:text-[#e0e0e0]  text-white py-3.25 rounded-lg flex justify-center"
             >
               Check out
             </NavLink>
             <NavLink
               to={"/Books"}
-              className="text-[#D9176C] border border-[#D9176C] py-3.25 rounded-lg flex  justify-center"
+              className="text-[#D9176C] border  border-[#D9176C] hover:text-[#a91455] hover:bg-[#eeecec] bg-white py-3.25 rounded-lg flex  justify-center"
             >
               Keep Shopping
             </NavLink>

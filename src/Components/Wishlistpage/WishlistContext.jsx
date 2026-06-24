@@ -64,43 +64,42 @@ export function WishlistProvider({ children }) {
     }
   };
 
-  const requireLoginAlert = () => {
-toast.custom(
-  (t) => (
-      <div className="bg-white p-5  rounded-xl shadow-lg w-120 text-center">
-        <p className="font-semibold mb-3">
-          You should log in first!
-        </p>
+const requireLoginAlert = () => {
+  toast.custom(
+    (t) => (
+      // أضفنا الكلاس هنا
+      <div className="toast-animation bg-white p-5 rounded-xl shadow-lg w-full max-w-sm text-center">
+        <p className="font-semibold mb-3">You should log in first!</p>
 
         <button
-          className="bg-[#D9176C] text-white py-2 rounded-lg w-full mb-2"
           onClick={() => {
-            toast.dismiss("login-toast");
-            window.scrollTo(0, 0);
-            window.location.hash = "#/login";
+            toast.remove(t.id); 
+            window.location.hash = "login";
           }}
+          className="block bg-[#D9176C] text-white py-2 rounded-lg w-full mb-2"
         >
           Log in
         </button>
 
         <button
-          className="bg-white text-[#D9176C] py-2 border border-[#D9176C] rounded-lg w-full"
           onClick={() => {
-            toast.dismiss("login-toast");
-            window.scrollTo(0, 0);
-            window.location.hash = "#/Regester";
+            toast.remove(t.id);
+            window.location.hash = "Regester";
           }}
+          className="block bg-white text-[#D9176C] py-2 border border-[#D9176C] rounded-lg w-full"
         >
           Create account
         </button>
       </div>
-  ),
-  {
-    id: "login-toast",
-     duration: Infinity,
-  }
-);
-  };
+    ),
+    { 
+      id: "login-toast", 
+      duration: 5000,
+      // تأكد أن الـ toast يظهر في المكان الصحيح (مثلاً الأعلى)
+      position: 'top-center' 
+    }
+  );
+};
 
   const handleAddToWishlist = async (book) => {
     if (!token) {

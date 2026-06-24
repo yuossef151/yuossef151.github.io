@@ -59,12 +59,12 @@ export default function Recomend({bookData}) {
       return newArr;
     });
   }, [wishlist]);
-  const bookimg = ["/book-1.png", "/book-5.png"];
+  const bookimg = ["/book-2.png", "/book-3.png"];
 console.log(bookData);
 
   return (
     <>
-      <div className="lg:py-30 py-3 px-8 sm:max-md:py-15 lg:px-15 bg-[#F5F5F5]">
+      <div className="lg:py-30 py-10 px-8 sm:max-md:py-15 lg:px-15 bg-[#F5F5F5]">
         <p className="pb-10 lg:text-[26px] pt-5 lg:pt-0 sm:max-md:pt-0 text-[20px] font-bold">
           Recomended For You
         </p>
@@ -72,35 +72,37 @@ console.log(bookData);
           {bookData?.recommended?.map((el, index) => (
             <div
               key={el.id || index}
-              className="flex flex-col sm:max-md:flex-row md:flex-row lg:flex-row items-center lg:items-start sm:max-md:items-start lg:p-10 px-2 py-4 bg-white gap-9.75
+              className="flex flex-col rounded-2xl lg:hover:shadow-[#d9176b5d] lg:hover:shadow-2xl  sm:max-md:flex-row md:flex-row lg:flex-row items-center lg:items-start sm:max-md:items-start lg:p-10 p-6  bg-white gap-9.75
         md:w-full  "
             >
               <img
                 className="lg:h-80 sm:max-md:h-60 h-70
-          w-full sm:max-md:w-80 lg:w-80"
+          w-full sm:max-md:w-80 lg:w-55"
                 src={bookimg[index]}
                 alt=""
               />
 
-              <div className="h-full flex flex-col justify-between">
+              <div className="w-full h-full flex flex-col justify-between">
                 <h3 className="text-[18px] font-bold">{el.bookName}</h3>
                 <p className="pb-2 pt-1 text-[#22222280]">
-                  Author:
-                  <span className="text-black font-medium">{el.author}</span>
+                  Author :
+                  <span className="text-black font-medium"> {el.author}</span>
                 </p>
                 <p className="text-[#22222280] hidden sm:block ">
                   {el.description}
                 </p>
-                <div className="flex justify-between lg:items-center pt-6 gap-0 lg:gap-0">
+                <div className=" pt-6 gap-0 lg:gap-0">
+                  <div className="flex justify-between">
                   <div>
                     <Star rate={el.rate} countReview={el.countReview} />
                     <p>{el.rate}</p>
                   </div>
-                  <div>
+                  
                     <p className="text-green-500 text-end">
                       Discount: {el.discount}%
                     </p>
-                    <div className="flex gap-1 items-end ">
+                    </div>
+                    <div className="flex w-full gap-1 justify-end">
                       <p className="lg:text-[18px] sm:max-md:text-[18px] text-[16px] font-medium">
                         ${el.final_price}
                       </p>
@@ -108,7 +110,7 @@ console.log(bookData);
                         <del>${el.price}</del>
                       </span>
                     </div>
-                  </div>
+                  
                 </div>
                 <div className="flex gap-2 pt-4">
                   {el.stock <= 0 ? (

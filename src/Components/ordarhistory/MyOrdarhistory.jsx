@@ -26,6 +26,7 @@ export default function MyOrdarhistory() {
   });
 
   console.log(myordar);
+  console.log(orderDetails);
 
   return (
     <>
@@ -68,7 +69,7 @@ export default function MyOrdarhistory() {
                         >
                           <img
                             className="w-24 h-36 object-cover rounded-lg"
-                            src={item?.book?.image || "/book-1.png"}
+                            src={item?.bookDetails?.bookImage[0].image}
                             alt={item?.book?.bookName}
                           />
 

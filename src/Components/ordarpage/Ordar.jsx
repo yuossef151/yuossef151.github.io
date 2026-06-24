@@ -337,7 +337,7 @@ export default function Ordar() {
                   >
                     <img
                       className="w-24 h-36 object-cover rounded-lg"
-                      src="/book-1.png"
+                      src={el.bookDetails?.bookImage[0].image}
                       alt={el?.bookDetails?.bookName}
                     />
                     <div className="flex flex-col justify-between w-full">

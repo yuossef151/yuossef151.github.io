@@ -67,17 +67,25 @@ export default function Bookdata({
     });
   }, [wishlist]);
 
-  useEffect(() => {
-    settpage(1);
-    console.log(book);
-    console.log(bookData);
-  }, [search]);
+
   const hasBooks = book?.length > 0;
-  console.log(book);
-  
+
+
+
+
+useEffect(() => {
+  localStorage.setItem("currentBookPage", page);
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}, [page]);
+
+
+
 
   return (
-    <div className="lg:pt-15 sm:max-md:pt-5 pt-5 sm:max-md:w-full lg:w-full pb-24 lg:border-e-2 border-none border-[#22222233]">
+    <div className="lg:pt-15 sm:max-md:pt-10 pt-10 sm:max-md:w-full lg:w-full pb-24 lg:border-e-2 border-none border-[#22222233]">
       <div className="w-full px-4">
         <div className="w-full border border-[#22222233] rounded-[50px] relative overflow-hidden">
           <input
@@ -125,256 +133,127 @@ export default function Bookdata({
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5 w-full">
+      <div className="flex px-10 flex-col gap-5 w-full">
         {isLoading ? (
           <div className="text-center py-10 text-[#D9176C] flex items-center justify-center gap-3">
             <p>Loading books </p> <BeatLoader color="#D9176C" size={10} />
           </div>
         ) : book.length > 0 ? (
-          book.map((el, index) => (
-              <div
-                onClick={() => navigate(`/single/${el.bookId}`)}
-                key={el.id || index}
-                className="flex cursor-pointer  flex-col items-center sm:max-md:flex-row md:flex-row lg:flex-row lg:w-full sm:max-md:w-full w-full px-5 lg:ps-6 md:ps-6 lg:pe-[10%] md:pe-6 mt-10 gap-9.75"
-              >
-                <div className="lg:w-[25%] md:w-[40%] lg:h-full h-55 w-50 sm:max-md:h-full sm:max-md:w-[30%]">
-                  <img
-                    className=" h-full w-full  "
-                    src={el?.bookImage[0]?.image}
-                    alt=""
-                  />
-                </div>
-                <div className="flex sm:max-md:w-full w-full flex-col grow justify-between">
-                  <div>
-                    <div className="sm:max-md:w-full">
-                      <h3 className="text-[16px] sm:max-md:text-[17px] lg:text-[18px] font-bold text-black leading-snug wrap-break-word w-full">
-                        {el.bookName}
-                      </h3>
-                      <p className="text-[#22222280] hidden sm:block">
-                        {el.description}
-                      </p>
-                    </div>
+book.map((el, index) => (
+  <div
+    onClick={() => navigate(`/single/${el.bookId}`)}
+    key={el.id || index}
+    className="flex cursor-pointer flex-col md:flex-row items-stretch w-full  mt-10 gap-6 border border-gray-100 rounded-2xl p-6 transition-all hover:shadow-lg bg-white"
+  >
+    {/* الصورة */}
+    <div className="w-full md:w-50 shrink-0">
+      <div className="aspect-3/4 w-full overflow-hidden rounded-lg">
+        <img
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+          src={el?.bookImage[0]?.image}
+          alt={el.bookName}
+        />
+      </div>
+    </div>
 
-                    <div className="flex justify-start gap-30 py-5">
-                      <div>
-                        <p className="pb-2 pt-1 text-[#22222280]">Author</p>
-                        <p className="text-black font-medium">{el.author}</p>
-                      </div>
-                      <div>
-                        <p className="pb-2 pt-1 text-[#22222280]">Year</p>
-                        <p className="text-black font-medium">
-                          {el.publicationYear}
-                        </p>
-                      </div>
-                      {/* {
-                        el.stock < 0?(<div className="flex flex-col items-center">
-                        <p className="pb-2 pt-1 text-[#22222280]">stock</p>
-                        <p className="text-black font-medium">
-                          {0}
-                        </p>
-                      </div>):(<div className="flex flex-col items-center">
-                        <p className="pb-2 pt-1 text-[#22222280]">stock</p>
-                        <p className="text-black font-medium">
-                          {el.stock}
-                        </p>
-                      </div>)
-                      } */}
-                    </div>
+    {/* المحتوى */}
+    <div className="flex flex-col grow justify-between w-full">
+      <div>
+        <h3 className="text-[17px] md:text-[18px] font-bold text-black leading-snug line-clamp-2">
+          {el.bookName}
+        </h3>
+        <p className="text-[#22222280] text-sm mt-2 hidden sm:block line-clamp-2">
+          {el.description}
+        </p>
+      </div>
 
-                    <div className="flex gap-2 pt-4 lg;flex-row sm:max-md:flex-col flex-col lg:justify-between sm:max-md:justify-between lg:items-center">
-                      <div className="flex w-full sm:max-md:w-full gap-3 justify-between lg:gorw">
-                        <div className="flex justify-between items-center">
-                          <Star rate={el.rate} countReview={el.countReview} />
-                          <p>{el.rate}</p>
-                        </div>
-                        <div className="flex gap-1 items-end">
-                          <p className="text-[18px] font-medium">${el.price}</p>
-                        </div>
-                      </div>
+      {/* Author & Year */}
+      <div className="flex gap-8 py-4 border-y border-gray-100 my-4">
+        <div>
+          <p className="text-[11px] text-[#22222280] uppercase">Author</p>
+          <p className="text-black font-medium text-sm">{el.author}</p>
+        </div>
+        <div>
+          <p className="text-[11px] text-[#22222280] uppercase">Year</p>
+          <p className="text-black font-medium text-sm">{el.publicationYear}</p>
+        </div>
+      </div>
 
-                      <div className="flex gap-4 lg:w-full">
-                        {
-                          el.stock <= 0?(
-                            <div className="flex grow py-3.25 px-7.5 justify-center rounded-lg text-[#D9176C] items-center border-2 border-[#D9176C] ">
-                              <p>Out of stock</p>
-                            </div>
-                          ):(
-                          <NavLink
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if (loadingId.includes(el.bookId)) return;
-                            handleAddToCart(el);
-                          }}
-                          className={`relative flex grow py-3.25 px-7.5 justify-center rounded-lg items-center text-white 
-    ${loadingId.includes(el.bookId) ? "bg-gray-400 " : "bg-[#D9176C]"}
-  `}
-                        >
-                          {loadingId.includes(el.bookId) ? (
-                            <ImSpinner2
-                              className="animate-spin text-[#D9176C]"
-                              size={18}
-                            />
-                          ) : (
-                            <>
-                              Add To Cart
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width={20}
-                                height={20}
-                                viewBox="0 0 512 512"
-                              >
-                                <circle
-                                  cx={176}
-                                  cy={416}
-                                  r={16}
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={32}
-                                ></circle>
-                                <circle
-                                  cx={400}
-                                  cy={416}
-                                  r={16}
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={32}
-                                ></circle>
-                                <path
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={32}
-                                  d="M48 80h64l48 272h256"
-                                ></path>
-                                <path
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={32}
-                                  d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
-                                ></path>
-                              </svg>
-                            </>
-                          )}
-                        </NavLink>
-                          )
-                        }
-                        {/* <NavLink
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if (loadingId.includes(el.bookId)) return;
-                            handleAddToCart(el);
-                          }}
-                          className={`relative flex grow py-3.25 px-7.5 justify-center rounded-lg items-center text-white 
-    ${loadingId.includes(el.bookId) ? "bg-gray-400 " : "bg-[#D9176C]"}
-  `}
-                        >
-                          {loadingId.includes(el.bookId) ? (
-                            <ImSpinner2
-                              className="animate-spin text-[#D9176C]"
-                              size={18}
-                            />
-                          ) : (
-                            <>
-                              Add To Cart
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width={20}
-                                height={20}
-                                viewBox="0 0 512 512"
-                              >
-                                <circle
-                                  cx={176}
-                                  cy={416}
-                                  r={16}
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={32}
-                                ></circle>
-                                <circle
-                                  cx={400}
-                                  cy={416}
-                                  r={16}
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={32}
-                                ></circle>
-                                <path
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={32}
-                                  d="M48 80h64l48 272h256"
-                                ></path>
-                                <path
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={32}
-                                  d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
-                                ></path>
-                              </svg>
-                            </>
-                          )}
-                        </NavLink> */}
+      {/* التقييم، السعر، والأزرار */}
+      <div className="flex flex-col   items-center justify-between gap-4">
+        <div className="flex items-center gap-3 w-full justify-between ">
+          <div className="flex items-center gap-1">
+            <Star rate={el.rate} countReview={el.countReview} />
+            <span className="text-sm font-medium">{el.rate}</span>
+          </div>
+          <p className="text-[18px] font-bold">${el.price}</p>
+        </div>
 
-                        <NavLink
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if (loadingId2.includes(el.bookId)) return;
-                            handleAddToWishlist(el);
-                          }}
-                          className={`relative flex py-3.25 px-3.5 justify-center items-center rounded-lg border text-[#D9176C] border-[#D9176C]
-                        ${
-                          loadingId2.includes(el.bookId) ? "bg-gray-400 " : ""
-                        }`}
-                        >
-                          {loadingId2.includes(el.bookId) ? (
-                            <ImSpinner2
-                              className="animate-spin text-[#ffff]"
-                              size={18}
-                            />
-                          ) : (
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width={20}
-                              height={20}
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                fill={
-                                  isInWishlist(el.bookId) ? "#D9176C" : "none"
-                                }
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={1.5}
-                                d="M7.75 3.5C5.127 3.5 3 5.76 3 8.547C3 14.125 12 20.5 12 20.5s9-6.375 9-11.953C21 5.094 18.873 3.5 16.25 3.5c-1.86 0-3.47 1.136-4.25 2.79c-.78-1.654-2.39-2.79-4.25-2.79"
-                              ></path>
-                            </svg>
-                          )}
-                        </NavLink>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))
+        <div className="flex gap-2 w-full ">
+          {el.stock <= 0 ? (
+            <div className="grow text-center py-2.5 px-4 rounded-lg text-[#D9176C] border-2 border-[#D9176C] text-sm font-medium">
+              Out of stock
+            </div>
+          ) : (
+            <NavLink
+              onClick={async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (loadingId.includes(el.bookId)) return;
+                handleAddToCart(el);
+              }}
+              className={` grow hover:bg-[#c41661] hover:text-[#dbdbdb] flex items-center justify-center gap-2 py-2.5 px-6 rounded-lg text-white text-sm font-medium transition-colors ${
+                loadingId.includes(el.bookId) ? "bg-gray-400" : "bg-[#D9176C]"
+              }`}
+            >
+              {loadingId.includes(el.bookId) ? (
+                <ImSpinner2 className="animate-spin" size={18} />
+              ) : (
+                <>
+                  Add To Cart
+                  <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 512 512">
+                    <circle cx={176} cy={416} r={16} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} />
+                    <circle cx={400} cy={416} r={16} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} />
+                    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M48 80h64l48 272h256" />
+                    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128" />
+                  </svg>
+                </>
+              )}
+            </NavLink>
+          )}
+
+          {/* زر الـ Wishlist */}
+          <NavLink
+            onClick={async (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (loadingId2.includes(el.bookId)) return;
+              handleAddToWishlist(el);
+            }}
+            className={`py-2.5 px-3 rounded-lg  hover:text-[#c41661] hover:bg-[#dbdbdb] border border-[#D9176C] text-[#D9176C] flex items-center justify-center transition-colors ${
+              loadingId2.includes(el.bookId) ? "bg-gray-400" : ""
+            }`}
+          >
+            {loadingId2.includes(el.bookId) ? (
+              <ImSpinner2 className="animate-spin text-white" size={18} />
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24">
+                <path
+                  fill={isInWishlist(el.bookId) ? "#D9176C" : "none"}
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M7.75 3.5C5.127 3.5 3 5.76 3 8.547C3 14.125 12 20.5 12 20.5s9-6.375 9-11.953C21 5.094 18.873 3.5 16.25 3.5c-1.86 0-3.47 1.136-4.25 2.79c-.78-1.654-2.39-2.79-4.25-2.79"
+                />
+              </svg>
+            )}
+          </NavLink>
+        </div>
+      </div>
+    </div>
+  </div>
+))
         ) : (
           <div className="text-center py-10 text-gray-500 flex items-center justify-center gap-3">
             <p>There's no book by that name. </p>

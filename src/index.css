@@ -13,6 +13,20 @@
     display: none;
 }
 
+.toast-animation {
+  animation: slideDown 0.4s ease-out forwards;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
 @keyframes scroll {
     0% {
@@ -74,21 +88,32 @@
         display: none;
     }
 
-    .mynav {
-        display: none;
-    }
+.mynav {
 
-    .mynav1 {
-        display: flex;
-        position: absolute;
-        background-color: white;
-        left: 0;
-        top: 80px;
-        width: 100%;
-        z-index: 999;
-        padding: 10px;
-        color: black;
-    }
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  /* transition: all 0.4s ease-in-out; */
+  overflow: hidden;
+  display: flex; 
+}
+
+.mynav1 {
+  max-height: 300px; 
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.4s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+  background-color: white;
+  left: 0;
+  top: 80px;
+  width: 100%;
+  z-index: 999;
+  padding: 10px;
+  color: black;
+}
 
     .user {
         display: none;
@@ -131,25 +156,34 @@
         display: none;
     }
 
-    .mynav {
-        display: none;
-    }
+.mynav {
 
-    .mynav1 {
-        display: flex;
-        position: absolute;
-        background-color: white;
-        left: 0;
-        top: 80px;
-        width: 100%;
-        z-index: 999;
-        padding: 10px;
-        color: black;
-    }
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  /* transition: all 0.4s ease-in-out; */
+  overflow: hidden;
+  display: flex; 
+}
 
-    /* .user {
-        display: none;
-    } */
+.mynav1 {
+  max-height: 300px; 
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.4s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+  background-color: white;
+  left: 0;
+  top: 80px;
+  width: 100%;
+  z-index: 999;
+  padding: 10px;
+  color: black;
+}
+
+
 
     .close {
         display: none;

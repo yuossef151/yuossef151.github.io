@@ -17,9 +17,11 @@ export default function Nav({ opn, setopn }) {
   ];
   return (
     <>
-      <ul
-        className={`flex flex-col lg:flex-row sm:max-md:flex-row md:flex-row  sm:max-md:gap-5 justify-around gap-9 text-[18px]  ${opn ? "mynav1" : "mynav"}`}
-      >
+<ul
+  className={`flex flex-col lg:flex-row sm:max-md:gap-5 justify-around gap-9 text-[18px] 
+    ${opn ? "mynav1" : "mynav"} 
+    lg:max-h-full! lg:opacity-100! lg:!visibility-visible lg:transition-none! lg:overflow-visible!`}
+>
         {nav.map((el, index) => {
           return (
             <li key={index}>

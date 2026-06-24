@@ -6,7 +6,10 @@ import { CartContext } from "../cartpage/CartContext";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Booklest() {
-  const [page, setpage] = useState(1);
+const [page, settpage] = useState(() => {
+  const savedPage = localStorage.getItem("currentBookPage");
+  return savedPage ? Number(savedPage) : 1;
+});
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
@@ -67,10 +70,16 @@ queryFn: async ({ queryKey }) => {
     console.log("Selected Categories Data:", selectedData);
   }, [selectedCategories, categories]);
 useEffect(() => {
-  setpage(1);
+
+  if (searchValue !== "" || selectedCategories.length > 0) {
+    settpage(1);
+    localStorage.setItem("currentBookPage", 1);
+  }
 }, [searchValue, selectedCategories]);
 
-
+useEffect(() => {
+  console.log("Current page is:", page);
+}, [page]);
   return (
     <>
       <div className="flex sm:max-md:flex sm:max-md:flex-col flex-col lg:flex-row  bg-[#F5F5F5] ">
@@ -90,7 +99,7 @@ useEffect(() => {
             setsearch={setSearchValue}
             page={page}
             pages={pages}
-            settpage={setpage}
+            settpage={settpage}
             book={books}
             cart={Cart}
             booktotal={totalCount}
