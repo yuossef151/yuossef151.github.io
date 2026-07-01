@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import {
   addToCartAPI,
+  getbooksAPI,
   getcartAPI,
   removeCartAPI,
   updateCartQuantityAPI,
@@ -14,12 +15,37 @@ import { AuthContext } from "../../context/AuthContext";
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [page, settpage] = useState(() => {
+    const savedPage = localStorage.getItem("currentBookPage");
+    return savedPage ? Number(savedPage) : 1;
+  });
   const [cart, setCart] = useState([]);
   const [loadingId, setLoadingId] = useState([]);
   const { user } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const token = localStorage.getItem("token");
 
+  const {
+    data: bookData,
+    isLoading:isLoading2,
+    isFetching,
+  } = useQuery({
+    queryKey: ["books", page, searchValue, selectedCategories.join(",")],
+
+    queryFn: async ({ queryKey }) => {
+      const [, page, search, categories] = queryKey;
+
+      const res = await getbooksAPI(page, {
+        search: search || "",
+        category_id: categories || "",
+      });
+
+      return res.data.data;
+    },
+  });
+const booksData = bookData;
   const { data: CartData, isLoading } = useQuery({
     queryKey: ["cart", token],
     queryFn: async () => {
@@ -45,9 +71,9 @@ export function CartProvider({ children }) {
       queryClient.invalidateQueries(["cart"]);
     },
     onError: (err) => {
-      console.log("ERROR FULL:", err); 
-      console.log("ERROR DATA:", err.response?.data); 
-      console.log("MESSAGE:", err.response?.data?.message); 
+      console.log("ERROR FULL:", err);
+      console.log("ERROR DATA:", err.response?.data);
+      console.log("MESSAGE:", err.response?.data?.message);
     },
   });
 
@@ -77,42 +103,42 @@ export function CartProvider({ children }) {
     addMutation.mutate(book);
   };
 
-const requireLoginAlert = () => {
-  toast.custom(
-    (t) => (
-      // أضفنا الكلاس هنا
-      <div className="toast-animation bg-white p-5 rounded-xl shadow-lg w-full max-w-sm text-center">
-        <p className="font-semibold mb-3">You should log in first!</p>
+  const requireLoginAlert = () => {
+    toast.custom(
+      (t) => (
+        // أضفنا الكلاس هنا
+        <div className="toast-animation bg-white p-5 rounded-xl shadow-lg w-full max-w-sm text-center">
+          <p className="font-semibold mb-3">You should log in first!</p>
 
-        <button
-          onClick={() => {
-            toast.remove(t.id); 
-            window.location.hash = "login";
-          }}
-          className="block bg-[#D9176C] text-white py-2 rounded-lg w-full mb-2"
-        >
-          Log in
-        </button>
+          <button
+            onClick={() => {
+              toast.remove(t.id);
+              window.location.hash = "login";
+            }}
+            className="block bg-[#D9176C] text-white py-2 rounded-lg w-full mb-2"
+          >
+            Log in
+          </button>
 
-        <button
-          onClick={() => {
-            toast.remove(t.id);
-            window.location.hash = "Regester";
-          }}
-          className="block bg-white text-[#D9176C] py-2 border border-[#D9176C] rounded-lg w-full"
-        >
-          Create account
-        </button>
-      </div>
-    ),
-    { 
-      id: "login-toast", 
-      duration: 5000,
-      // تأكد أن الـ toast يظهر في المكان الصحيح (مثلاً الأعلى)
-      position: 'top-center' 
-    }
-  );
-};
+          <button
+            onClick={() => {
+              toast.remove(t.id);
+              window.location.hash = "Regester";
+            }}
+            className="block bg-white text-[#D9176C] py-2 border border-[#D9176C] rounded-lg w-full"
+          >
+            Create account
+          </button>
+        </div>
+      ),
+      {
+        id: "login-toast",
+        duration: 5000,
+        // تأكد أن الـ toast يظهر في المكان الصحيح (مثلاً الأعلى)
+        position: "top-center",
+      },
+    );
+  };
 
   const handleAddToCart = async (book) => {
     if (!token) {
@@ -168,6 +194,13 @@ const requireLoginAlert = () => {
   return (
     <CartContext.Provider
       value={{
+        bookData,
+        booksData,
+        selectedCategories,
+        searchValue,
+        setSearchValue ,
+        isLoading2,
+        isFetching,
         Cart: cart,
         setCart,
         handleAddToCart,
@@ -180,6 +213,8 @@ const requireLoginAlert = () => {
         updateQuantityMutation,
         isLoading,
         addToCart,
+        page,
+        settpage,
       }}
     >
       {children}

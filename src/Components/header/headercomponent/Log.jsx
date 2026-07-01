@@ -212,14 +212,14 @@ export default function Log() {
           <div className="flex gap-4">
             <NavLink
               to="login"
-              className="bg-[#D9176C] mybtn  px-4 py-2  rounded-[10px]  "
+              className="bg-[#D9176C] mybtn  lg:px-4 px-2 py-2  rounded-[10px]  "
             >
               Log in
             </NavLink>
 
             <NavLink
               to="Regester"
-              className="bg-white px-4 py-2 mybtn2 text-[#D9176C] rounded-[10px]"
+              className="bg-white lg:px-4 px-2 py-2 mybtn2 text-[#D9176C] rounded-[10px]"
             >
               Sign up
             </NavLink>

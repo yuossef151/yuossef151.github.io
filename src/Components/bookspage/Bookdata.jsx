@@ -8,8 +8,7 @@ import { ImSpinner2 } from "react-icons/im";
 import { BeatLoader, ClipLoader } from "react-spinners";
 
 export default function Bookdata({
-  page,
-  settpage,
+
   book,
   pages,
   booktotal,
@@ -20,7 +19,7 @@ export default function Bookdata({
   isFetching,
 }) {
   const mypages = pages?.last_page || 1;
-  const { addToCart, handleAddToCart, loadingId, setLoadingId, Cart } =
+  const { addToCart, handleAddToCart, loadingId, setLoadingId, Cart  ,page, settpage,} =
     useContext(CartContext);
   const {
     wishlist,
@@ -71,6 +70,7 @@ export default function Bookdata({
   const hasBooks = book?.length > 0;
 
 
+console.log(book);
 
 
 useEffect(() => {

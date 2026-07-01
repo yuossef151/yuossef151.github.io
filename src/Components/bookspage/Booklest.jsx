@@ -6,12 +6,10 @@ import { CartContext } from "../cartpage/CartContext";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Booklest() {
-const [page, settpage] = useState(() => {
-  const savedPage = localStorage.getItem("currentBookPage");
-  return savedPage ? Number(savedPage) : 1;
-});
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  const {page, isLoading2 , isFetching, settpage, bookData , selectedCategories , searchValue ,setSearchValue,Cart} =
+    useContext(CartContext);
+  // const [selectedCategories, setSelectedCategories] = useState([]);
+  // const [searchValue, setSearchValue] = useState("");
 
   const handleCategoryChange = (categoryId) => {
     setSelectedCategories((prev) =>
@@ -21,27 +19,28 @@ const [page, settpage] = useState(() => {
     );
   };
 
-  const { Cart } = useContext(CartContext);
 
-const {
-  data: bookData,
-  isLoading,
-  isFetching,
-} = useQuery({
-  queryKey: ["books", page, searchValue, selectedCategories.join(",")],
+// const {
+//   data: bookData,
+//   isLoading,
+//   isFetching,
+// } = useQuery({
+//   queryKey: ["books", page, searchValue, selectedCategories.join(",")],
 
-queryFn: async ({ queryKey }) => {
-  const [, page, search, categories] = queryKey;
+// queryFn: async ({ queryKey }) => {
+//   const [, page, search, categories] = queryKey;
 
-  const res = await getbooksAPI(page, {
-    search: search || "",
-    category_id: categories || "",
-  });
+//   const res = await getbooksAPI(page, {
+//     search: search || "",
+//     category_id: categories || "",
+//   });
 
-  return res.data.data;
-}
-});
+//   return res.data.data;
+// }
+// });
   const mybookdata = bookData;
+  console.log(bookData);
+  
   useEffect(() => {
   console.log("FILTER:", selectedCategories);
 }, [selectedCategories]);
@@ -93,10 +92,10 @@ useEffect(() => {
         <div className="lg:w-[70%]">
           <Bookdata
             bookdata={mybookdata}
-            isLoading={isLoading}
+            isLoading={isLoading2}
             isFetching={isFetching}
             search={searchValue}
-            setsearch={setSearchValue}
+            setsearch={setSearchValue }
             page={page}
             pages={pages}
             settpage={settpage}

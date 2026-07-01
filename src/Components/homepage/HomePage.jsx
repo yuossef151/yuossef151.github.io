@@ -7,7 +7,7 @@ import { getbooks } from "../../API/Auth";
 
 export default function HomePage() {
   const {
-    data: bookData = [],
+    data: bookData ,
     isLoading,
     error,
   } = useQuery({

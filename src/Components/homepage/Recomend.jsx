@@ -8,9 +8,9 @@ import { NavLink } from "react-router-dom";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { ImSpinner2 } from "react-icons/im";
-
+// import books from "../bookspage/Booklest"
 export default function Recomend({bookData}) {
-  const { addToCart, handleAddToCart, loadingId, setLoadingId } =
+  const { addToCart, handleAddToCart, loadingId, setLoadingId  ,booksData } =
     useContext(CartContext);
   const {
     wishlist,
@@ -21,22 +21,8 @@ export default function Recomend({bookData}) {
     setLoadingId2,
   } = useContext(WishlistContext);
   const token = localStorage.getItem("token");
-
-  // const {
-  //   data: bookData = [],
-  //   isLoading,
-  //   error,
-  // } = useQuery({
-  //   queryKey: ["books"],
-  //   queryFn: async () => {
-  //     try {
-  //       const res = await getbooks();
-  //       return res.data.data;
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   },
-  // });
+// const book = books ;
+// console.log(book);
 
   useEffect(() => {
     loadingId2.forEach((id) => {
@@ -59,8 +45,8 @@ export default function Recomend({bookData}) {
       return newArr;
     });
   }, [wishlist]);
-  const bookimg = ["/book-2.png", "/book-3.png"];
-console.log(bookData);
+
+console.log(bookData?.recommended);
 
   return (
     <>
@@ -69,17 +55,22 @@ console.log(bookData);
           Recomended For You
         </p>
         <div className="flex flex-col lg:flex-row lg:justify-center gap-6 w-full">
-          {bookData?.recommended?.map((el, index) => (
-            <div
+          {bookData?.recommended?.map((el, index) => {
+
+            const fullBookDetails = booksData?.books?.find((book) => book.bookId === el.bookId);
+  const bookImage = fullBookDetails?.bookImage?.[0]?.image || "/default-book.png";
+  
+return (
+              <div
               key={el.id || index}
               className="flex flex-col rounded-2xl lg:hover:shadow-[#d9176b5d] lg:hover:shadow-2xl  sm:max-md:flex-row md:flex-row lg:flex-row items-center lg:items-start sm:max-md:items-start lg:p-10 p-6  bg-white gap-9.75
         md:w-full  "
             >
               <img
                 className="lg:h-80 sm:max-md:h-60 h-70
-          w-full sm:max-md:w-80 lg:w-55"
-                src={bookimg[index]}
-                alt=""
+          w-full sm:max-md:w-80 lg:w-55 rounded-2xl"
+                src={bookImage}
+                alt={el.bookName}
               />
 
               <div className="w-full h-full flex flex-col justify-between">
@@ -99,7 +90,7 @@ console.log(bookData);
                   </div>
                   
                     <p className="text-green-500 text-end">
-                      Discount: {el.discount}%
+                      {el.discount === 0 ?"":"Discount: " + el.discount + "%"}
                     </p>
                     </div>
                     <div className="flex w-full gap-1 justify-end">
@@ -107,7 +98,7 @@ console.log(bookData);
                         ${el.final_price}
                       </p>
                       <span className="text-red-500">
-                        <del>${el.price}</del>
+                        <del>{el.final_price == el.price?"":el.price + " $" }</del>
                       </span>
                     </div>
                   
@@ -221,7 +212,8 @@ console.log(bookData);
                 </div>
               </div>
             </div>
-          ))}
+)
+          })}
         </div>
       </div>
     </>

@@ -16,7 +16,7 @@ export default function MyOrdarhistory() {
   });
   const myordar = data?.data;
 
-  const { data: orderDetails } = useQuery({
+  const { data: orderDetails ,isLoading:loding } = useQuery({
     queryKey: ["orderDetails", expandedOrderId],
     queryFn: async () => {
       const res = await OrdardataAPI(expandedOrderId);
