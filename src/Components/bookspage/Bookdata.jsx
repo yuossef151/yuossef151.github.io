@@ -31,7 +31,7 @@ export default function Bookdata({
   } = useContext(WishlistContext);
 
   const navigate = useNavigate();
-
+const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     setLoadingId((prev) => {
       const newArr = prev.filter(
@@ -145,13 +145,18 @@ book.map((el, index) => (
     key={el.id || index}
     className="flex cursor-pointer flex-col md:flex-row items-stretch w-full  mt-10 gap-6 border border-gray-100 rounded-2xl p-6 transition-all hover:shadow-lg bg-white"
   >
-    {/* الصورة */}
     <div className="w-full md:w-50 shrink-0">
       <div className="aspect-3/4 w-full overflow-hidden rounded-lg">
+      {!isLoaded && (
+      <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+        <ImSpinner2 className="animate-spin text-[#D9176C]" size={24} />
+      </div>
+    )}
         <img
           className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
           src={el?.bookImage[0]?.image}
           alt={el.bookName}
+          onLoad={() => setIsLoaded(true)}
         />
       </div>
     </div>

@@ -197,6 +197,7 @@ const booksData = bookData;
         bookData,
         booksData,
         selectedCategories,
+        setSelectedCategories,
         searchValue,
         setSearchValue ,
         isLoading2,

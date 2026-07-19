@@ -6,10 +6,9 @@ import { CartContext } from "../cartpage/CartContext";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Booklest() {
-  const {page, isLoading2 , isFetching, settpage, bookData , selectedCategories , searchValue ,setSearchValue,Cart} =
+  const {page, isLoading2 , isFetching, settpage, bookData ,setSelectedCategories, selectedCategories , searchValue ,setSearchValue,Cart} =
     useContext(CartContext);
-  // const [selectedCategories, setSelectedCategories] = useState([]);
-  // const [searchValue, setSearchValue] = useState("");
+
 
   const handleCategoryChange = (categoryId) => {
     setSelectedCategories((prev) =>
@@ -20,24 +19,7 @@ export default function Booklest() {
   };
 
 
-// const {
-//   data: bookData,
-//   isLoading,
-//   isFetching,
-// } = useQuery({
-//   queryKey: ["books", page, searchValue, selectedCategories.join(",")],
 
-// queryFn: async ({ queryKey }) => {
-//   const [, page, search, categories] = queryKey;
-
-//   const res = await getbooksAPI(page, {
-//     search: search || "",
-//     category_id: categories || "",
-//   });
-
-//   return res.data.data;
-// }
-// });
   const mybookdata = bookData;
   console.log(bookData);
   

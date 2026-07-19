@@ -68,12 +68,12 @@ export default function Message() {
           src="bgimg.png"
           alt=""
         />
-        <div className="lg:pt-30 lg:pb-10 py-15 lg:px-10 px-5 flex flex-col lg:flex-row lg:justify-between lg:gap-48 gap-15">
+        <div className="lg:pt-30 lg:pb-10 py-15 lg:px-10 px-5 flex flex-col lg:flex-row lg:justify-around lg:gap-48 gap-15">
           <div className="lg:w-148 ">
-            <h2 className="text-[38px] font-bold lg:w-[67%] pb-4">
+            <h2 className="lg:text-[38px] md:text-[28px] text-[20px] font-bold lg:w-[67%] pb-4">
               Have a Questions? Get in Touch
             </h2>
-            <p>
+            <p className="lg:text-[20px] md:text-[18px] text-[14px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et
               ultricies est. Aliquam in justo varius, sagittis neque ut,
               malesuada leo.
@@ -101,26 +101,26 @@ export default function Message() {
                 <div className="flex gap-4 w-full">
                   <div className="grow">
                     <Field
-                      className="p-4 rounded-lg mt-2 bg-transparent border w-full border-white/20"
+                      className="py-4 px-2 rounded-lg mt-2 bg-transparent border w-full lg:text-[38px] md:text-[28px] text-[14px] border-white/20"
                       name="name"
                       placeholder="Name"
                     />
                     <ErrorMessage
                       name="name"
                       component={"p"}
-                      className="text-red-600 py-2 font-semibold"
+                      className="text-red-600 py-2 font-semibold lg:text-[38px] md:text-[28px] text-[14px]"
                     />
                   </div>
                   <div className="grow">
                     <Field
-                      className="p-4 rounded-lg mt-2 bg-transparent border w-full border-white/20"
+                      className="py-4 px-2 rounded-lg mt-2 lg:text-[38px] md:text-[28px] text-[14px] bg-transparent border w-full border-white/20"
                       name="email"
                       placeholder="example@gmail.com"
                     />
                     <ErrorMessage
                       name="email"
                       component={"p"}
-                      className="text-red-600 py-2 font-semibold"
+                      className="text-red-600 py-2 font-semibold lg:text-[38px] md:text-[28px] text-[14px]"
                     />
                   </div>
                 </div>
@@ -133,6 +133,9 @@ export default function Message() {
                   innerRef={textareaRef}
                   placeholder="Your Message"
                   className="
+                  lg:text-[38px]
+                   md:text-[28px]
+                    text-[14px]
             min-h-38
               w-full
               resize-none
@@ -154,7 +157,7 @@ export default function Message() {
                 <ErrorMessage
                   name="message"
                   component={"p"}
-                  className="text-red-600 py-2 font-semibold"
+                  className="text-red-600 py-2 font-semibold lg:text-[38px] md:text-[28px] text-[14px] "
                 />
                 <button
                   disabled={isPending}
