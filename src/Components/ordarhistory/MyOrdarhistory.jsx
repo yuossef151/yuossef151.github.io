@@ -62,17 +62,16 @@ export default function MyOrdarhistory() {
                max-h-112.5 pr-4 overflow-y-auto 
                scrollbar-thin scrollbar-thumb-[#D9176C] scrollbar-track-gray-100/30"
                     >
-                      {orderDetails?.Details?.map((item, index) => (
+                      {orderDetails?.Details?.map((item, index) => 
+                      {
+                        console.log(item);
+                        
+                        return(
+                    
                         <div
                           key={item.bookId || index}
-                          className="flex gap-4 bg-white shadow-md rounded-xl p-4 hover:shadow-lg transition-shadow duration-300"
+                          className="flex gap-4 bg-white shadow-md rounded-xl border-[#d2d0d0] border-2 p-4 hover:shadow-lg transition-shadow duration-300"
                         >
-                          <img
-                            className="w-24 h-36 object-cover rounded-lg"
-                            src={item?.bookDetails?.bookImage[0].image}
-                            alt={item?.book?.bookName}
-                          />
-
                           <div className="flex flex-col justify-between w-full">
                             <div>
                               <p className="text-[16px] font-semibold text-gray-900 line-clamp-1">
@@ -98,7 +97,7 @@ export default function MyOrdarhistory() {
                             </div>
                           </div>
                         </div>
-                      ))}
+                      )})}
                     </div>
                   </div>
                 )}

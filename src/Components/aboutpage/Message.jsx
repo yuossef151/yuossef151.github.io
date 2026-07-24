@@ -101,26 +101,26 @@ export default function Message() {
                 <div className="flex gap-4 w-full">
                   <div className="grow">
                     <Field
-                      className="py-4 px-2 rounded-lg mt-2 bg-transparent border w-full lg:text-[38px] md:text-[28px] text-[14px] border-white/20"
+                      className="py-4 px-2 rounded-lg mt-2 bg-transparent border w-full lg:text-[20px] md:text-[18px] text-[14px] border-white/20"
                       name="name"
                       placeholder="Name"
                     />
                     <ErrorMessage
                       name="name"
                       component={"p"}
-                      className="text-red-600 py-2 font-semibold lg:text-[38px] md:text-[28px] text-[14px]"
+                      className="text-red-600 py-2 font-semibold  text-[14px]"
                     />
                   </div>
                   <div className="grow">
                     <Field
-                      className="py-4 px-2 rounded-lg mt-2 lg:text-[38px] md:text-[28px] text-[14px] bg-transparent border w-full border-white/20"
+                      className="py-4 px-2 rounded-lg mt-2 lg:text-[20px] md:text-[18px] text-[14px] bg-transparent border w-full border-white/20"
                       name="email"
                       placeholder="example@gmail.com"
                     />
                     <ErrorMessage
                       name="email"
                       component={"p"}
-                      className="text-red-600 py-2 font-semibold lg:text-[38px] md:text-[28px] text-[14px]"
+                      className="text-red-600 py-2 font-semibold  text-[14px]"
                     />
                   </div>
                 </div>
@@ -133,8 +133,8 @@ export default function Message() {
                   innerRef={textareaRef}
                   placeholder="Your Message"
                   className="
-                  lg:text-[38px]
-                   md:text-[28px]
+                  lg:text-[20px]
+                   md:text-[18px]
                     text-[14px]
             min-h-38
               w-full
@@ -157,7 +157,7 @@ export default function Message() {
                 <ErrorMessage
                   name="message"
                   component={"p"}
-                  className="text-red-600 py-2 font-semibold lg:text-[38px] md:text-[28px] text-[14px] "
+                  className="text-red-600 py-2 font-semibold  text-[14px] "
                 />
                 <button
                   disabled={isPending}

@@ -66,7 +66,7 @@ export default function CheckOut() {
                 type="text"
                 placeholder="Enter Promo Code"
               />
-              <button className="bg-[#3B2F4A]  px-4 py-2 text-white  rounded-lg">
+              <button className="bg-[#3B2F4A] cursor-pointer  px-4 py-2 text-white  rounded-lg">
                 Apply
               </button>
             </div>

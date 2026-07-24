@@ -83,12 +83,12 @@ export default function Footarpage() {
 
                 <ul
                   tabIndex="-1"
-                  className={`menu menu-sm dropdown-content absolute rounded-box z-10 mt-2  w-28 bg-black px-4 py-5 rounded-lg flex flex-col gap-3  ${langOpen ? "istrue" : "isfalse"}`}
+                  className={`menu menu-sm dropdown-content absolute rounded-box z-10 mt-0  w-28 bg-black px-4 py-5 rounded-lg flex flex-col gap-3  ${langOpen ? "istrue" : "isfalse"}`}
                 >
                   {lang.map((el, index) => {
                     return (
                       <li key={index} className="">
-                        <NavLink onClick={() => setLanguage(el)}>{el}</NavLink>
+                        <span className="cursor-pointer" onClick={() => setLanguage(el)}>{el}</span>
                       </li>
                     );
                   })}

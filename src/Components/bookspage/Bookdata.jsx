@@ -161,7 +161,6 @@ book.map((el, index) => (
       </div>
     </div>
 
-    {/* المحتوى */}
     <div className="flex flex-col grow justify-between w-full">
       <div>
         <h3 className="text-[17px] md:text-[18px] font-bold text-black leading-snug line-clamp-2">
@@ -172,7 +171,6 @@ book.map((el, index) => (
         </p>
       </div>
 
-      {/* Author & Year */}
       <div className="flex gap-8 py-4 border-y border-gray-100 my-4">
         <div>
           <p className="text-[11px] text-[#22222280] uppercase">Author</p>
@@ -184,7 +182,6 @@ book.map((el, index) => (
         </div>
       </div>
 
-      {/* التقييم، السعر، والأزرار */}
       <div className="flex flex-col   items-center justify-between gap-4">
         <div className="flex items-center gap-3 w-full justify-between ">
           <div className="flex items-center gap-1">
@@ -207,12 +204,12 @@ book.map((el, index) => (
                 if (loadingId.includes(el.bookId)) return;
                 handleAddToCart(el);
               }}
-              className={` grow hover:bg-[#c41661] hover:text-[#dbdbdb] flex items-center justify-center gap-2 py-2.5 px-6 rounded-lg text-white text-sm font-medium transition-colors ${
-                loadingId.includes(el.bookId) ? "bg-gray-400" : "bg-[#D9176C]"
+              className={` grow  hover:text-[#dbdbdb] flex items-center justify-center gap-2 py-2.5 px-6 rounded-lg text-white text-sm font-medium transition-colors ${
+                loadingId.includes(el.bookId) ? "bg-gray-400" : "bg-[#D9176C] hover:bg-[#c41661]"
               }`}
             >
               {loadingId.includes(el.bookId) ? (
-                <ImSpinner2 className="animate-spin" size={18} />
+                <ImSpinner2 className="animate-spin text-[#D9176C]" size={18} />
               ) : (
                 <>
                   Add To Cart
@@ -240,7 +237,7 @@ book.map((el, index) => (
             }`}
           >
             {loadingId2.includes(el.bookId) ? (
-              <ImSpinner2 className="animate-spin text-white" size={18} />
+              <ImSpinner2 className="animate-spin text-[#D9176C]" size={18} />
             ) : (
               <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24">
                 <path

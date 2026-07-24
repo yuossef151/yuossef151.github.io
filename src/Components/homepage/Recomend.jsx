@@ -116,13 +116,13 @@ return (
                         if (loadingId.includes(el.bookId)) return;
                         handleAddToCart(el);
                       }}
-                      className={`relative flex hover:bg-[#c41661] hover:text-[#dbdbdb]  grow-4 bg-[#D9176C] py-3.25 justify-center rounded-lg items-center text-white 
-                      ${loadingId.includes(el.bookId) ? "bg-gray-400 " : "bg-[#D9176C]"}
+                      className={`relative flex  hover:text-[#dbdbdb]  w-[80%] bg-[#D9176C] py-3.25 justify-center rounded-lg items-center text-white 
+                      ${loadingId.includes(el.bookId) ? "bg-gray-400 hover:bg-gray-400 " : "bg-[#D9176C] hover:bg-[#c41661]"}
                     `}
                     >
                       {loadingId.includes(el.bookId) ? (
                         <ImSpinner2
-                          className="animate-spin text-[#D9176C]"
+                          className="animate-spin my-0 text-[#D9176C]"
                           size={18}
                         />
                       ) : (
@@ -183,12 +183,12 @@ return (
                       if (loadingId2.includes(el.bookId)) return;
                       handleAddToWishlist(el);
                     }}
-                    className={`relative hover:text-[#c41661] hover:bg-[#dbdbdb] flex mybtn2 grow py-3.25 justify-center rounded-lg border border-[#D9176C] text-[#D9176C]
+                    className={`relative hover:text-[#c41661] hover:bg-[#dbdbdb] flex mybtn2 w-[20%] py-3.25 justify-center rounded-lg border border-[#D9176C] text-[#D9176C]
                       ${loadingId2.includes(el.bookId) ? "bg-gray-400 " : ""}`}
                   >
                     {loadingId2.includes(el.bookId) ? (
                       <ImSpinner2
-                        className="animate-spin text-[#ffff]"
+                        className="animate-spin text-[#D9176C]"
                         size={18}
                       />
                     ) : (
