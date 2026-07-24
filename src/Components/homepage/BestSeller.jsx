@@ -35,7 +35,6 @@ export default function BestSeller({ bookData }) {
               />
             ))}
 
-            {/* duplicate for infinite effect */}
             {bookData?.best_selling_image?.map((img, i) => (
               <img
                 key={`dup-${i}`}

@@ -106,7 +106,7 @@ const booksData = bookData;
   const requireLoginAlert = () => {
     toast.custom(
       (t) => (
-        // أضفنا الكلاس هنا
+
         <div className="toast-animation bg-white p-5 rounded-xl shadow-lg w-full max-w-sm text-center">
           <p className="font-semibold mb-3">You should log in first!</p>
 
@@ -134,7 +134,6 @@ const booksData = bookData;
       {
         id: "login-toast",
         duration: 5000,
-        // تأكد أن الـ toast يظهر في المكان الصحيح (مثلاً الأعلى)
         position: "top-center",
       },
     );

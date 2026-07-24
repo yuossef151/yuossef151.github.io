@@ -224,7 +224,6 @@ book.map((el, index) => (
             </NavLink>
           )}
 
-          {/* زر الـ Wishlist */}
           <NavLink
             onClick={async (e) => {
               e.preventDefault();

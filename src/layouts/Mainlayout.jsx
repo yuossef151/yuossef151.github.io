@@ -16,10 +16,7 @@ const location = useLocation();
       settpage(1);
     }
     
-    // مثال: إذا خرجت من صفحة الطلبات (Ordar)
-    // if (!location.pathname.includes("/Ordar")) {
-    //   setOrderPage(1);
-    // }
+
     
   }, [location.pathname]);
   return (

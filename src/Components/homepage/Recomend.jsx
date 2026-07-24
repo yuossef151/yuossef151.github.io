@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { ImSpinner2 } from "react-icons/im";
-// import books from "../bookspage/Booklest"
 export default function Recomend({bookData}) {
   const { addToCart, handleAddToCart, loadingId, setLoadingId  ,booksData } =
     useContext(CartContext);
@@ -21,8 +20,7 @@ export default function Recomend({bookData}) {
     setLoadingId2,
   } = useContext(WishlistContext);
   const token = localStorage.getItem("token");
-// const book = books ;
-// console.log(book);
+
 
   useEffect(() => {
     loadingId2.forEach((id) => {

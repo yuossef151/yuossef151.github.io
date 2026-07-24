@@ -27,7 +27,6 @@ export default function Ordar() {
     enabled: !!token,
     retry: false,
   });
-  //jj
   console.log(books);
   console.log(user);
 
