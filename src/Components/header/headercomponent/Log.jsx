@@ -3,28 +3,59 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 import { CartContext } from "../../cartpage/CartContext";
 import { WishlistContext } from "../../Wishlistpage/WishlistContext";
+import toast from "react-hot-toast";
 
 export default function Log() {
   const { user, logout } = useContext(AuthContext);
   const [prof, setprof] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const { Cart } = useContext(CartContext);
-
   const { wishlist, setWishlist } = useContext(WishlistContext);
 
-
-
   const navRef = useRef(null);
-      useEffect(() => {
-      const handleClickOutside = (e) => {
-        if (navRef.current && !navRef.current.contains(e.target)) {
-          setprof(false);
-        }
-      };
   
-      document.addEventListener("click", handleClickOutside);
-      return () => document.removeEventListener("click", handleClickOutside);
-    }, []);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setprof(false);
+      }
+    };
+ 
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+    setIsLoggingOut(true);
+    setprof(false);
+
+    const loadingToast = toast.loading("Logging out, please wait...", {
+      position: "bottom-right",
+    });
+
+    setTimeout(() => {
+      logout();
+      setIsLoggingOut(false);
+      
+      toast.dismiss(loadingToast);
+      toast.success("You have successfully logged out!", {
+        position: "bottom-right",
+        duration: 4000,
+        style: {
+          padding: "16px",
+          fontSize: "16px",
+          minWidth: "250px",
+        },
+        iconTheme: {
+          primary: "#D9176C",
+          secondary: "#fff",
+        },
+      });
+    }, 3000); 
+  };
+
   return (
     <>
       <div className="">
@@ -91,7 +122,7 @@ export default function Log() {
             <div ref={navRef}>
               <div
                 onClick={() => {
-                  setprof((prev) => !prev);
+                  if (!isLoggingOut) setprof((prev) => !prev);
                 }}
                 className="flex gap-4 cursor-pointer"
               >
@@ -102,7 +133,7 @@ export default function Log() {
                     className="flex items-center btn-ghost"
                   >
                     <div className="flex items-center gap-2">
-                      <div className="w-11.25 h-11.25   relative">
+                      <div className="w-11.25 h-11.25  relative">
                         <div className="bg-[#25D994] w-[9.6px] h-[9.6px] rounded-[50%] absolute border-2  top-[3%] right-[3%]"></div>
                         <img
                           className="w-full h-full rounded-[50%] "
@@ -179,7 +210,7 @@ export default function Log() {
                     </li>
 
                     <li className="">
-                      <div className="flex py-3 items-center gap-2 ">
+                      <div className={`flex py-3 items-center gap-2 ${isLoggingOut ? "opacity-50 pointer-events-none" : ""}`}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width={20}
@@ -192,13 +223,13 @@ export default function Log() {
                           ></path>
                         </svg>
                         <NavLink
-                          onClick={() => {
-                            console.log("akali");
-                            
-                            logout();
+                          as="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleLogout();
                           }}
                         >
-                          Log Out
+                          {isLoggingOut ? "Logging out..." : "Log Out"}
                         </NavLink>
                       </div>
                     </li>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaPlusCircle, FaMinusCircle, FaTrashAlt } from "react-icons/fa";
+import { FaPlusCircle, FaMinusCircle, FaTrashAlt, FaHeartBroken } from "react-icons/fa";
 import { WishlistContext } from "./WishlistContext";
 import { CartContext } from "../cartpage/CartContext";
 import { NavLink } from "react-router-dom";
@@ -43,25 +43,32 @@ export default function Wishlistdata() {
 
   return (
     <>
-      <div className=" w-full lg:h-30 h-25 inset-0">
+      <div className="w-full lg:h-30 h-25 inset-0 relative">
         <img
-          className=" object-cover w-full h-full rotate-180   top-0 "
+          className="object-cover w-full h-full rotate-180 top-0"
           src="/imglogin.png"
           alt=""
         />
-        <div className="absolute w-full lg:h-30 h-25 inset-0 bg-[#00000099] flex items-center justify-center "></div>
+        <div className="absolute w-full lg:h-30 h-25 inset-0 bg-[#00000099] flex items-center justify-center"></div>
       </div>
+      
       {mycart.length === 0 ? (
-        <div className="py-20 w-full flex items-center justify-center">
-          <p className="lg:text-3xl text-[20px] sm:max-md:text-[26px] text-[#18181880] ">
-            The Wishlis is empty
+        <div className="flex flex-col items-center justify-center bg-white border border-[#D9176C33] rounded-[20px] lg:p-12 md:p-8 p-6  text-center shadow-sm my-16 mx-5 lg:mx-20">
+          <div className="p-4 bg-pink-50 rounded-full text-[#D9176C] mb-4">
+            <FaHeartBroken size={48} />
+          </div>
+          <h3 className="lg:text-3xl text-[20px] sm:max-md:text-[26px] font-bold text-gray-800 mb-2">
+            The Wishlist is empty
+          </h3>
+          <p className="text-gray-500 text-base max-w-md">
+            You haven't added any books to your wishlist yet. Explore our collection and save your favorites!
           </p>
         </div>
       ) : (
         <div className="pb-20">
           <div className="lg:px-15 bg-[#F5F5F5]">
             <table
-              className="hidden2 sm:max-md:table  w-full table-auto bg-[#F5F5F5] "
+              className="hidden sm:max-md:table w-full table-auto bg-[#F5F5F5]"
               style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}
             >
               <thead>
@@ -82,10 +89,10 @@ export default function Wishlistdata() {
                 {mycart.map((el, index) => (
                   <tr
                     key={el.id || index}
-                    className="bg-white "
+                    className="bg-white"
                     style={{ borderRadius: "8px" }}
                   >
-                    <td className=" py-6 px-6 ">
+                    <td className="py-6 px-6">
                       <div className="flex gap-4 h-full w-full">
                         <img
                           src={el.image || `/book-${index + 1}.png`}
@@ -93,22 +100,24 @@ export default function Wishlistdata() {
                           className="w-42.5 h-62.5 object-cover rounded"
                         />
                         <div className="flex flex-col w-full justify-between">
-                          <h3 className="text-lg font-semibold">
-                            {el.bookName}
-                          </h3>
-                          <p className="text-gray-600 text-sm">
-                            Author:{" "}
-                            <span className="font-medium">{el.author}</span>
-                          </p>
-                          <p className="text-gray-500 text-sm mt-1 line-clamp-3">
-                            {el.description}
-                          </p>
-                          <p className="text-xs text-gray-400 mt-10">
-                            ASIN: {el.asin || "B09TWSRMCB"}
-                          </p>
+                          <div>
+                            <h3 className="text-lg font-semibold">
+                              {el.bookName}
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                              Author:{" "}
+                              <span className="font-medium">{el.author}</span>
+                            </p>
+                            <p className="text-gray-500 text-sm mt-1 line-clamp-3">
+                              {el.description}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-10">
+                              ASIN: {el.asin || "B09TWSRMCB"}
+                            </p>
+                          </div>
                           <div className="pt-5">
                             {el.stock <= 0 ? (
-                              <div className="flex grow py-3.25 px-7.5 justify-center rounded-lg text-[#D9176C] items-center border-2 border-[#D9176C] ">
+                              <div className="flex grow py-3.25 px-7.5 justify-center rounded-lg text-[#D9176C] items-center border-2 border-[#D9176C]">
                                 <p>Out of stock</p>
                               </div>
                             ) : (
@@ -121,7 +130,11 @@ export default function Wishlistdata() {
 
                                   handleAddToCart(el);
                                 }}
-                                className={`flex  relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(el.bookId) ? "bg-gray-400  " : "bg-[#D9176C]"}`}
+                                className={`flex relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${
+                                  loadingId.includes(el.bookId)
+                                    ? "bg-gray-400"
+                                    : "bg-[#D9176C]"
+                                }`}
                               >
                                 {loadingId.includes(el.bookId) ? (
                                   <ImSpinner2
@@ -206,7 +219,8 @@ export default function Wishlistdata() {
                 ))}
               </tbody>
             </table>
-            <div className="sm:max-md:hidden md:hidden lg:hidden  space-y-6 px-5 py-5">
+
+            <div className="sm:max-md:hidden md:hidden lg:hidden space-y-6 px-5 py-5">
               {mycart.map((el, index) => (
                 <div
                   key={el.id || index}
@@ -252,7 +266,7 @@ export default function Wishlistdata() {
                     </NavLink>
                   </div>
                   {el.stock <= 0 ? (
-                    <div className="flex grow py-3.25 px-7.5 justify-center rounded-lg text-[#D9176C] items-center border-2 border-[#D9176C] ">
+                    <div className="flex grow py-3.25 px-7.5 justify-center rounded-lg text-[#D9176C] items-center border-2 border-[#D9176C]">
                       <p>Out of stock</p>
                     </div>
                   ) : (
@@ -264,7 +278,11 @@ export default function Wishlistdata() {
                         if (loadingId2.includes(el.bookId)) return;
                         handleAddToCart(el);
                       }}
-                      className={`flex  relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${loadingId.includes(el.bookId) ? "bg-gray-400 cursor-not-allowed " : "bg-[#D9176C]"}`}
+                      className={`flex relative bg-[#D9176C] py-3.25 px-7.5 justify-center rounded-lg items-center text-white ${
+                        loadingId.includes(el.bookId)
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-[#D9176C]"
+                      }`}
                     >
                       {loadingId.includes(el.bookId) ? (
                         <ImSpinner2

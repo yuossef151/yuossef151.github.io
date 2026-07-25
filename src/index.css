@@ -70,6 +70,15 @@
     align-items: center;
 }
 
+
+.Toastify__toast--success .Toastify__toast-icon svg {
+  fill: #D9176C;
+}
+
+.Toastify__progress-bar--success {
+  background: #D9176C !important;
+}
+
 @media (max-width: 640px) {
     .hidden2 {
         display: none;

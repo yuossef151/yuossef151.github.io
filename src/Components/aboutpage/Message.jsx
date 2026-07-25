@@ -23,12 +23,14 @@ export default function Message() {
     mutate(values);
   };
 
-  const meesageschema = Yup.object({
-    email: Yup.string().required().email(),
-    name: Yup.string().required(),
+const meesageschema = Yup.object({
+    name: Yup.string().required("Please enter your name"),
+    email: Yup.string()
+      .required("Please enter your email address")
+      .email("Please enter a valid email address"),
     message: Yup.string()
-      .required()
-      .min(10, "The message field must be at least 10 characters"),
+      .required("Please enter your message")
+      .min(10, "The message must be at least 10 characters long"),
   });
   const handleResize = () => {
     const el = textareaRef.current;
