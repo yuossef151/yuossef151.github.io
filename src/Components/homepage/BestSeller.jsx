@@ -30,7 +30,7 @@ export default function BestSeller({ bookData }) {
             {bookData?.best_selling_image?.map((img, i) => (
               <img
                 key={i}
-                src={img}
+                src={`/book-1.png`}
                 className="w-60 h-70 object-cover rounded-2xl shrink-0"
               />
             ))}

@@ -5,10 +5,9 @@ import { WishlistContext } from "../Wishlistpage/WishlistContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { ImSpinner2 } from "react-icons/im";
-import { BeatLoader, ClipLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 
 export default function Bookdata({
-
   book,
   pages,
   booktotal,
@@ -19,8 +18,15 @@ export default function Bookdata({
   isFetching,
 }) {
   const mypages = pages?.last_page || 1;
-  const { addToCart, handleAddToCart, loadingId, setLoadingId, Cart  ,page, settpage,} =
-    useContext(CartContext);
+  const {
+    addToCart,
+    handleAddToCart,
+    loadingId,
+    setLoadingId,
+    Cart,
+    page,
+    settpage,
+  } = useContext(CartContext);
   const {
     wishlist,
     addToWishlist,
@@ -31,11 +37,22 @@ export default function Bookdata({
   } = useContext(WishlistContext);
 
   const navigate = useNavigate();
-const [isLoaded, setIsLoaded] = useState(false);
+  const [loadedBooks, setLoadedBooks] = useState({});
+  const [failedBooks, setFailedBooks] = useState({});
+
+  const markBookLoaded = (key) => {
+    setLoadedBooks((prev) => (prev[key] ? prev : { ...prev, [key]: true }));
+  };
+
+  const markBookFailed = (key) => {
+    setFailedBooks((prev) => (prev[key] ? prev : { ...prev, [key]: true }));
+    setLoadedBooks((prev) => (prev[key] ? prev : { ...prev, [key]: true }));
+  };
+
   useEffect(() => {
     setLoadingId((prev) => {
       const newArr = prev.filter(
-        (id) => !Cart.some((el) => el.bookDetails.bookId === id),
+        (id) => !Cart.some((el) => el.bookDetails.bookId === id)
       );
 
       if (newArr.length === prev.length) return prev;
@@ -58,7 +75,7 @@ const [isLoaded, setIsLoaded] = useState(false);
     });
     setLoadingId2((prev) => {
       const newArr = prev.filter(
-        (id) => !wishlist.some((item) => item.bookId === id),
+        (id) => !wishlist.some((item) => item.bookId === id)
       );
       if (newArr.length === prev.length) return prev;
 
@@ -66,23 +83,15 @@ const [isLoaded, setIsLoaded] = useState(false);
     });
   }, [wishlist]);
 
-
   const hasBooks = book?.length > 0;
 
-
-console.log(book);
-
-
-useEffect(() => {
-  localStorage.setItem("currentBookPage", page);
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-}, [page]);
-
-
-
+  useEffect(() => {
+    localStorage.setItem("currentBookPage", page);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [page]);
 
   return (
     <div className="lg:pt-15 sm:max-md:pt-10 pt-10 sm:max-md:w-full lg:w-full pb-24 lg:border-e-2 border-none border-[#22222233]">
@@ -99,7 +108,7 @@ useEffect(() => {
             <div className="border-e-2 border-[#22222233] h-full px-3 flex justify-center items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className=" text-[#22222280] lg:w-6 w-5 lg:h-6 h-5"
+                className="text-[#22222280] lg:w-6 w-5 lg:h-6 h-5"
                 viewBox="0 0 24 24"
               >
                 <g
@@ -109,12 +118,12 @@ useEffect(() => {
                   strokeLinejoin="round"
                   strokeWidth={1.5}
                 >
-                  <path d="M16 6.429C16 4.535 14.21 3 12 3S8 4.535 8 6.429v5.142C8 13.465 9.79 15 12 15s4-1.535 4-3.429z"></path>
-                  <path d="M5 11a7 7 0 1 0 14 0m-7 7v3m-4 0h8"></path>
+                  <path d="M16 6.429C16 4.535 14.21 3 12 3S8 4.535 8 6.429v5.142C8 13.465 9.79 15 12 15s4-1.535 4-3.429z" />
+                  <path d="M5 11a7 7 0 1 0 14 0m-7 7v3m-4 0h8" />
                 </g>
               </svg>
             </div>
-            <div className="h-full lg:px-3 sm:max-md:px-1 flex justify-center px-1  items-center">
+            <div className="h-full lg:px-3 sm:max-md:px-1 flex justify-center px-1 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="text-[#D9176C] lg:w-6 w-5 lg:h-6 h-5"
@@ -127,137 +136,208 @@ useEffect(() => {
                   strokeLinejoin="round"
                   strokeWidth={2}
                   d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6"
-                ></path>
+                />
               </svg>
             </div>
           </div>
         </div>
       </div>
+
       <div className="flex px-10 flex-col gap-5 w-full">
         {isLoading ? (
           <div className="text-center py-10 text-[#D9176C] flex items-center justify-center gap-3">
-            <p>Loading books </p> <BeatLoader color="#D9176C" size={10} />
+            <p>Loading books</p> <BeatLoader color="#D9176C" size={10} />
           </div>
-        ) : book.length > 0 ? (
-book.map((el, index) => (
-  <div
-    onClick={() => navigate(`/single/${el.bookId}`)}
-    key={el.id || index}
-    className="flex cursor-pointer flex-col md:flex-row items-stretch w-full  mt-10 gap-6 border border-gray-100 rounded-2xl p-6 transition-all hover:shadow-lg bg-white"
-  >
-    <div className="w-full md:w-50 shrink-0">
-      <div className="aspect-3/4 w-full overflow-hidden rounded-lg">
-      {!isLoaded && (
-      <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-        <ImSpinner2 className="animate-spin text-[#D9176C]" size={24} />
-      </div>
-    )}
-        <img
-          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-          src={el?.bookImage[0]?.image}
-          alt={el.bookName}
-          onLoad={() => setIsLoaded(true)}
-        />
-      </div>
-    </div>
+        ) : book?.length > 0 ? (
+          book.map((el, index) => {
+            const bookKey = el.bookId || el.id || index;
+            const isBookLoaded = Boolean(loadedBooks[bookKey]);
+            const isBookFailed = Boolean(failedBooks[bookKey]);
+            const rawImg = el?.bookImage?.[0]?.image;
+            const imgSrc = isBookFailed || !rawImg ? "/imglogin.png" : rawImg;
 
-    <div className="flex flex-col grow justify-between w-full">
-      <div>
-        <h3 className="text-[17px] md:text-[18px] font-bold text-black leading-snug line-clamp-2">
-          {el.bookName}
-        </h3>
-        <p className="text-[#22222280] text-sm mt-2 hidden sm:block line-clamp-2">
-          {el.description}
-        </p>
-      </div>
+            return (
+              <div
+                onClick={() => navigate(`/single/${el.bookId}`)}
+                key={bookKey}
+                className="flex cursor-pointer flex-col md:flex-row items-stretch w-full mt-10 gap-6 border border-gray-100 rounded-2xl p-6 transition-all hover:shadow-lg bg-white"
+              >
+                <div className="w-full md:w-50 shrink-0">
+                  <div className="relative aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-100">
+                    {!isBookLoaded && !isBookFailed && (
+                      <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-100">
+                        <ImSpinner2
+                          className="animate-spin text-[#D9176C]"
+                          size={24}
+                        />
+                      </div>
+                    )}
+                    <img
+                      className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                      src={`/book-1.png`}
+                      alt={el.bookName}
+                      onLoad={() => markBookLoaded(bookKey)}
+                      onError={() => markBookFailed(bookKey)}
+                    />
+                  </div>
+                </div>
 
-      <div className="flex gap-8 py-4 border-y border-gray-100 my-4">
-        <div>
-          <p className="text-[11px] text-[#22222280] uppercase">Author</p>
-          <p className="text-black font-medium text-sm">{el.author}</p>
-        </div>
-        <div>
-          <p className="text-[11px] text-[#22222280] uppercase">Year</p>
-          <p className="text-black font-medium text-sm">{el.publicationYear}</p>
-        </div>
-      </div>
+                <div className="flex flex-col grow justify-between w-full">
+                  <div>
+                    <h3 className="text-[17px] md:text-[18px] font-bold text-black leading-snug line-clamp-2">
+                      {el.bookName}
+                    </h3>
+                    <p className="text-[#22222280] text-sm mt-2 hidden sm:block line-clamp-2">
+                      {el.description}
+                    </p>
+                  </div>
 
-      <div className="flex flex-col   items-center justify-between gap-4">
-        <div className="flex items-center gap-3 w-full justify-between ">
-          <div className="flex items-center gap-1">
-            <Star rate={el.rate} countReview={el.countReview} />
-            <span className="text-sm font-medium">{el.rate}</span>
-          </div>
-          <p className="text-[18px] font-bold">${el.price}</p>
-        </div>
+                  <div className="flex gap-8 py-4 border-y border-gray-100 my-4">
+                    <div>
+                      <p className="text-[11px] text-[#22222280] uppercase">
+                        Author
+                      </p>
+                      <p className="text-black font-medium text-sm">
+                        {el.author}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-[#22222280] uppercase">
+                        Year
+                      </p>
+                      <p className="text-black font-medium text-sm">
+                        {el.publicationYear}
+                      </p>
+                    </div>
+                  </div>
 
-        <div className="flex gap-2 w-full ">
-          {el.stock <= 0 ? (
-            <div className="grow text-center py-2.5 px-4 rounded-lg text-[#D9176C] border-2 border-[#D9176C] text-sm font-medium">
-              Out of stock
-            </div>
-          ) : (
-            <NavLink
-              onClick={async (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (loadingId.includes(el.bookId)) return;
-                handleAddToCart(el);
-              }}
-              className={` grow  hover:text-[#dbdbdb] flex items-center justify-center gap-2 py-2.5 px-6 rounded-lg text-white text-sm font-medium transition-colors ${
-                loadingId.includes(el.bookId) ? "bg-gray-400" : "bg-[#D9176C] hover:bg-[#c41661]"
-              }`}
-            >
-              {loadingId.includes(el.bookId) ? (
-                <ImSpinner2 className="animate-spin text-[#D9176C]" size={18} />
-              ) : (
-                <>
-                  Add To Cart
-                  <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 512 512">
-                    <circle cx={176} cy={416} r={16} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} />
-                    <circle cx={400} cy={416} r={16} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} />
-                    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M48 80h64l48 272h256" />
-                    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128" />
-                  </svg>
-                </>
-              )}
-            </NavLink>
-          )}
+                  <div className="flex flex-col items-center justify-between gap-4">
+                    <div className="flex items-center gap-3 w-full justify-between">
+                      <div className="flex items-center gap-1">
+                        <Star rate={el.rate} countReview={el.countReview} />
+                        <span className="text-sm font-medium">{el.rate}</span>
+                      </div>
+                      <p className="text-[18px] font-bold">${el.price}</p>
+                    </div>
 
-          <NavLink
-            onClick={async (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              if (loadingId2.includes(el.bookId)) return;
-              handleAddToWishlist(el);
-            }}
-            className={`py-2.5 px-3 rounded-lg  hover:text-[#c41661] hover:bg-[#dbdbdb] border border-[#D9176C] text-[#D9176C] flex items-center justify-center transition-colors ${
-              loadingId2.includes(el.bookId) ? "bg-gray-400" : ""
-            }`}
-          >
-            {loadingId2.includes(el.bookId) ? (
-              <ImSpinner2 className="animate-spin text-[#D9176C]" size={18} />
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24">
-                <path
-                  fill={isInWishlist(el.bookId) ? "#D9176C" : "none"}
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M7.75 3.5C5.127 3.5 3 5.76 3 8.547C3 14.125 12 20.5 12 20.5s9-6.375 9-11.953C21 5.094 18.873 3.5 16.25 3.5c-1.86 0-3.47 1.136-4.25 2.79c-.78-1.654-2.39-2.79-4.25-2.79"
-                />
-              </svg>
-            )}
-          </NavLink>
-        </div>
-      </div>
-    </div>
-  </div>
-))
+                    <div className="flex gap-2 w-full">
+                      {el.stock <= 0 ? (
+                        <div className="grow text-center py-2.5 px-4 rounded-lg text-[#D9176C] border-2 border-[#D9176C] text-sm font-medium">
+                          Out of stock
+                        </div>
+                      ) : (
+                        <NavLink
+                          onClick={async (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if (loadingId.includes(el.bookId)) return;
+                            handleAddToCart(el);
+                          }}
+                          className={`grow hover:text-[#dbdbdb] flex items-center justify-center gap-2 py-2.5 px-6 rounded-lg text-white text-sm font-medium transition-colors ${
+                            loadingId.includes(el.bookId)
+                              ? "bg-gray-400"
+                              : "bg-[#D9176C] hover:bg-[#c41661]"
+                          }`}
+                        >
+                          {loadingId.includes(el.bookId) ? (
+                            <ImSpinner2
+                              className="animate-spin text-white"
+                              size={18}
+                            />
+                          ) : (
+                            <>
+                              Add To Cart
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={20}
+                                height={20}
+                                viewBox="0 0 512 512"
+                              >
+                                <circle
+                                  cx={176}
+                                  cy={416}
+                                  r={16}
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={32}
+                                />
+                                <circle
+                                  cx={400}
+                                  cy={416}
+                                  r={16}
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={32}
+                                />
+                                <path
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={32}
+                                  d="M48 80h64l48 272h256"
+                                />
+                                <path
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={32}
+                                  d="M160 288h249.44a8 8 0 0 0 7.85-6.43l28.8-144a8 8 0 0 0-7.85-9.57H128"
+                                />
+                              </svg>
+                            </>
+                          )}
+                        </NavLink>
+                      )}
+
+                      <NavLink
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (loadingId2.includes(el.bookId)) return;
+                          handleAddToWishlist(el);
+                        }}
+                        className={`py-2.5 px-3 rounded-lg hover:text-[#c41661] hover:bg-[#dbdbdb] border border-[#D9176C] text-[#D9176C] flex items-center justify-center transition-colors ${
+                          loadingId2.includes(el.bookId) ? "bg-gray-400" : ""
+                        }`}
+                      >
+                        {loadingId2.includes(el.bookId) ? (
+                          <ImSpinner2
+                            className="animate-spin text-white"
+                            size={18}
+                          />
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={20}
+                            height={20}
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fill={isInWishlist(el.bookId) ? "#D9176C" : "none"}
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M7.75 3.5C5.127 3.5 3 5.76 3 8.547C3 14.125 12 20.5 12 20.5s9-6.375 9-11.953C21 5.094 18.873 3.5 16.25 3.5c-1.86 0-3.47 1.136-4.25 2.79c-.78-1.654-2.39-2.79-4.25-2.79"
+                            />
+                          </svg>
+                        )}
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })
         ) : (
           <div className="text-center py-10 text-gray-500 flex items-center justify-center gap-3">
-            <p>There's no book by that name. </p>
+            <p>There's no book by that name.</p>
           </div>
         )}
 
@@ -297,7 +377,7 @@ book.map((el, index) => (
                   >
                     {p}
                   </button>
-                ),
+                )
             )}
 
             <button className="w-10 h-10 rounded-lg text-white bg-[#D9176C] me-4">
@@ -314,7 +394,7 @@ book.map((el, index) => (
                   >
                     {p}
                   </button>
-                ),
+                )
             )}
 
             {page + 1 <= mypages && (

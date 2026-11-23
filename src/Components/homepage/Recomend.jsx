@@ -67,7 +67,7 @@ return (
               <img
                 className="lg:h-80 sm:max-md:h-60 h-70
           w-full sm:max-md:w-80 lg:w-55 rounded-2xl"
-                src={bookImage}
+                src={`/book-1.png`}
                 alt={el.bookName}
               />
 

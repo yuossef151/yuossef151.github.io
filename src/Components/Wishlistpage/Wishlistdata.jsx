@@ -68,7 +68,7 @@ export default function Wishlistdata() {
         <div className="pb-20">
           <div className="lg:px-15 bg-[#F5F5F5]">
             <table
-              className="hidden sm:max-md:table w-full table-auto bg-[#F5F5F5]"
+              className="hidden md:table  w-full table-auto bg-[#F5F5F5]"
               style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}
             >
               <thead>
@@ -95,7 +95,7 @@ export default function Wishlistdata() {
                     <td className="py-6 px-6">
                       <div className="flex gap-4 h-full w-full">
                         <img
-                          src={el.image || `/book-${index + 1}.png`}
+                          src={el.image || `/book-1.png`}
                           alt={el.bookName}
                           className="w-42.5 h-62.5 object-cover rounded"
                         />

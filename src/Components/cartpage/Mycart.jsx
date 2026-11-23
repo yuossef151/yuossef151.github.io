@@ -13,56 +13,61 @@ export default function Mycart() {
     removeFromCart,
     updateQuantityMutation,
   } = useContext(CartContext);
-  
-  const mycart = Cart;
+
+  const mycart = Array.isArray(Cart) ? Cart : [];
   const [loadingId, setLoadingId] = useState([]);
   const [stock, setstock] = useState("");
 
   const increaseQty = (item) => {
-    const updatedCart = mycart.map((el) =>
-      el.bookDetails.bookId === item.bookDetails.bookId
-        ? { ...el, qty: el.qty + 1 }
-        : el,
-    );
+    const targetId = item?.bookDetails?.bookId ?? item?.bookId ?? item?.id;
+    const updatedCart = mycart.map((el) => {
+      const currentId = el?.bookDetails?.bookId ?? el?.bookId ?? el?.id;
+      return currentId === targetId
+        ? { ...el, qty: (el.qty || 1) + 1 }
+        : el;
+    });
     setCart(updatedCart);
-    const newQty = item.qty + 1;
+    const newQty = (item.qty || 1) + 1;
 
     updateQuantityMutation.mutate({
-      bookId: item.bookDetails.bookId,
+      bookId: targetId,
       qty: newQty,
     });
   };
 
   const decreaseQty = (item) => {
-    if (item.qty > 1) {
-      const updatedCart = mycart.map((el) =>
-        el.bookDetails.bookId === item.bookDetails.bookId
-          ? { ...el, qty: el.qty - 1 }
-          : el,
-      );
+    const currentQty = item.qty || 1;
+    if (currentQty > 1) {
+      const targetId = item?.bookDetails?.bookId ?? item?.bookId ?? item?.id;
+      const updatedCart = mycart.map((el) => {
+        const currentId = el?.bookDetails?.bookId ?? el?.bookId ?? el?.id;
+        return currentId === targetId
+          ? { ...el, qty: currentQty - 1 }
+          : el;
+      });
       setCart(updatedCart);
-      const newQty = item.qty - 1;
+      const newQty = currentQty - 1;
 
       updateQuantityMutation.mutate({
-        bookId: item.bookDetails.bookId,
+        bookId: targetId,
         qty: newQty,
       });
     }
   };
 
   const removeItem = async (item) => {
-    const id = item.bookDetails.bookId;
-
-    if (loadingId.includes(id)) return;
+    const id = item?.bookDetails?.bookId ?? item?.bookId ?? item?.id;
+    if (!id || loadingId.includes(id)) return;
 
     setLoadingId((prev) => [...prev, id]);
-
     await removeFromCart(item);
   };
 
   useEffect(() => {
     loadingId.forEach((id) => {
-      const stillExists = Cart.some((el) => el.bookDetails.bookId === id);
+      const stillExists = mycart.some(
+        (el) => (el?.bookDetails?.bookId ?? el?.bookId ?? el?.id) === id
+      );
 
       if (!stillExists) {
         toast.success("Item removed!", {
@@ -74,7 +79,7 @@ export default function Mycart() {
         setLoadingId((prev) => prev.filter((i) => i !== id));
       }
     });
-  }, [Cart, loadingId]);
+  }, [mycart, loadingId]);
 
   return (
     <>
@@ -102,8 +107,9 @@ export default function Mycart() {
       ) : (
         <div className="pb-20">
           <div className="lg:px-15 bg-[#F5F5F5]">
+            {/* جدول الشاشات المتوسطة والكبيرة */}
             <table
-              className="hidden sm:max-md:table w-full table-auto bg-[#F5F5F5]"
+              className="hidden md:table w-full table-auto bg-[#F5F5F5]"
               style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}
             >
               <thead>
@@ -127,200 +133,226 @@ export default function Mycart() {
                 style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}
                 className="bg-[#F5F5F5]"
               >
-                {mycart.map((el, index) => (
-                  <tr
-                    key={el.id || index}
-                    className="bg-white"
-                    style={{ borderRadius: "8px" }}
-                  >
-                    <td className="py-6 px-4 align-top">
-                      <div className="flex gap-4 max-w-lg h-full">
-                        <img
-                          src={el.bookDetails?.bookImage[0]?.image}
-                          alt={el.bookDetails.bookName}
-                          className="w-42.5 h-62.5 object-cover rounded"
-                        />
-                        <div className="flex flex-col justify-between">
-                          <div>
-                            <h3 className="text-lg font-semibold">
-                              {el.bookDetails.bookName}
-                            </h3>
-                            <p className="text-gray-600 text-sm">
-                              Author:{" "}
-                              <span className="font-medium">
-                                {el.bookDetails.author}
-                              </span>
-                            </p>
-                            <p className="text-gray-500 text-sm mt-1 line-clamp-3">
-                              {el.bookDetails.description}
-                            </p>
-                            <p className="text-xs text-gray-400 mt-10">
-                              ASIN: {el.asin || "B09TWSRMCB"}
-                            </p>
+                {mycart.map((el, index) => {
+                  const details = el?.bookDetails || el || {};
+                  const bookId = details.bookId ?? el.id ?? index;
+                  const qty = el.qty || 1;
+                  const price = Number(details.price || 0);
+                  const imgSrc =
+                    details?.bookImage?.[0]?.image ||
+                    details?.image ||
+                    "/imglogin.png";
+
+                  return (
+                    <tr
+                      key={el.id || bookId || index}
+                      className="bg-white"
+                      style={{ borderRadius: "8px" }}
+                    >
+                      <td className="py-6 px-4 align-top">
+                        <div className="flex gap-4 max-w-lg h-full">
+                          <img
+                            src={ `/book-1.png`}
+                            alt={details.bookName || "Book"}
+                            className="w-42.5 h-62.5 object-cover rounded"
+                          />
+                          <div className="flex flex-col justify-between">
+                            <div>
+                              <h3 className="text-lg font-semibold">
+                                {details.bookName}
+                              </h3>
+                              <p className="text-gray-600 text-sm">
+                                Author:{" "}
+                                <span className="font-medium">
+                                  {details.author}
+                                </span>
+                              </p>
+                              <p className="text-gray-500 text-sm mt-1 line-clamp-3">
+                                {details.description}
+                              </p>
+                              <p className="text-xs text-gray-400 mt-10">
+                                ASIN: {el.asin || details.asinCode || "B09TWSRMCB"}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
 
-                    <td className="text-center py-6 px-4 relative">
-                      <div className="inline-flex items-center gap-3 text-pink-600">
+                      <td className="text-center py-6 px-4 relative">
+                        <div className="inline-flex items-center gap-3 text-pink-600">
+                          <NavLink
+                            onClick={(e) => {
+                              e.preventDefault();
+                              qty === 1 ? removeItem(el) : decreaseQty(el);
+                              setstock("");
+                            }}
+                            aria-label="Decrease quantity"
+                          >
+                            <FaMinusCircle size={20} />
+                          </NavLink>
+                          <span className="text-lg font-semibold">{qty}</span>
+                          <NavLink
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (details?.stock !== undefined && qty >= details.stock) {
+                                setstock("Out of stock");
+                              } else {
+                                increaseQty(el);
+                                setstock("");
+                              }
+                            }}
+                            aria-label="Increase quantity"
+                          >
+                            <FaPlusCircle size={20} />
+                          </NavLink>
+                        </div>
+                        <div className="absolute bottom-2 text-red-600 left-[50%] -translate-x-1/2">
+                          <p className="text-[14px] whitespace-nowrap">{stock}</p>
+                        </div>
+                      </td>
+
+                      <td className="text-center py-6 px-4 font-semibold">
+                        ${price.toFixed(2)}
+                      </td>
+
+                      <td className="text-center py-6 px-4 font-semibold">
+                        ${(price * qty).toFixed(2)}
+                      </td>
+
+                      <td className="text-center py-6 px-4 text-pink-600">
                         <NavLink
+                          className="flex items-center justify-center"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            removeItem(el);
+                          }}
+                          aria-label="Remove item"
+                        >
+                          {loadingId.includes(bookId) ? (
+                            <ImSpinner2
+                              className="animate-spin text-red-500"
+                              size={18}
+                            />
+                          ) : (
+                            <FaTrashAlt size={18} />
+                          )}
+                        </NavLink>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+
+            {/* عرض الموبايل والشاشات الصغيرة */}
+            <div className="md:hidden space-y-6 py-5 px-5">
+              {mycart.map((el, index) => {
+                const details = el?.bookDetails || el || {};
+                const bookId = details.bookId ?? el.id ?? index;
+                const qty = el.qty || 1;
+                const price = Number(details.price || 0);
+                const imgSrc =
+                  details?.bookImage?.[0]?.image ||
+                  details?.image ||
+                  "/imglogin.png";
+
+                return (
+                  <div
+                    key={el.id || bookId || index}
+                    className="bg-white rounded-xl p-4 shadow-sm flex flex-col gap-4"
+                  >
+                    <div className="flex gap-4 items-start">
+                      <img
+                      
+                        src={ `/book-1.png`}
+                        alt={details.bookName || "Book"}
+                        className="w-24 h-32 object-cover rounded"
+                      />
+
+                      <div className="flex flex-col justify-between flex-1">
+                        <div>
+                          <h3 className="font-semibold text-base line-clamp-2">
+                            {details.bookName}
+                          </h3>
+                          <p className="text-sm text-gray-600">
+                            {details.author}
+                          </p>
+                          <p className="text-gray-500 text-xs mt-1 line-clamp-3">
+                            {details.description}
+                          </p>
+                        </div>
+
+                        <p className="text-pink-600 font-bold text-lg mt-2">
+                          ${price.toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between border-t pt-4">
+                      <div className="inline-flex items-center gap-4 text-pink-600">
+                        <button
                           onClick={() => {
-                            el.qty == 1 ? removeItem(el) : decreaseQty(el);
+                            qty === 1 ? removeItem(el) : decreaseQty(el);
                             setstock("");
                           }}
-                          aria-label="Decrease quantity"
                         >
                           <FaMinusCircle size={20} />
-                        </NavLink>
-                        <span className="text-lg font-semibold">
-                          {el.qty || 1}
-                        </span>
-                        <NavLink
+                        </button>
+
+                        <span className="font-semibold text-lg">{qty}</span>
+
+                        <button
                           onClick={() => {
-                            el.qty >= el.bookDetails?.stock
-                              ? setstock("Out of stock")
-                              : (() => {
-                                  increaseQty(el);
-                                  setstock("");
-                                })();
+                            if (details?.stock !== undefined && qty >= details.stock) {
+                              setstock("Out of stock");
+                            } else {
+                              increaseQty(el);
+                              setstock("");
+                            }
                           }}
-                          aria-label="Increase quantity"
                         >
                           <FaPlusCircle size={20} />
-                        </NavLink>
+                        </button>
                       </div>
-                      <div className="absolute bottom-2 text-red-600 left-[50%] -translate-x-1/2">
-                        <p className="text-[14px] whitespace-nowrap">{stock}</p>
-                      </div>
-                    </td>
 
-                    <td className="text-center py-6 px-4 font-semibold">
-                      ${el.bookDetails.price.toFixed(2)}
-                    </td>
-
-                    <td className="text-center py-6 px-4 font-semibold">
-                      ${(el.bookDetails.price * el.qty).toFixed(2)}
-                    </td>
-
-                    <td className="text-center py-6 px-4 text-pink-600">
                       <NavLink
-                        className="flex items-center justify-center"
-                        onClick={() => removeItem(el)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (loadingId.includes(bookId)) return;
+                          removeItem(el);
+                        }}
+                        style={{
+                          pointerEvents: loadingId.includes(bookId)
+                            ? "none"
+                            : "auto",
+                          opacity: loadingId.includes(bookId) ? 0.5 : 1,
+                        }}
                         aria-label="Remove item"
                       >
-                        {loadingId.includes(el.bookDetails.bookId) ? (
+                        {loadingId.includes(bookId) ? (
                           <ImSpinner2
                             className="animate-spin text-red-500"
                             size={18}
                           />
                         ) : (
-                          <FaTrashAlt size={18} />
+                          <FaTrashAlt className="text-pink-600" size={18} />
                         )}
                       </NavLink>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
 
-            <div className="sm:max-md:hidden md:hidden lg:hidden space-y-6 py-5 px-5">
-              {mycart.map((el, index) => (
-                <div
-                  key={el.id || index}
-                  className="bg-white rounded-xl p-4 shadow-sm flex flex-col gap-4"
-                >
-                  <div className="flex gap-4 items-start">
-                    <img
-                      src={el.bookDetails?.bookImage[0]?.image}
-                      alt={el.bookDetails.bookName}
-                      className="w-24 h-32 object-cover rounded"
-                    />
-
-                    <div className="flex flex-col justify-between flex-1">
-                      <div>
-                        <h3 className="font-semibold text-base line-clamp-2">
-                          {el.bookDetails.bookName}
-                        </h3>
-                        <p className="text-sm text-gray-600">
-                          {el.bookDetails.author}
-                        </p>
-                        <p className="text-gray-500 text-xs mt-1 line-clamp-3">
-                          {el.bookDetails.description}
-                        </p>
+                    {stock && (
+                      <div className="w-full flex items-center justify-center text-red-600 text-sm">
+                        <p>{stock}</p>
                       </div>
+                    )}
 
-                      <p className="text-pink-600 font-bold text-lg mt-2">
-                        ${el.bookDetails.price.toFixed(2)}
-                      </p>
+                    <div className="border-t pt-3 flex justify-between font-semibold">
+                      <span>Total</span>
+                      <span>${(price * qty).toFixed(2)}</span>
                     </div>
                   </div>
-
-                  <div className="flex items-center justify-between border-t pt-4">
-                    <div className="inline-flex items-center gap-4 text-pink-600">
-                      <button
-                        onClick={() => {
-                          el.qty == 1 ? removeItem(el) : decreaseQty(el);
-                          setstock("");
-                        }}
-                      >
-                        <FaMinusCircle size={20} />
-                      </button>
-
-                      <span className="font-semibold text-lg">{el.qty}</span>
-
-                      <button
-                        onClick={() => {
-                          el.qty >= el.bookDetails?.stock
-                            ? setstock("Out of stock")
-                            : (() => {
-                                increaseQty(el);
-                                setstock("");
-                              })();
-                        }}
-                      >
-                        <FaPlusCircle size={20} />
-                      </button>
-                    </div>
-
-                    <NavLink
-                      onClick={() => {
-                        if (loadingId.includes(el.bookDetails.bookId)) return;
-                        removeItem(el);
-                      }}
-                      style={{
-                        pointerEvents: loadingId.includes(el.bookDetails.bookId)
-                          ? "none"
-                          : "auto",
-                        opacity: loadingId.includes(el.bookDetails.bookId)
-                          ? 0.5
-                          : 1,
-                      }}
-                      aria-label="Remove item"
-                    >
-                      {loadingId.includes(el.bookDetails.bookId) ? (
-                        <ImSpinner2
-                          className="animate-spin text-red-500"
-                          size={18}
-                        />
-                      ) : (
-                        <FaTrashAlt className="text-pink-600" size={18} />
-                      )}
-                    </NavLink>
-                  </div>
-
-                  {stock && (
-                    <div className="w-full flex items-center justify-center text-red-600 text-sm">
-                      <p>{stock}</p>
-                    </div>
-                  )}
-
-                  <div className="border-t pt-3 flex justify-between font-semibold">
-                    <span>Total</span>
-                    <span>${(el.bookDetails.price * el.qty).toFixed(2)}</span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
           <CheckOut />
